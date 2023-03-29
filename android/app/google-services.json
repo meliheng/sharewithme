@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "546550976490",
+    "project_id": "sharewithme-a8140",
+    "storage_bucket": "sharewithme-a8140.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546550976490:android:ad3cf55a0a7a50fdfcac93",
+        "android_client_info": {
+          "package_name": "com.melihcan.sharewithme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546550976490-cb9uo7m0m2aategl70v3mn1g0irh6h95.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABBCVl6LSwvNXr6kRwrra5AhH5nsTkqoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546550976490-cb9uo7m0m2aategl70v3mn1g0irh6h95.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
