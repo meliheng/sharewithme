@@ -1,13 +1,68 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'apply_cubit.dart';
 
-@immutable
-abstract class ApplyState {}
+enum ApplyStatus { initial, submitting, success, error }
 
-class ApplyInitial extends ApplyState {}
+class ApplyState {
+  final String fullname;
+  final String school;
+  final String department;
+  final String email;
+  final File file;
+  final ApplyStatus status;
+  ApplyState({
+    required this.fullname,
+    required this.school,
+    required this.department,
+    required this.email,
+    required this.status,
+    required this.file,
+  });
+  factory ApplyState.initial() {
+    return ApplyState(
+      department: "",
+      fullname: "",
+      school: "",
+      email: "",
+      file: File(""),
+      status: ApplyStatus.initial,
+    );
+  }
+  ApplyState copyWith({
+    String? fullname,
+    String? school,
+    String? department,
+    String? email,
+    ApplyStatus? status,
+    File? file,
+  }) {
+    return ApplyState(
+      fullname: fullname ?? this.fullname,
+      school: school ?? this.school,
+      department: department ?? this.department,
+      status: status ?? this.status,
+      email: email ?? this.email,
+      file: file ?? this.file,
+    );
+  }
 
-class ApplySubmitting extends ApplyState {}
+  @override
+  bool operator ==(covariant ApplyState other) {
+    return other.fullname == fullname &&
+        other.school == school &&
+        other.department == department &&
+        other.status == status &&
+        other.email == email &&
+        other.file == file;
+  }
 
-class ApplySubmitted extends ApplyState {}
-
-class ApplyErrored extends ApplyState {}
+  @override
+  int get hashCode {
+    return fullname.hashCode ^
+        school.hashCode ^
+        department.hashCode ^
+        email.hashCode ^
+        file.hashCode ^
+        status.hashCode;
+  }
+}

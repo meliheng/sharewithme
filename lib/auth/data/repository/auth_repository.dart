@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:sharewithme/auth/domain/model/appeal_entity.dart';
 import 'package:sharewithme/auth/domain/repository/i_auth_repository.dart';
@@ -12,6 +13,9 @@ class AuthRepository extends IAuthRepository {
     return TaskEither.tryCatch(
       () async {
         await db.collection("appeals").doc().set(appealEntity.toMap());
+        final storageRef =
+            FirebaseStorage.instance.ref().child("files/${appealEntity.email}");
+        await storageRef.putFile(appealEntity.file);
         return unit;
       },
       (error, stackTrace) {

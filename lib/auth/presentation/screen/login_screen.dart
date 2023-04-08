@@ -42,17 +42,23 @@ class LoginPage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  TextFieldWithIcon(hintText: "Username", icon: Icons.person),
-                  SizedBox(
+                children: [
+                  TextFieldWithIcon(
+                    hintText: "Username",
+                    icon: Icons.person,
+                    onChanged: (p0) {},
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFieldWithIcon(
-                      hintText: "Password",
-                      icon: Icons.lock,
-                      obscureText: true),
-                  SizedBox(height: 5),
-                  Text(
+                    hintText: "Password",
+                    icon: Icons.lock,
+                    onChanged: (p0) {},
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 5),
+                  const Text(
                     "Forgot  your password?",
                     textAlign: TextAlign.end,
                     style: TextStyle(
@@ -60,10 +66,10 @@ class LoginPage extends StatelessWidget {
                       fontSize: 15,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  SubmitButton(title: "Sign in")
+                  const SubmitButton(title: "Sign in")
                 ],
               ),
               const SizedBox(height: 200),

@@ -4,11 +4,13 @@ class TextFieldWithIcon extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final bool obscureText;
+  final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   const TextFieldWithIcon({
     Key? key,
     required this.hintText,
     required this.icon,
+    required this.onChanged,
     this.validator,
     this.obscureText = false,
   }) : super(key: key);
@@ -34,6 +36,7 @@ class TextFieldWithIcon extends StatelessWidget {
         TextFormField(
           obscureText: obscureText,
           validator: validator,
+          onChanged: onChanged,
           decoration: InputDecoration(
             prefixIcon: Icon(icon),
             contentPadding: const EdgeInsets.symmetric(vertical: 20),
