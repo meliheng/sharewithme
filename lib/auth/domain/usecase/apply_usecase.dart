@@ -13,7 +13,6 @@ class ApplyUsecase {
     return authRepository.apply(appealEntity: appealEntity);
   }
 
-  // TODO get it ile register et.
   static ApplyUsecase get i => ApplyUsecase(
         authRepository: GetIt.instance<IAuthRepository>(),
       );

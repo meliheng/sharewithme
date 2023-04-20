@@ -37,6 +37,7 @@ class TextFieldWithIcon extends StatelessWidget {
           obscureText: obscureText,
           validator: validator,
           onChanged: onChanged,
+          style: const TextStyle(decorationThickness: 0),
           decoration: InputDecoration(
             prefixIcon: Icon(icon),
             contentPadding: const EdgeInsets.symmetric(vertical: 20),

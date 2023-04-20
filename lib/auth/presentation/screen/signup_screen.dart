@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     const Text(
-                      "Sign In",
+                      "Create Account",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff262626),
@@ -66,6 +66,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     }
                                     return null;
                                   },
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                TextFieldWithIcon(
+                                  hintText: "Nickname",
+                                  onChanged: (p0) {
+                                    context
+                                        .read<AuthCubit>()
+                                        .nicknameChanged(p0);
+                                  },
+                                  icon: Icons.person,
                                 ),
                                 const SizedBox(
                                   height: 20,

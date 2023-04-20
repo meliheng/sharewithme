@@ -13,8 +13,10 @@ dependencies:
   cloud_firestore: ^4.5.0
   cupertino_icons: ^1.0.2
   file_picker: ^5.2.6
+  firebase_auth: ^4.4.1
   firebase_core: ^2.9.0
   firebase_storage: ^11.1.0
+  loading_animation_widget: ^1.2.0+4
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
@@ -31,4 +33,6 @@ flutter:
     - family: Lato
       fonts:
         - asset: assets/fonts/Lato-Regular.ttf
+  assets:
+    - assets/icons/
   uses-material-design: true

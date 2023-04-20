@@ -28,17 +28,8 @@ class _AppealPageState extends State<AppealPage> with InputValidationMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  width: 200,
-                  child: Text(
-                    "Share With Me",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xff262626),
-                      fontSize: 48,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                const AuthTitle(
+                  title: "Share With Me",
                 ),
                 const SizedBox(height: 5),
                 const Text(
@@ -96,7 +87,7 @@ class _AppealPageState extends State<AppealPage> with InputValidationMixin {
                         hintText: "Mail",
                         icon: Icons.mail,
                         onChanged: (p0) {
-                          context.read<ApplyCubit>().fullnameChanged(p0);
+                          context.read<ApplyCubit>().emailChanged(p0);
                         },
                         validator: (p0) {
                           if (!isEmailValid(p0!)) {
