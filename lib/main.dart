@@ -5,6 +5,8 @@ import 'package:sharewithme/auth/presentation/screen/login_screen.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/init/register.dart';
 
+import 'auth/application/login_cubit/login_cubit.dart';
+
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -24,6 +26,9 @@ class MainPage extends StatelessWidget {
         ),
         BlocProvider<AuthCubit>(
           create: (BuildContext context) => AuthCubit(),
+        ),
+        BlocProvider<LoginCubit>(
+          create: (BuildContext context) => LoginCubit(),
         ),
       ],
       child: MaterialApp(

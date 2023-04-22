@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sharewithme/auth/application/login_cubit/login_cubit.dart';
 import 'package:sharewithme/export.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -42,10 +43,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    BlocConsumer<AuthCubit, AuthState>(
+                    BlocConsumer<LoginCubit, LoginState>(
                       listener: (context, state) {},
                       builder: (context, state) {
-                        if (state.status == AuthStatus.submitting) {
+                        if (state.status == LoginStatus.submitting) {
                           return const CircularProgressIndicator();
                         } else {
                           return Form(
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintText: "Mail",
                                   icon: Icons.mail,
                                   onChanged: (p0) {
-                                    context.read<AuthCubit>().emailChanged(p0);
+                                    context.read<LoginCubit>().emailChanged(p0);
                                   },
                                   validator: (p0) {
                                     if (p0 == '') {
@@ -75,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   icon: Icons.lock,
                                   onChanged: (p0) {
                                     context
-                                        .read<AuthCubit>()
+                                        .read<LoginCubit>()
                                         .passwordChanged(p0);
                                   },
                                 ),
@@ -87,12 +88,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: 20,
                                     ),
                                     SubmitButton(
-                                      title: "Sign Up",
+                                      title: "Sign In",
                                       onTap: () {
                                         if (_formKey.currentState!.validate()) {
                                           context
-                                              .read<AuthCubit>()
-                                              .createUser(context);
+                                              .read<LoginCubit>()
+                                              .loginUser(context);
                                         }
                                       },
                                     ),

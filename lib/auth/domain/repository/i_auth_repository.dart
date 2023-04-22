@@ -6,4 +6,6 @@ abstract class IAuthRepository {
   TaskEither<BaseFailure, Unit> apply({required AppealEntity appealEntity});
   TaskEither<BaseFailure, UserEntity> signUpWithEmailAndPassword(
       {required String email, required String password});
+  TaskEither<BaseFailure, UserEntity> signIn(
+      {required String email, required String password});
 }
