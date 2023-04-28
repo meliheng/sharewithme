@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sharewithme/auth/presentation/screen/login_screen.dart';
+import 'package:sharewithme/auth/presentation/screen/home_screen.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/init/register.dart';
 
@@ -33,7 +33,18 @@ class MainPage extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(fontFamily: 'Lato'),
-        home: const LoginScreen(),
+        home: FutureBuilder(
+          future: LoginCubit().getCurrentUser(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              print("asss");
+              print(snapshot.data!.email);
+              return Container();
+            } else {
+              return HomeScreen();
+            }
+          },
+        ),
       ),
     );
   }

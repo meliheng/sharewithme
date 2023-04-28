@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
 
@@ -45,5 +46,10 @@ class LoginCubit extends Cubit<LoginState> {
         state.copyWith(status: LoginStatus.success),
       ),
     );
+  }
+
+  Future<User?> getCurrentUser() async {
+    var user = FirebaseAuth.instance.currentUser;
+    return user;
   }
 }
