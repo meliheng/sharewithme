@@ -42,9 +42,12 @@ class LoginCubit extends Cubit<LoginState> {
           );
         }
       },
-      (r) => emit(
-        state.copyWith(status: LoginStatus.success),
-      ),
+      (r) {
+        emit(
+          state.copyWith(status: LoginStatus.success),
+        );
+        Navigator.pushNamed(context, ActivityScreen.route);
+      },
     );
   }
 

@@ -33,13 +33,13 @@ class MainPage extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(fontFamily: 'Lato'),
+        onGenerateRoute: RouterManager.generateRoute,
+        // initialRoute: HomeScreen.route,
         home: FutureBuilder(
           future: LoginCubit().getCurrentUser(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print("asss");
-              print(snapshot.data!.email);
-              return Container();
+              return ActivityScreen();
             } else {
               return HomeScreen();
             }

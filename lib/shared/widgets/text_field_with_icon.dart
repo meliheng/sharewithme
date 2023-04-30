@@ -55,6 +55,12 @@ class TextFieldWithIcon extends StatelessWidget {
                 Radius.circular(20),
               ),
             ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red.shade700),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.blue,

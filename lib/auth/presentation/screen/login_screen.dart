@@ -4,6 +4,7 @@ import 'package:sharewithme/auth/application/login_cubit/login_cubit.dart';
 import 'package:sharewithme/export.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const route = '/Login';
   const LoginScreen({super.key});
 
   @override
@@ -62,10 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context.read<LoginCubit>().emailChanged(p0);
                                   },
                                   validator: (p0) {
-                                    if (p0 == '') {
-                                      return 'boş olamaz';
-                                    }
-                                    return null;
+                                    return Email.create(p0!).validate();
                                   },
                                 ),
                                 const SizedBox(

@@ -4,6 +4,7 @@ import 'package:sharewithme/auth/presentation/screen/signup_screen.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const route = '/home';
   const HomeScreen({super.key});
 
   @override
@@ -33,12 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: "Sign In",
                         color: Colors.amber,
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ),
-                          );
+                          Navigator.pushNamed(context, LoginScreen.route);
                         },
                       ),
                     ),
@@ -49,18 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Spacer(),
                     Expanded(
-                        child: CustomButton(
-                      title: "Create Account",
-                      color: Colors.orange,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUpPage(),
-                          ),
-                        );
-                      },
-                    )),
+                      child: CustomButton(
+                        title: "Create Account",
+                        color: Colors.orange,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignUpPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                     Spacer(),
                   ],
                 ),
