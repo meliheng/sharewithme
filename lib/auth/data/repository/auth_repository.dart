@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fpdart/fpdart.dart';
 
-import 'package:sharewithme/auth/domain/repository/i_auth_repository.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/failures/auth_failures.dart';
 import 'package:sharewithme/shared/failures/base_failure.dart';

@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sharewithme/auth/presentation/screen/home_screen.dart';
+import 'package:sharewithme/activity/application/activity_cubit/activity_cubit.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/init/register.dart';
 
@@ -30,6 +30,9 @@ class MainPage extends StatelessWidget {
         BlocProvider<LoginCubit>(
           create: (BuildContext context) => LoginCubit(),
         ),
+        BlocProvider<ActivityCubit>(
+          create: (context) => ActivityCubit(),
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(fontFamily: 'Lato'),
@@ -39,9 +42,9 @@ class MainPage extends StatelessWidget {
           future: LoginCubit().getCurrentUser(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ActivityScreen();
+              return const ActivityScreen();
             } else {
-              return HomeScreen();
+              return const HomeScreen();
             }
           },
         ),
