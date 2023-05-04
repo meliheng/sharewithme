@@ -6,4 +6,5 @@ abstract class IActivityRepository {
   TaskEither<BaseFailure, Unit> add({
     required ActivityEntity activityEntity,
   });
+  TaskEither<BaseFailure, List<ActivityEntity>> getAll();
 }

@@ -12,11 +12,29 @@ class ActivityRepository extends IActivityRepository {
   TaskEither<BaseFailure, Unit> add({required ActivityEntity activityEntity}) {
     return TaskEither.tryCatch(
       () async {
-        await db
-            .collection("activities")
-            .doc(activityEntity.userId)
-            .set(activityEntity.toMap());
+        await db.collection("activities").doc().set(activityEntity.toMap());
         return unit;
+      },
+      (error, stackTrace) {
+        print(error);
+        return AuthFailures.def();
+      },
+    );
+  }
+
+  @override
+  TaskEither<BaseFailure, List<ActivityEntity>> getAll() {
+    return TaskEither.tryCatch(
+      () async {
+        List<ActivityEntity> activities = [];
+        await db.collection("activities").get().then(
+          (querySnapshot) {
+            for (var item in querySnapshot.docs) {
+              activities.add(ActivityEntity.fromFirestore(item));
+            }
+          },
+        );
+        return activities;
       },
       (error, stackTrace) {
         print(error);

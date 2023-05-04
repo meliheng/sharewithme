@@ -3,17 +3,16 @@ import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/failures/base_failure.dart';
 import 'package:get_it/get_it.dart';
 
-class AddActivityUsecase {
+class GetAllActivityUsecase {
   final IActivityRepository activityRepository;
 
-  AddActivityUsecase({required this.activityRepository});
+  GetAllActivityUsecase({required this.activityRepository});
 
-  TaskEither<BaseFailure, Unit> execute(
-      {required ActivityEntity activityEntity}) {
-    return activityRepository.add(activityEntity: activityEntity);
+  TaskEither<BaseFailure, List<ActivityEntity>> execute() {
+    return activityRepository.getAll();
   }
 
-  static AddActivityUsecase get i => AddActivityUsecase(
+  static GetAllActivityUsecase get i => GetAllActivityUsecase(
         activityRepository: GetIt.instance<IActivityRepository>(),
       );
 }

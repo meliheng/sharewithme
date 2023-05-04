@@ -13,39 +13,31 @@ class ActivityScreen extends StatefulWidget {
 
 class _ActivityScreenState extends State<ActivityScreen> {
   @override
+  void initState() {
+    context.read<ActivityCubit>().getActivities(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: _buildAddActivityButton(context),
       bottomNavigationBar: const NavigationBar(),
-      body: const SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ActivityCard(
-                content: "canım öyle istedi sana mı sorucam",
-              ),
-              ActivityCard(
-                content: "canım öyle istedi sana mı sorucam",
-              ),
-              ActivityCard(
-                content: "canım öyle istedi sana mı sorucam",
-              ),
-              ActivityCard(
-                content: "canım öyle istedi sana mı sorucam",
-              ),
-              ActivityCard(
-                content: "canım öyle istedi sana mı sorucam",
-              ),
-              ActivityCard(
-                content: "canım öyle istedi sana mı sorucam",
-              ),
-              ActivityCard(
-                content: "canım öyle istedi sana mı sorucam",
-              ),
-              ActivityCard(
-                content: "canım öyle istedi sana mı sorucam",
-              ),
-            ],
+          child: BlocConsumer<ActivityCubit, ActivityState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return state.status == ActivityStatus.submitting
+                  ? const CircularProgressIndicator()
+                  : Column(
+                      children: [
+                        ...state.activityList
+                            .map((e) => ActivityCard(content: e.content))
+                            .toList()
+                      ],
+                    );
+            },
           ),
         ),
       ),

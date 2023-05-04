@@ -16,16 +16,42 @@ class ActivityCubit extends Cubit<ActivityState> {
     );
   }
 
+  void getActivities(BuildContext context) async {
+    emit(state.copyWith(status: ActivityStatus.submitting));
+    var response = await GetAllActivityUsecase.i.execute().run();
+    response.fold(
+      (l) {
+        emit(state.copyWith(status: ActivityStatus.error));
+        if (state.status == ActivityStatus.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Birşeyler yanlış gitti 🧐'),
+            ),
+          );
+        }
+      },
+      (r) {
+        emit(
+          state.copyWith(status: ActivityStatus.success, activityList: r),
+        );
+      },
+    );
+  }
+
   void addActivity(BuildContext context) async {
     emit(state.copyWith(status: ActivityStatus.submitting));
     final user = FirebaseAuth.instance.currentUser;
     var response = await AddActivityUsecase.i
-        .execute(activityEntity: ActivityEntity(state.content, user!.uid))
+        .execute(
+          activityEntity: ActivityEntity(
+            state.content,
+            UserEntity('', user!.uid),
+          ),
+        )
         .run();
     Future.delayed(const Duration(seconds: 3));
     response.fold(
       (l) {
-        print(l.message);
         emit(state.copyWith(status: ActivityStatus.error));
         if (state.status == ActivityStatus.error) {
           ScaffoldMessenger.of(context).showSnackBar(
