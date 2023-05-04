@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/config/router2.dart';
-import 'package:sharewithme/shared/init/register.dart';
 
 import '../../activity/application/activity_cubit/activity_cubit.dart';
 import '../../auth/application/login_cubit/login_cubit.dart';
+import '../init/register.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         title: 'Dynamic route',
         debugShowCheckedModeBanner: false,
-        // theme: ThemeData.dark().copyWith(primaryColor: Colors.grey),
+        theme: ThemeData.dark().copyWith(primaryColor: Colors.grey),
         routerConfig: router,
       ),
     );

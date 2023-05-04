@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/user/presentation/user_list_screen.dart';
 
 class RouterManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case LoginScreen.route:
-        return pageGenerator(LoginScreen());
+        return pageGenerator(const LoginScreen());
       case HomeScreen.route:
-        return pageGenerator(HomeScreen());
+        return pageGenerator(const HomeScreen());
       case ActivityScreen.route:
-        return pageGenerator(ActivityScreen());
+        return pageGenerator(const ActivityScreen());
+      case UserListScreen.route:
+        return pageGenerator(const UserListScreen());
       default:
-        return pageGenerator(Text("error"));
+        return pageGenerator(const Text("error"));
     }
   }
 

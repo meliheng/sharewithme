@@ -46,6 +46,7 @@ class ActivityCubit extends Cubit<ActivityState> {
           activityEntity: ActivityEntity(
             state.content,
             UserEntity('', user!.uid),
+            state.date,
           ),
         )
         .run();

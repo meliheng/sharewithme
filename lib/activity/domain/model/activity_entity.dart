@@ -7,13 +7,15 @@ import 'package:sharewithme/auth/auth_export.dart';
 class ActivityEntity {
   final String content;
   final UserEntity user;
+  final DateTime date;
 
-  ActivityEntity(this.content, this.user);
+  ActivityEntity(this.content, this.user, this.date);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'content': content,
       'userId': user.uid,
+      'date': date,
     };
   }
 
@@ -21,18 +23,21 @@ class ActivityEntity {
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     return ActivityEntity(
-        data?['content'], UserEntity('email', data?['userId']));
-  }
-
-  factory ActivityEntity.fromMap(Map<String, dynamic> map) {
-    return ActivityEntity(
-      map['content'] as String,
-      map['userId'],
+      data?['content'],
+      UserEntity('email', data?['userId']),
+      (data?['date'] as Timestamp).toDate(),
     );
   }
 
+  // factory ActivityEntity.fromMap(Map<String, dynamic> map) {
+  //   return ActivityEntity(
+  //     map['content'] as String,
+  //     map['userId'],
+  //   );
+  // }
+
   String toJson() => json.encode(toMap());
 
-  factory ActivityEntity.fromJson(String source) =>
-      ActivityEntity.fromMap(json.decode(source) as Map<String, dynamic>);
+  // factory ActivityEntity.fromJson(String source) =>
+  //     ActivityEntity.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/activity/application/activity_cubit/activity_cubit.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/user/presentation/user_list_screen.dart';
 
 class ActivityScreen extends StatefulWidget {
-  static const route = '/activity';
+  static const route = '/home';
   const ActivityScreen({super.key});
 
   @override
@@ -20,26 +21,22 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: _buildAddActivityButton(context),
-      bottomNavigationBar: const NavigationBar(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: BlocConsumer<ActivityCubit, ActivityState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              return state.status == ActivityStatus.submitting
-                  ? const CircularProgressIndicator()
-                  : Column(
-                      children: [
-                        ...state.activityList
-                            .map((e) => ActivityCard(content: e.content))
-                            .toList()
-                      ],
-                    );
-            },
-          ),
-        ),
+    // floatingActionButton: _buildAddActivityButton(context),
+    // bottomNavigationBar: const NavigationBar(),
+    return SingleChildScrollView(
+      child: BlocConsumer<ActivityCubit, ActivityState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return state.status == ActivityStatus.submitting
+              ? const Center()
+              : Column(
+                  children: [
+                    ...state.activityList
+                        .map((e) => ActivityCard(activity: e))
+                        .toList()
+                  ],
+                );
+        },
       ),
     );
   }
@@ -121,10 +118,17 @@ class NavigationBar extends StatelessWidget {
             icon: const Icon(Icons.person),
           ),
           IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, UserListScreen.route);
+            },
+            iconSize: 30,
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
             onPressed: () {},
             iconSize: 30,
             icon: const Icon(Icons.settings),
-          )
+          ),
         ],
       ),
     );
@@ -132,11 +136,11 @@ class NavigationBar extends StatelessWidget {
 }
 
 class ActivityCard extends StatelessWidget {
-  final String content;
+  final ActivityEntity activity;
 
   const ActivityCard({
     super.key,
-    required this.content,
+    required this.activity,
   });
 
   @override
@@ -166,7 +170,7 @@ class ActivityCard extends StatelessWidget {
                               ),
                               child: const Text("Melo"),
                             ),
-                            const Text("10:07"),
+                            Text(activity.date.toString()),
                           ],
                         ),
                         const SizedBox(
@@ -175,7 +179,7 @@ class ActivityCard extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: Text(content),
+                              child: Text(activity.content),
                             ),
                           ],
                         ),
