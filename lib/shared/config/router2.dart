@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sharewithme/activity/presentation/activity_screen.dart';
+import 'package:sharewithme/auth/auth_export.dart';
 import 'package:sharewithme/user/user_export.dart';
 
 import 'main.dart';
@@ -35,6 +36,12 @@ final router = GoRouter(
           path: '/account',
           builder: (BuildContext context, GoRouterState state) {
             return const Center(child: Text('Account'));
+          },
+        ),
+        GoRoute(
+          path: '/welcome',
+          builder: (BuildContext context, GoRouterState state) {
+            return const HomeScreen();
           },
         ),
       ],

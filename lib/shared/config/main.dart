@@ -14,7 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Register.setUp();
-  runApp(const MyApp());
+  runApp(const Ana());
 }
 
 class AppState {
@@ -23,8 +23,8 @@ class AppState {
   static List<BottomNavigationBarItem> navigationBarItems = [];
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Ana extends StatelessWidget {
+  const Ana({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         title: 'Dynamic route',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark().copyWith(primaryColor: Colors.grey),
         routerConfig: router,
       ),
     );

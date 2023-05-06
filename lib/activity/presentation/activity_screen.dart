@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/activity/application/activity_cubit/activity_cubit.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/user/presentation/user_list_screen.dart';
 
 class ActivityScreen extends StatefulWidget {
-  static const route = '/home';
+  static const route = '/activity';
   const ActivityScreen({super.key});
 
   @override
@@ -13,30 +12,36 @@ class ActivityScreen extends StatefulWidget {
 }
 
 class _ActivityScreenState extends State<ActivityScreen> {
+  final ActivityCubit cubit = ActivityCubit.instance();
   @override
   void initState() {
-    context.read<ActivityCubit>().getActivities(context);
+    cubit.getActivities(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // floatingActionButton: _buildAddActivityButton(context),
-    // bottomNavigationBar: const NavigationBar(),
-    return SingleChildScrollView(
-      child: BlocConsumer<ActivityCubit, ActivityState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return state.status == ActivityStatus.submitting
-              ? const Center()
-              : Column(
-                  children: [
-                    ...state.activityList
-                        .map((e) => ActivityCard(activity: e))
-                        .toList()
-                  ],
-                );
-        },
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: BlocConsumer<ActivityCubit, ActivityState>(
+          bloc: cubit,
+          listener: (context, state) {},
+          builder: (context, state) {
+            return state.status == ActivityStatus.submitting
+                ? const CircularProgressIndicator()
+                : Column(
+                    children: [
+                      ...state.activityList
+                          .map((e) => ActivityCard(
+                                content: e.content,
+                                username: e.username,
+                              ))
+                          .toList(),
+                      _buildAddActivityButton(context),
+                    ],
+                  );
+          },
+        ),
       ),
     );
   }
@@ -80,7 +85,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       title: "Paylaş",
                       color: Colors.purple,
                       onPressed: () {
-                        context.read<ActivityCubit>().addActivity(context);
+                        cubit.addActivity(context);
+                        cubit.getActivities(context);
                       },
                     )
                   ],
@@ -118,17 +124,10 @@ class NavigationBar extends StatelessWidget {
             icon: const Icon(Icons.person),
           ),
           IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, UserListScreen.route);
-            },
-            iconSize: 30,
-            icon: const Icon(Icons.search),
-          ),
-          IconButton(
             onPressed: () {},
             iconSize: 30,
             icon: const Icon(Icons.settings),
-          ),
+          )
         ],
       ),
     );
@@ -136,11 +135,12 @@ class NavigationBar extends StatelessWidget {
 }
 
 class ActivityCard extends StatelessWidget {
-  final ActivityEntity activity;
-
+  final String content;
+  final String username;
   const ActivityCard({
     super.key,
-    required this.activity,
+    required this.content,
+    required this.username,
   });
 
   @override
@@ -168,9 +168,9 @@ class ActivityCard extends StatelessWidget {
                                 border: Border.all(),
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: const Text("Melo"),
+                              child: Text(username),
                             ),
-                            Text(activity.date.toString()),
+                            const Text("10:07"),
                           ],
                         ),
                         const SizedBox(
@@ -179,7 +179,7 @@ class ActivityCard extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: Text(activity.content),
+                              child: Text(content),
                             ),
                           ],
                         ),

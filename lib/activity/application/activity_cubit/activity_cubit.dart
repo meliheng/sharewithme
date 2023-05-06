@@ -44,9 +44,10 @@ class ActivityCubit extends Cubit<ActivityState> {
     var response = await AddActivityUsecase.i
         .execute(
           activityEntity: ActivityEntity(
-            state.content,
-            UserEntity('', user!.uid),
-            state.date,
+            content: state.content,
+            userId: user!.uid,
+            username: user.displayName ?? '',
+            date: state.date,
           ),
         )
         .run();
@@ -66,8 +67,14 @@ class ActivityCubit extends Cubit<ActivityState> {
         emit(
           state.copyWith(status: ActivityStatus.success),
         );
-        Navigator.pushNamed(context, ActivityScreen.route);
+        Navigator.pop(context);
+        getActivities(context);
+        emit(state.copyWith());
       },
     );
+  }
+
+  static ActivityCubit instance() {
+    return ActivityCubit();
   }
 }

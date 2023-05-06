@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/main.dart';
+import 'package:sharewithme/shared/config/main.dart';
 
 part 'login_state.dart';
 
@@ -46,7 +48,14 @@ class LoginCubit extends Cubit<LoginState> {
         emit(
           state.copyWith(status: LoginStatus.success),
         );
-        Navigator.pushNamed(context, ActivityScreen.route);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const Ana();
+            },
+          ),
+        );
       },
     );
   }

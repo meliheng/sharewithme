@@ -4,7 +4,7 @@ import 'package:sharewithme/auth/presentation/screen/signup_screen.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const route = '/home';
+  static const route = '/welcome';
   const HomeScreen({super.key});
 
   @override
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Row(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     Expanded(
                       child: CustomButton(
                         title: "Sign In",
@@ -38,12 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                   ],
                 ),
                 Row(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     Expanded(
                       child: CustomButton(
                         title: "Create Account",
@@ -52,25 +52,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SignUpPage(),
+                              builder: (context) => const SignUpPage(),
                             ),
                           );
                         },
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                   ],
                 ),
                 Row(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {},
-                        child: Text("Apply Now"),
+                        child: const Text("Apply Now"),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                   ],
                 ),
               ],

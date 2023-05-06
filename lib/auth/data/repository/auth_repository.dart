@@ -33,7 +33,7 @@ class AuthRepository extends IAuthRepository {
       () async {
         var response = await auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        return UserEntity(email, password);
+        return UserEntity(email, response.user!.uid, []);
       },
       (error, stackTrace) {
         if (error is FirebaseAuthException) {
@@ -50,7 +50,7 @@ class AuthRepository extends IAuthRepository {
     return TaskEither.tryCatch(() async {
       var response = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      var user = UserEntity(response.user!.email!, response.user!.uid);
+      var user = UserEntity(response.user!.email!, response.user!.uid, []);
       return user;
     }, (error, stackTrace) {
       print(error);

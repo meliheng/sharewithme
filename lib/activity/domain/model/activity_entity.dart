@@ -2,19 +2,24 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sharewithme/auth/auth_export.dart';
 
 class ActivityEntity {
   final String content;
-  final UserEntity user;
+  final String userId;
+  final String username;
   final DateTime date;
-
-  ActivityEntity(this.content, this.user, this.date);
+  ActivityEntity({
+    required this.content,
+    required this.userId,
+    required this.username,
+    required this.date,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'content': content,
-      'userId': user.uid,
+      'userId': userId,
+      'username': username,
       'date': date,
     };
   }
@@ -23,9 +28,10 @@ class ActivityEntity {
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     return ActivityEntity(
-      data?['content'],
-      UserEntity('email', data?['userId']),
-      (data?['date'] as Timestamp).toDate(),
+      content: data?['content'],
+      userId: data?['userId'],
+      username: data?['username'],
+      date: (data?['date'] as Timestamp).toDate(),
     );
   }
 

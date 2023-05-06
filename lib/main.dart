@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/config/router2.dart';
+import 'package:sharewithme/shared/config/main.dart';
 import 'package:sharewithme/shared/init/register.dart';
 
 import '../../activity/application/activity_cubit/activity_cubit.dart';
@@ -43,11 +43,19 @@ class MyApp extends StatelessWidget {
           create: (context) => ActivityCubit(),
         )
       ],
-      child: MaterialApp.router(
-        title: 'Dynamic route',
-        debugShowCheckedModeBanner: false,
-        // theme: ThemeData.dark().copyWith(primaryColor: Colors.grey),
-        routerConfig: router,
+      child: MaterialApp(
+        theme: ThemeData(fontFamily: 'Lato'),
+        onGenerateRoute: RouterManager.generateRoute,
+        home: FutureBuilder(
+          future: LoginCubit().getCurrentUser(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const Ana();
+            } else {
+              return const HomeScreen();
+            }
+          },
+        ),
       ),
     );
   }
