@@ -57,7 +57,17 @@ class UserRepository extends IUserRepository {
           {
             "followers": FieldValue.arrayUnion(
               [FirebaseAuth.instance.currentUser!.uid],
-            )
+            ),
+          },
+        );
+        await db
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            "following": FieldValue.arrayUnion(
+              [userEntity.uid],
+            ),
           },
         );
 

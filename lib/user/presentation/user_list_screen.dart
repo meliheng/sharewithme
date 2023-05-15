@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/application/user_list_cubit/user_list_cubit.dart';
 import 'package:sharewithme/user/presentation/_presentation_exporter.dart';
 
@@ -17,7 +18,7 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   void initState() {
     super.initState();
-    cubit.getActivities(context);
+    cubit.getUsers(context);
   }
 
   @override
@@ -28,6 +29,17 @@ class _UserListScreenState extends State<UserListScreen> {
       builder: (context, state) {
         return Column(
           children: [
+            const SizedBox(
+              height: 10,
+            ),
+            TextFieldWithIcon(
+              hintText: "Search",
+              icon: Icons.search,
+              onChanged: cubit.filterTextChanged,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             ..._buildList(),
           ],
         );
@@ -36,7 +48,7 @@ class _UserListScreenState extends State<UserListScreen> {
   }
 
   List<Widget> _buildList() {
-    return cubit.state.userList
+    return cubit.state.filteredUserList
         .map(
           (e) => UserCard(userEntity: e, cubit: cubit),
         )

@@ -23,21 +23,53 @@ class UserCard extends StatelessWidget {
                     left: BorderSide(color: Colors.greenAccent, width: 5),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                   children: [
-                    Text(userEntity.email),
-                    if (!cubit.isFollowed(userEntity: userEntity))
-                      IconButton(
-                        icon: const Icon(
-                          Icons.follow_the_signs_sharp,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(userEntity.email),
+                        if (!cubit.isFollowed(userEntity: userEntity))
+                          IconButton(
+                            icon: const Icon(
+                              Icons.follow_the_signs_sharp,
+                            ),
+                            onPressed: () {
+                              cubit.addFollow(userEntity: userEntity);
+                            },
+                          )
+                        else
+                          const FaIcon(FontAwesomeIcons.faceKiss)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.greenAccent,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text("15 Followers",style: TextStyle(fontSize: 12),),
+                          ),
                         ),
-                        onPressed: () {
-                          cubit.addFollow(userEntity: userEntity);
-                        },
-                      )
-                    else
-                      const FaIcon(FontAwesomeIcons.kiss)
+                        SizedBox(width: 5,),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text("5 Following",style: TextStyle(fontSize: 12)),
+                          ),
+                        ),
+                        Spacer(flex: 2,),
+                      ],
+                    )
                   ],
                 ),
               ),
