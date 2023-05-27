@@ -3,11 +3,16 @@ import 'package:sharewithme/auth/auth_export.dart';
 import 'package:sharewithme/user/application/user_list_cubit/user_list_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class UserCard extends StatelessWidget {
+class UserCard extends StatefulWidget {
   final UserEntity userEntity;
   final UserListCubit cubit;
   const UserCard({super.key, required this.userEntity, required this.cubit});
 
+  @override
+  State<UserCard> createState() => _UserCardState();
+}
+
+class _UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -28,14 +33,17 @@ class UserCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(userEntity.email),
-                        if (!cubit.isFollowed(userEntity: userEntity))
+                        Text(widget.userEntity.email),
+                        if (!widget.cubit
+                            .isFollowed(userEntity: widget.userEntity))
                           IconButton(
                             icon: const Icon(
                               Icons.follow_the_signs_sharp,
                             ),
                             onPressed: () {
-                              cubit.addFollow(userEntity: userEntity);
+                              widget.cubit
+                                  .addFollow(userEntity: widget.userEntity);
+                              setState(() {});
                             },
                           )
                         else
@@ -47,27 +55,39 @@ class UserCard extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
                             decoration: BoxDecoration(
                               color: Colors.greenAccent,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Text("15 Followers",style: TextStyle(fontSize: 12),),
+                            child: Text(
+                              widget.userEntity.totalFollowersString,
+                              style: TextStyle(fontSize: 12),
+                            ),
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        const SizedBox(
+                          width: 5,
+                        ),
                         Expanded(
                           flex: 2,
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
                             decoration: BoxDecoration(
                               color: Colors.blueAccent,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Text("5 Following",style: TextStyle(fontSize: 12)),
+                            child: Text(
+                              widget.userEntity.totalFollowingString,
+                              style: TextStyle(fontSize: 12),
+                            ),
                           ),
                         ),
-                        Spacer(flex: 2,),
+                        const Spacer(
+                          flex: 2,
+                        ),
                       ],
                     )
                   ],

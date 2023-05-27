@@ -7,10 +7,10 @@ class RouterManager {
     switch (settings.name) {
       case LoginScreen.route:
         return pageGenerator(const LoginScreen());
-      case HomeScreen.route:
-        return pageGenerator(const HomeScreen());
+      case WelcomeScreen.route:
+        return pageGenerator(const WelcomeScreen());
       case ActivityScreen.route:
-        return pageGenerator(const ActivityScreen());
+        return pageGenerator( ActivityScreen(authCubit: AuthCubit.instance(),));
       case UserListScreen.route:
         return pageGenerator(const UserListScreen());
       default:

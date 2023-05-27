@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sharewithme/auth/application/login_cubit/login_cubit.dart';
 import 'package:sharewithme/export.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,6 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  final AuthCubit cubit = AuthCubit.instance();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,10 +44,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    BlocConsumer<LoginCubit, LoginState>(
+                    BlocConsumer<AuthCubit, AuthState>(
+                      bloc: cubit,
                       listener: (context, state) {},
                       builder: (context, state) {
-                        if (state.status == LoginStatus.submitting) {
+                        if (state.status == AuthStatus.submitting) {
                           return const CircularProgressIndicator();
                         } else {
                           return Form(
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintText: "Mail",
                                   icon: Icons.mail,
                                   onChanged: (p0) {
-                                    context.read<LoginCubit>().emailChanged(p0);
+                                    cubit.emailChanged(p0);
                                   },
                                   validator: (p0) {
                                     return Email.create(p0!).validate();
@@ -73,9 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintText: "Password",
                                   icon: Icons.lock,
                                   onChanged: (p0) {
-                                    context
-                                        .read<LoginCubit>()
-                                        .passwordChanged(p0);
+                                    cubit.passwordChanged(p0);
                                   },
                                 ),
                                 const SizedBox(height: 5),
@@ -89,9 +88,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                       title: "Sign In",
                                       onTap: () {
                                         if (_formKey.currentState!.validate()) {
-                                          context
-                                              .read<LoginCubit>()
-                                              .loginUser(context);
+                                          cubit.loginUser(context);
+
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //     builder: (context) {
+                                          //       return HomeScreen(
+                                          //         authCubit: cubit,
+                                          //       );
+                                          //     },
+                                          //   ),
+                                          // );
                                         }
                                       },
                                     ),
@@ -113,14 +121,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-// mixin InputValidationMixin {
-//   bool isPasswordValid(String password) => password.length == 6;
-
-//   bool isEmailValid(String email) {
-//     final bool emailValid = RegExp(
-//             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.edu+\.[a-zA-Z]+")
-//         .hasMatch(email);
-//     return emailValid;
-//   }
-// }

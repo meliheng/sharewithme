@@ -4,13 +4,20 @@ class UserEntity {
   final String email;
   final String uid;
   final List followers;
+  final List following;
 
-  UserEntity(this.email, this.uid, this.followers);
+  UserEntity(
+    this.email,
+    this.uid,
+    this.followers,
+    this.following,
+  );
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'email': email,
       'uid': uid,
       'followers': followers,
+      'following': following,
     };
   }
 
@@ -20,7 +27,15 @@ class UserEntity {
     return UserEntity(
       data?['email'],
       data?['uid'],
-      data?['followers'],
+      data?['followers']?? [],
+      data?['following']??[],
     );
+  }
+
+  String  get totalFollowersString {
+    return "${followers.length} Followers";
+  }
+  String get totalFollowingString {
+    return "${following.length} Following";
   }
 }

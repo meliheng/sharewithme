@@ -4,15 +4,19 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ActivityEntity {
+  final String id;
   final String content;
   final String userId;
   final String username;
   final DateTime date;
+  final List likes;
   ActivityEntity({
     required this.content,
     required this.userId,
     required this.username,
     required this.date,
+    required this.id,
+    required this.likes,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,6 +25,8 @@ class ActivityEntity {
       'userId': userId,
       'username': username,
       'date': date,
+      'id':id,
+      'likes':likes,
     };
   }
 
@@ -32,6 +38,9 @@ class ActivityEntity {
       userId: data?['userId'],
       username: data?['username'],
       date: (data?['date'] as Timestamp).toDate(),
+      id: data?['id'],
+
+      likes: data?['likes']??[],
     );
   }
 
@@ -41,6 +50,9 @@ class ActivityEntity {
   //     map['userId'],
   //   );
   // }
+  String get totalLikeString{
+    return likes.length.toString();
+  }
 
   String toJson() => json.encode(toMap());
 

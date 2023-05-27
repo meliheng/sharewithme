@@ -63,6 +63,8 @@ class UserListCubit extends Cubit<UserListState> {
     );
   }
 
+
+
   void filterTextChanged(String value) {
     emit(
       state.copyWith(filterText: value),

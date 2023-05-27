@@ -13,7 +13,6 @@ class UserRepository extends IUserRepository {
     return TaskEither.tryCatch(
       () async {
         List<UserEntity> users = [];
-        print("repodayım");
 
         await db.collection("users").get().then(
           (querySnapshot) {
@@ -22,10 +21,9 @@ class UserRepository extends IUserRepository {
             }
           },
         );
-        return users;
+        return users.filter((t) => t.uid!=FirebaseAuth.instance.currentUser!.uid).toList();
       },
       (error, stackTrace) {
-        print(error);
         return AuthFailures.def();
       },
     );
@@ -43,7 +41,6 @@ class UserRepository extends IUserRepository {
         return unit;
       },
       (error, stackTrace) {
-        print(error);
         return AuthFailures.def();
       },
     );
@@ -74,7 +71,6 @@ class UserRepository extends IUserRepository {
         return unit;
       },
       (error, stackTrace) {
-        print(error);
         return AuthFailures.def();
       },
     );

@@ -3,15 +3,15 @@ import 'package:sharewithme/auth/presentation/screen/login_screen.dart';
 import 'package:sharewithme/auth/presentation/screen/signup_screen.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
 
-class HomeScreen extends StatefulWidget {
+class WelcomeScreen extends StatefulWidget {
   static const route = '/welcome';
-  const HomeScreen({super.key});
+  const WelcomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

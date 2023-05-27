@@ -8,4 +8,6 @@ abstract class IAuthRepository {
       {required String email, required String password});
   TaskEither<BaseFailure, UserEntity> signIn(
       {required String email, required String password});
+  TaskEither<BaseFailure, Unit> logout(
+   );
 }

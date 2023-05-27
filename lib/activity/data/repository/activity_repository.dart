@@ -27,6 +27,8 @@ class ActivityRepository extends IActivityRepository {
     return TaskEither.tryCatch(
       () async {
         List<ActivityEntity> activities = [];
+        await db.collection("activities").snapshots();
+        
         await db.collection("activities").get().then(
           (querySnapshot) {
             for (var item in querySnapshot.docs) {
@@ -37,7 +39,6 @@ class ActivityRepository extends IActivityRepository {
         return activities;
       },
       (error, stackTrace) {
-        print(error);
         return AuthFailures.def();
       },
     );

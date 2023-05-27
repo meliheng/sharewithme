@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,10 +6,10 @@ import 'package:go_router/go_router.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/config/main.dart';
+import 'package:sharewithme/shared/home/home_screen.dart';
 import 'package:sharewithme/shared/init/register.dart';
 
 import '../../activity/application/activity_cubit/activity_cubit.dart';
-import '../../auth/application/login_cubit/login_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,32 +29,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthCubit authCubit = AuthCubit();
     return MultiBlocProvider(
       providers: [
         BlocProvider<ApplyCubit>(
           create: (BuildContext context) => ApplyCubit(),
         ),
         BlocProvider<AuthCubit>(
-          create: (BuildContext context) => AuthCubit(),
-        ),
-        BlocProvider<LoginCubit>(
-          create: (BuildContext context) => LoginCubit(),
+          create: (BuildContext context) => authCubit,
         ),
         BlocProvider<ActivityCubit>(
           create: (context) => ActivityCubit(),
         )
       ],
       child: MaterialApp(
-        theme: ThemeData(fontFamily: 'Lato'),
+        theme: ThemeData(
+          fontFamily: 'Lato',
+          useMaterial3: true,
+          primarySwatch: Colors.red,
+        ),
         onGenerateRoute: RouterManager.generateRoute,
-        home: FutureBuilder(
-          future: LoginCubit().getCurrentUser(),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const Ana();
-            } else {
-              return const HomeScreen();
+            if (snapshot.connectionState == ConnectionState.active) {
+              User? user = snapshot.data;
+              if (user == null) {
+                return const WelcomeScreen();
+              } else {
+                authCubit.getUser();
+
+                return HomeScreen(
+                  authCubit: authCubit,
+                );
+              }
             }
+            return Container();
           },
         ),
       ),
@@ -118,7 +129,7 @@ class _AppScaffoldState extends State<AppScaffold> {
 void setDefaultLayout() async {
   AppState.mapScreen[0] = '/home';
   AppState.mapScreen[1] = '/search';
-  AppState.mapScreen[2] = '/search';
+  AppState.mapScreen[2] = '/profile';
 
   AppState.navigationBarItems.addAll(
     [
@@ -131,7 +142,7 @@ void setDefaultLayout() async {
         icon: Icon(IconData(58727, fontFamily: 'MaterialIcons')),
       ),
       const BottomNavigationBarItem(
-        label: 'Account',
+        label: 'Profile',
         icon: Icon(IconData(57410, fontFamily: 'MaterialIcons')),
       ),
     ],

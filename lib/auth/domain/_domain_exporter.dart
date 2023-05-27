@@ -6,3 +6,4 @@ export 'repository/i_auth_repository.dart';
 export 'usecase/apply_usecase.dart';
 export 'usecase/create_user_usecase.dart';
 export 'usecase/login_usecase.dart';
+export 'usecase/logout_usecase.dart';
