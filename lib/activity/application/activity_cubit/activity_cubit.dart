@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +79,8 @@ class ActivityCubit extends Cubit<ActivityState> {
     );
   }
 
-  StreamBuilder getAllActivity({required UserEntity userEntity}) {
+  StreamBuilder getAllActivity(
+      {required UserEntity userEntity, bool onlyOwn = false}) {
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection("activities").snapshots(),
       builder: (context, snapshot) {
@@ -88,13 +88,27 @@ class ActivityCubit extends Cubit<ActivityState> {
         if (snapshot.hasData) {
           for (var element in snapshot.data!.docs) {
             var ac = ActivityEntity.fromFirestore(element);
-            items.add(
-              ActivityCard(
-                cubit: this,
-                activityEntity: ac,
-                userEntity: userEntity,
-              ),
-            );
+            if (onlyOwn) {
+              if (ac.userId == userEntity.uid) {
+                items.add(
+                  ActivityCard(
+                    cubit: this,
+                    activityEntity: ac,
+                    userEntity: userEntity,
+                    isProfileScreen: true,
+                  ),
+                );
+              }
+            } else {
+              items.add(
+                ActivityCard(
+                  cubit: this,
+                  activityEntity: ac,
+                  userEntity: userEntity,
+                  isProfileScreen: false,
+                ),
+              );
+            }
           }
         }
         return Column(
@@ -106,7 +120,20 @@ class ActivityCubit extends Cubit<ActivityState> {
     );
   }
 
-  Future<void> likeActivity(ActivityEntity activityEntity,UserEntity userEntity) async {
+  void deleteActivity({required ActivityEntity activityEntity}) async {
+    await FirebaseFirestore.instance
+        .collection("activities")
+        .where('id', isEqualTo: activityEntity.id)
+        .get()
+        .then(
+      (value) {
+        value.docs[0].reference.delete();
+      },
+    );
+  }
+
+  Future<void> likeActivity(
+      ActivityEntity activityEntity, UserEntity userEntity) async {
     try {
       var document = await FirebaseFirestore.instance
           .collection("activities")
@@ -114,7 +141,7 @@ class ActivityCubit extends Cubit<ActivityState> {
           .get();
       // var id= context.read<AuthCubit>().state.user!.uid;
       // print(id);
-      print("""""object""""");
+      print("""""object""" "");
       FirebaseFirestore.instance
           .collection("activities")
           .doc(document.docs.first.id)
@@ -122,7 +149,7 @@ class ActivityCubit extends Cubit<ActivityState> {
         {
           'likes': FieldValue.arrayUnion([
             // ignore: use_build_context_synchronously
-           userEntity.uid
+            userEntity.uid
           ]),
         },
       );

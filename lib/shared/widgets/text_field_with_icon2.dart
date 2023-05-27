@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sharewithme/export.dart';
 
 class TextFieldWithIcon2 extends StatelessWidget {
   final String hintText;
@@ -40,7 +41,7 @@ class TextFieldWithIcon2 extends StatelessWidget {
             hintText: hintText,
             hintStyle: const TextStyle(),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blue.shade700),
+              borderSide: BorderSide(color: ColorConstants.primaryOrange),
               borderRadius: const BorderRadius.all(
                 Radius.circular(20),
               ),
@@ -57,12 +58,12 @@ class TextFieldWithIcon2 extends StatelessWidget {
                 Radius.circular(20),
               ),
             ),
-            enabledBorder: const OutlineInputBorder(
+            enabledBorder:  OutlineInputBorder(
               borderSide: BorderSide(
-                color: Colors.blue,
+                color: ColorConstants.primaryOrange,
                 width: 0,
               ),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(20),
               ),
             ),
