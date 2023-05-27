@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/config/main.dart';
 import 'package:sharewithme/shared/home/home_screen.dart';
 import 'package:sharewithme/shared/init/register.dart';
 
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          fontFamily: 'Lato',
+          fontFamily: 'Poppins',
           useMaterial3: true,
           primarySwatch: Colors.red,
         ),

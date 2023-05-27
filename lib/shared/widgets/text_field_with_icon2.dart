@@ -6,13 +6,14 @@ class TextFieldWithIcon2 extends StatelessWidget {
   final bool obscureText;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final String? initialValue;
   const TextFieldWithIcon2({
     Key? key,
     required this.hintText,
     required this.icon,
     required this.onChanged,
     this.validator,
-    this.obscureText = false,
+    this.obscureText = false, this.initialValue,
   }) : super(key: key);
 
   @override
@@ -27,6 +28,7 @@ class TextFieldWithIcon2 extends StatelessWidget {
           ),
         ),
         TextFormField(
+          initialValue: initialValue,
           obscureText: obscureText,
           validator: validator,
           maxLines: 5,

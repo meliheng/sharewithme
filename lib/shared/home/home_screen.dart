@@ -18,9 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Share With Me'),
-          backgroundColor: ColorConstants.primaryBackground),
+      appBar: _appBar(),
       body: PersistentTabView(
         context, screens: _buildScreens(authCubit: widget.authCubit),
         items: _navBarsItems(),
@@ -40,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
           // Navigation Bar's items animation properties.
           duration: Duration(milliseconds: 200),
           curve: Curves.ease,
-
         ),
         screenTransitionAnimation: const ScreenTransitionAnimation(
           // Screen transition animation on change of selected tab.
@@ -52,6 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+AppBar _appBar() {
+  return AppBar(
+      title: const Text('Share With Me'),
+      backgroundColor: ColorConstants.primaryBackground);
 }
 
 List<Widget> _buildScreens({required AuthCubit authCubit}) {

@@ -2,8 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/config/main.dart';
-import 'package:sharewithme/shared/home/home_screen.dart';
 
 part 'login_state.dart';
 

@@ -39,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
   void createUser(BuildContext context) async {
     emit(state.copyWith(status: AuthStatus.submitting));
     var response = await CreateUserUsecase.i
-        .execute(email: state.email, password: state.password)
+        .execute(email: state.email, password: state.password,username: state.nickname)
         .run();
     Future.delayed(const Duration(seconds: 3));
     response.fold(
@@ -61,6 +61,7 @@ class AuthCubit extends Cubit<AuthState> {
             emit(
               state.copyWith(status: AuthStatus.success),
             );
+           // getUser();
           },
         );
       },
@@ -114,6 +115,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void getUser() async {
+    print(FirebaseAuth.instance.currentUser!.uid);
     var user = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)

@@ -28,12 +28,19 @@ class AuthRepository extends IAuthRepository {
 
   @override
   TaskEither<BaseFailure, UserEntity> signUpWithEmailAndPassword(
-      {required String email, required String password}) {
+      {required String email, required String password,required String username}) {
     return TaskEither.tryCatch(
       () async {
         var response = await auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        return UserEntity(email, response.user!.uid, [], []);
+        return UserEntity(
+          email: email,
+          followers: [],
+          following: [],
+          uid: response.user!.uid,
+          username: username,
+          about: "",
+        );
       },
       (error, stackTrace) {
         if (error is FirebaseAuthException) {

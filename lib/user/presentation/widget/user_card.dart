@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/auth/auth_export.dart';
+import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/application/user_list_cubit/user_list_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -23,9 +24,9 @@ class _UserCardState extends State<UserCard> {
             child: ClipPath(
               child: Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
+                decoration:  BoxDecoration(
                   border: Border(
-                    left: BorderSide(color: Colors.greenAccent, width: 5),
+                    left: BorderSide(color: ColorConstants.primaryOrange, width: 5),
                   ),
                 ),
                 child: Column(

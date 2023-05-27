@@ -29,6 +29,7 @@ dependencies:
   uuid: ^3.0.7
   intl: ^0.18.1
   persistent_bottom_nav_bar: ^5.0.2
+  expansion_tile_card: ^3.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -40,6 +41,9 @@ flutter:
     - family: Lato
       fonts:
         - asset: assets/fonts/Lato-Regular.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
   assets:
     - assets/icons/
   uses-material-design: true

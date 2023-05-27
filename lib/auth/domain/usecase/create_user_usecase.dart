@@ -9,9 +9,9 @@ class CreateUserUsecase {
   CreateUserUsecase({required this.authRepository});
 
   TaskEither<BaseFailure, UserEntity> execute(
-      {required String email, required String password}) {
+      {required String email, required String password,required String username}) {
     return authRepository.signUpWithEmailAndPassword(
-        email: email, password: password);
+        email: email, password: password,username: username);
   }
 
   static CreateUserUsecase get i => CreateUserUsecase(

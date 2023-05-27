@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/shared/home/home_screen.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -11,6 +12,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+  final AuthCubit cubit = AuthCubit.instance();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 20),
                     BlocConsumer<AuthCubit, AuthState>(
+                      bloc: cubit,
                       listener: (context, state) {},
                       builder: (context, state) {
                         if (state.status == AuthStatus.submitting) {
@@ -56,9 +59,10 @@ class _SignUpPageState extends State<SignUpPage> {
                               children: [
                                 TextFieldWithIcon(
                                   hintText: "Mail",
+                                  inputType: TextInputType.emailAddress,
                                   icon: Icons.mail,
                                   onChanged: (p0) {
-                                    context.read<AuthCubit>().emailChanged(p0);
+                                    cubit.emailChanged(p0);
                                   },
                                   validator: (p0) {
                                     if (p0 == '') {
@@ -73,9 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 TextFieldWithIcon(
                                   hintText: "Nickname",
                                   onChanged: (p0) {
-                                    context
-                                        .read<AuthCubit>()
-                                        .nicknameChanged(p0);
+                                    cubit.nicknameChanged(p0);
                                   },
                                   icon: Icons.person,
                                 ),
@@ -84,11 +86,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                                 TextFieldWithIcon(
                                   hintText: "Password",
+                                  obscureText: true,
                                   icon: Icons.lock,
                                   onChanged: (p0) {
-                                    context
-                                        .read<AuthCubit>()
-                                        .passwordChanged(p0);
+                                    cubit.passwordChanged(p0);
                                   },
                                 ),
                                 const SizedBox(height: 5),
@@ -102,9 +103,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                       title: "Sign Up",
                                       onTap: () {
                                         if (_formKey.currentState!.validate()) {
-                                          context
-                                              .read<AuthCubit>()
-                                              .createUser(context);
+                                          cubit.createUser(context);
+                                          // cubit.getUser();
+
+                                          Navigator.pushAndRemoveUntil(context,
+                                              MaterialPageRoute(
+                                            builder: (context) {
+                                              return HomeScreen(
+                                                authCubit: cubit,
+                                              );
+                                            },
+                                          ), (route) => false);
                                         }
                                       },
                                     ),
