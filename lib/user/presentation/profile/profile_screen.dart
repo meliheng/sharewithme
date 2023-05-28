@@ -98,8 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 10,
                   ),
                   SettingListTile(
-                    icon:
-                        const FaIcon(FontAwesomeIcons.arrowRightFromBracket),
+                    icon: const FaIcon(FontAwesomeIcons.arrowRightFromBracket),
                     text: "Çıkış Yap",
                     showSwitch: false,
                     onTap: () async {
@@ -117,6 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(
                     height: 10,
                   ),
+                  _followersCard(),
                   _aboutMeCard(context),
                   context.read<ActivityCubit>().getAllActivity(
                       userEntity: userCubit.state.userEntity, onlyOwn: true),
@@ -126,6 +126,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         );
       },
+    );
+  }
+
+  Row _followersCard() {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.greenAccent,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Text(
+              userCubit.userEntity.totalFollowersString,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.blueAccent,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Text(
+              userCubit.userEntity.totalFollowingString,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

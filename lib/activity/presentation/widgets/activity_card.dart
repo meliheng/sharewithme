@@ -47,8 +47,12 @@ class _ActivityCardState extends State<ActivityCard> {
             onPressed: (context) {
               CoolAlert.show(
                 context: context,
-                type: CoolAlertType.success,
+                type: CoolAlertType.error,
+                cancelBtnText: "İptal",
+                confirmBtnText: "Sil",
+                title: "Opsss...",
                 showCancelBtn: true,
+                confirmBtnColor: ColorConstants.primaryOrange,
                 text: 'Silmek istediğine emin misin?',
                 onConfirmBtnTap: () {
                   widget.cubit

@@ -24,9 +24,10 @@ class _UserCardState extends State<UserCard> {
             child: ClipPath(
               child: Container(
                 padding: const EdgeInsets.all(16),
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   border: Border(
-                    left: BorderSide(color: ColorConstants.primaryOrange, width: 5),
+                    left: BorderSide(
+                        color: ColorConstants.primaryOrange, width: 5),
                   ),
                 ),
                 child: Column(
@@ -64,7 +65,7 @@ class _UserCardState extends State<UserCard> {
                             ),
                             child: Text(
                               widget.userEntity.totalFollowersString,
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ),
                         ),
@@ -82,7 +83,7 @@ class _UserCardState extends State<UserCard> {
                             ),
                             child: Text(
                               widget.userEntity.totalFollowingString,
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ),
                         ),
@@ -90,7 +91,7 @@ class _UserCardState extends State<UserCard> {
                           flex: 2,
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
