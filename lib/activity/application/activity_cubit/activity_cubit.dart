@@ -139,9 +139,7 @@ class ActivityCubit extends Cubit<ActivityState> {
           .collection("activities")
           .where('id', isEqualTo: activityEntity.id)
           .get();
-      // var id= context.read<AuthCubit>().state.user!.uid;
-      // print(id);
-      print("""""object""" "");
+
       FirebaseFirestore.instance
           .collection("activities")
           .doc(document.docs.first.id)

@@ -10,12 +10,14 @@ class AppealEntity {
   final Name department;
   final String email;
   final File file;
+  final bool isApprovad;
   AppealEntity({
     required this.fullname,
     required this.school,
     required this.department,
     required this.email,
     required this.file,
+    this.isApprovad = false,
   });
 
   AppealEntity copyWith({
@@ -24,6 +26,7 @@ class AppealEntity {
     Name? department,
     String? email,
     File? file,
+    bool? isApprovad,
   }) {
     return AppealEntity(
       fullname: fullname ?? this.fullname,
@@ -31,6 +34,7 @@ class AppealEntity {
       department: department ?? this.department,
       email: email ?? this.email,
       file: file ?? this.file,
+      isApprovad: isApprovad ?? this.isApprovad,
     );
   }
 
@@ -40,7 +44,8 @@ class AppealEntity {
         other.school == school &&
         other.department == department &&
         other.email == email &&
-        other.file == file;
+        other.file == file &&
+        other.isApprovad == isApprovad;
   }
 
   @override
@@ -49,7 +54,8 @@ class AppealEntity {
       school.hashCode ^
       department.hashCode ^
       email.hashCode ^
-      file.hashCode;
+      file.hashCode ^
+      isApprovad.hashCode;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -57,6 +63,7 @@ class AppealEntity {
       'school': school.value,
       'department': department.value,
       'email': email,
+      'isApprovad': isApprovad,
     };
   }
 

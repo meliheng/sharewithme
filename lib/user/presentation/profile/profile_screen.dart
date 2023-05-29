@@ -2,6 +2,7 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sharewithme/activity/application/activity_cubit/activity_cubit.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/application/user_cubit/user_cubit.dart';
@@ -105,12 +106,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //print(cubit.state.user!.email);
                       await widget.authCubit.logout(context);
                       // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const WelcomeScreen(),
-                        ),
-                      );
+                      PersistentNavBarNavigator.pushNewScreen(context,
+                          screen: const WelcomeScreen(), withNavBar: false);
                     },
                   ),
                   const SizedBox(

@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
@@ -46,7 +47,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     const SizedBox(height: 20),
                     BlocConsumer<AuthCubit, AuthState>(
                       bloc: cubit,
-                      listener: (context, state) {},
+                      listener: (context, state) {
+                        if (state.status == AuthStatus.error) {
+                          CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.error,
+                            text: "Başvurun Daha Onaylanmamış...",
+                          );
+                        }
+                      },
                       builder: (context, state) {
                         if (state.status == AuthStatus.submitting) {
                           return const CircularProgressIndicator();
@@ -103,17 +112,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                       title: "Sign Up",
                                       onTap: () {
                                         if (_formKey.currentState!.validate()) {
-                                          cubit.createUser(context);
+                                          cubit.checkUser(context);
                                           // cubit.getUser();
 
-                                          Navigator.pushAndRemoveUntil(context,
-                                              MaterialPageRoute(
-                                            builder: (context) {
-                                              return HomeScreen(
-                                                authCubit: cubit,
-                                              );
-                                            },
-                                          ), (route) => false);
+                                          // Navigator.pushAndRemoveUntil(context,
+                                          //     MaterialPageRoute(
+                                          //   builder: (context) {
+                                          //     return HomeScreen(
+                                          //       authCubit: cubit,
+                                          //     );
+                                          //   },
+                                          // ), (route) => false);
                                         }
                                       },
                                     ),

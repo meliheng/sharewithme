@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sharewithme/export.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -84,24 +85,37 @@ class _LoginScreenState extends State<LoginScreen> {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    SubmitButton(
-                                      title: "Sign In",
-                                      onTap: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          cubit.loginUser(context);
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            cubit.signUpWithGoogle(context);
+                                          },
+                                          icon: const FaIcon(
+                                            FontAwesomeIcons.google,
+                                          ),
+                                        ),
+                                        SubmitButton(
+                                          title: "Sign In",
+                                          onTap: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              cubit.loginUser(context);
 
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) {
-                                          //       return HomeScreen(
-                                          //         authCubit: cubit,
-                                          //       );
-                                          //     },
-                                          //   ),
-                                          // );
-                                        }
-                                      },
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) {
+                                              //       return HomeScreen(
+                                              //         authCubit: cubit,
+                                              //       );
+                                              //     },
+                                              //   ),
+                                              // );
+                                            }
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

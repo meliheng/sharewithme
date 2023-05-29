@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cool_alert/cool_alert.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/auth/domain/model/appeal_entity.dart';
 import 'package:sharewithme/auth/domain/usecase/apply_usecase.dart';
@@ -50,7 +52,7 @@ class ApplyCubit extends Cubit<ApplyState> {
     emit(state.copyWith(file: file, status: ApplyStatus.initial));
   }
 
-  void newApply() async {
+  void newApply(BuildContext context) async {
     emit(state.copyWith(status: ApplyStatus.submitting));
     var response = await ApplyUsecase.i
         .execute(
@@ -63,11 +65,19 @@ class ApplyCubit extends Cubit<ApplyState> {
           ),
         )
         .run();
+    if (state.status == ApplyStatus.submitting) {
+      // ignore: use_build_context_synchronously
+    }
+    Future.delayed(const Duration(seconds: 2));
+
     response.fold((l) {
-      print(l.message);
       emit(state.copyWith(status: ApplyStatus.error));
     }, (r) {
       emit(state.copyWith(status: ApplyStatus.success));
     });
+  }
+
+  static ApplyCubit instance() {
+    return ApplyCubit();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/auth/presentation/screen/login_screen.dart';
 import 'package:sharewithme/auth/presentation/screen/signup_screen.dart';
+import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -66,7 +67,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     const Spacer(),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AppealPage(),
+                            ),
+                          );
+                        },
                         child: const Text("Apply Now"),
                       ),
                     ),
