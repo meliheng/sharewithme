@@ -8,6 +8,7 @@ class AddDialog extends StatelessWidget {
   final void Function()? onPressed;
   final void Function(String)? onChanged;
   final String initialText;
+  final Widget? extraWidget;
   const AddDialog({
     super.key,
     required this.title,
@@ -16,6 +17,7 @@ class AddDialog extends StatelessWidget {
     this.onPressed,
     this.onChanged,
     required this.initialText,
+    this.extraWidget,
   });
 
   @override
@@ -46,6 +48,7 @@ class AddDialog extends StatelessWidget {
               onChanged: onChanged,
               initialValue: initialText,
             ),
+            if (extraWidget != null) extraWidget!,
             CustomButton(
               title: buttonText,
               color: ColorConstants.primaryOrange,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/failures/base_failure.dart';
@@ -8,9 +10,14 @@ class AddActivityUsecase {
 
   AddActivityUsecase({required this.activityRepository});
 
-  TaskEither<BaseFailure, Unit> execute(
-      {required ActivityEntity activityEntity}) {
-    return activityRepository.add(activityEntity: activityEntity);
+  TaskEither<BaseFailure, Unit> execute({
+    required ActivityEntity activityEntity,
+    required File file,
+  }) {
+    return activityRepository.add(
+      activityEntity: activityEntity,
+      file: file,
+    );
   }
 
   static AddActivityUsecase get i => AddActivityUsecase(

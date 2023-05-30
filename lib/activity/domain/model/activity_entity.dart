@@ -10,6 +10,7 @@ class ActivityEntity {
   final String username;
   final DateTime date;
   final List likes;
+  final String imagePath;
   ActivityEntity({
     required this.content,
     required this.userId,
@@ -17,6 +18,7 @@ class ActivityEntity {
     required this.date,
     required this.id,
     required this.likes,
+    required this.imagePath,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,8 +27,9 @@ class ActivityEntity {
       'userId': userId,
       'username': username,
       'date': date,
-      'id':id,
-      'likes':likes,
+      'id': id,
+      'likes': likes,
+      'imagePath': imagePath,
     };
   }
 
@@ -39,8 +42,8 @@ class ActivityEntity {
       username: data?['username'],
       date: (data?['date'] as Timestamp).toDate(),
       id: data?['id'],
-
-      likes: data?['likes']??[],
+      likes: data?['likes'] ?? [],
+      imagePath: data?['imagePath'] ?? '',
     );
   }
 
@@ -50,7 +53,7 @@ class ActivityEntity {
   //     map['userId'],
   //   );
   // }
-  String get totalLikeString{
+  String get totalLikeString {
     return likes.length.toString();
   }
 
@@ -58,4 +61,24 @@ class ActivityEntity {
 
   // factory ActivityEntity.fromJson(String source) =>
   //     ActivityEntity.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  ActivityEntity copyWith({
+    String? id,
+    String? content,
+    String? userId,
+    String? username,
+    DateTime? date,
+    List? likes,
+    String? imagePath,
+  }) {
+    return ActivityEntity(
+      id: id ?? this.id,
+      content: content ?? this.content,
+      userId: userId ?? this.userId,
+      username: username ?? this.username,
+      date: date ?? this.date,
+      likes: likes ?? this.likes,
+      imagePath: imagePath ?? this.imagePath,
+    );
+  }
 }

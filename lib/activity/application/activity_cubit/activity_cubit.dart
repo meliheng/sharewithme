@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,12 @@ class ActivityCubit extends Cubit<ActivityState> {
       state.copyWith(
         content: value,
       ),
+    );
+  }
+
+  void imageSelected(File file) {
+    emit(
+      state.copyWith(image: file),
     );
   }
 
@@ -53,7 +61,9 @@ class ActivityCubit extends Cubit<ActivityState> {
             date: state.date,
             id: const Uuid().v1(),
             likes: [],
+            imagePath: '',
           ),
+          file: state.image,
         )
         .run();
     Future.delayed(const Duration(seconds: 3));
@@ -128,6 +138,36 @@ class ActivityCubit extends Cubit<ActivityState> {
         .then(
       (value) {
         value.docs[0].reference.delete();
+      },
+    );
+  }
+
+  void addComplaint({
+    required ActivityEntity activityEntity,
+    required BuildContext context,
+  }) async {
+    emit(state.copyWith(status: ActivityStatus.submitting));
+    var response = await AddComplaintUsecase.i
+        .execute(
+          activityEntity: activityEntity,
+        )
+        .run();
+    Future.delayed(const Duration(seconds: 3));
+    response.fold(
+      (l) {
+        emit(state.copyWith(status: ActivityStatus.error));
+        if (state.status == ActivityStatus.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Birşeyler yanlış gitti 🧐'),
+            ),
+          );
+        }
+      },
+      (r) {
+        emit(
+          state.copyWith(status: ActivityStatus.success),
+        );
       },
     );
   }
