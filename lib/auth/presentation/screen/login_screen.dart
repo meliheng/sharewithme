@@ -67,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   validator: (p0) {
                                     return Email.create(p0!).validate();
                                   },
+                                  inputType: TextInputType.emailAddress,
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -77,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onChanged: (p0) {
                                     cubit.passwordChanged(p0);
                                   },
+                                  obscureText: true,
                                 ),
                                 const SizedBox(height: 5),
                                 Column(

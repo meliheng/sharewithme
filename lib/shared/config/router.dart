@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/shared/home/page_cubit.dart';
 import 'package:sharewithme/user/presentation/user_list_screen.dart';
 
 class RouterManager {
@@ -10,9 +11,17 @@ class RouterManager {
       case WelcomeScreen.route:
         return pageGenerator(const WelcomeScreen());
       case ActivityScreen.route:
-        return pageGenerator( ActivityScreen(authCubit: AuthCubit.instance(),));
+        return pageGenerator(
+          ActivityScreen(
+            authCubit: AuthCubit.instance(),
+          ),
+        );
       case UserListScreen.route:
-        return pageGenerator(const UserListScreen());
+        return pageGenerator(
+          UserListScreen(
+            pageCubit: PageCubit.instance(),
+          ),
+        );
       default:
         return pageGenerator(const Text("error"));
     }

@@ -1,20 +1,20 @@
 class PageState {
-  final int activeTabIndex;
+  final bool showNavigationBar;
   PageState({
-    required this.activeTabIndex,
+    required this.showNavigationBar,
   });
 
   factory PageState.initial() {
     return PageState(
-      activeTabIndex: 0,
+      showNavigationBar: true,
     );
   }
 
   PageState copyWith({
-    int? activeTabIndex,
+    bool? showNavigationBar,
   }) {
     return PageState(
-      activeTabIndex: activeTabIndex ?? this.activeTabIndex,
+      showNavigationBar: showNavigationBar ?? this.showNavigationBar,
     );
   }
 
@@ -22,9 +22,9 @@ class PageState {
   bool operator ==(covariant PageState other) {
     if (identical(this, other)) return true;
 
-    return other.activeTabIndex == activeTabIndex;
+    return other.showNavigationBar == showNavigationBar;
   }
 
   @override
-  int get hashCode => activeTabIndex.hashCode;
+  int get hashCode => showNavigationBar.hashCode;
 }

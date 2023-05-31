@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/page_cubit.dart';
+import 'package:sharewithme/shared/home/page_state.dart';
 import 'package:sharewithme/user/presentation/_presentation_exporter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -18,49 +20,66 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
-      body: PersistentTabView(
-        context, screens: _buildScreens(authCubit: widget.authCubit),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        backgroundColor: ColorConstants.primaryBackground,
-        handleAndroidBackButtonPress: true,
-        resizeToAvoidBottomInset: true,
-        stateManagement: true,
-        hideNavigationBarWhenKeyboardShows: true,
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10),
-          colorBehindNavBar: ColorConstants.primaryBackground,
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties(
-          // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        navBarStyle: NavBarStyle.style4, // Ch
+      appBar: _appBar(context),
+      body: BlocConsumer<PageCubit, PageState>(
+        bloc: cubit,
+        listener: (context, state) {},
+        builder: (context, state) {
+          return PersistentTabView(
+            context,
+            controller: PersistentTabController(initialIndex: 0),
+            screens: _buildScreens(
+              authCubit: widget.authCubit,
+              pageCubit: cubit,
+            ),
+            items: _navBarsItems(),
+            hideNavigationBar: !state.showNavigationBar,
+            confineInSafeArea: true,
+            backgroundColor: ColorConstants.primaryBackground,
+            resizeToAvoidBottomInset: true,
+            stateManagement: false,
+            hideNavigationBarWhenKeyboardShows: true,
+            decoration: NavBarDecoration(
+              borderRadius: BorderRadius.circular(10),
+              colorBehindNavBar: ColorConstants.primaryBackground,
+            ),
+            popAllScreensOnTapOfSelectedTab: true,
+            popActionScreens: PopActionScreensType.once,
+            itemAnimationProperties: const ItemAnimationProperties(
+              // Navigation Bar's items animation properties.
+              duration: Duration(milliseconds: 200),
+              curve: Curves.ease,
+            ),
+            screenTransitionAnimation: const ScreenTransitionAnimation(
+              // Screen transition animation on change of selected tab.
+              animateTabTransition: true,
+              curve: Curves.ease,
+              duration: Duration(milliseconds: 200),
+            ),
+            navBarStyle: NavBarStyle.style4,
+          );
+        },
       ),
     );
   }
 }
 
-AppBar _appBar() {
+AppBar _appBar(BuildContext context) {
   return AppBar(
-      title: const Text('Share With Me'),
-      backgroundColor: ColorConstants.primaryBackground);
+    title: const Text('Share With Me'),
+    leading: IconButton(
+      onPressed: () {},
+      icon: const Icon(Icons.arrow_back),
+    ),
+    backgroundColor: ColorConstants.primaryBackground,
+  );
 }
 
-List<Widget> _buildScreens({required AuthCubit authCubit}) {
+List<Widget> _buildScreens(
+    {required AuthCubit authCubit, required PageCubit pageCubit}) {
   return [
     ActivityScreen(authCubit: authCubit),
-    const UserListScreen(),
+    UserListScreen(pageCubit: pageCubit),
     ProfileScreen(authCubit: authCubit),
   ];
 }
@@ -78,6 +97,14 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
       title: ("Arama"),
       activeColorPrimary: ColorConstants.primaryOrange,
       inactiveColorPrimary: CupertinoColors.systemGrey,
+      routeAndNavigatorSettings: RouteAndNavigatorSettings(
+        initialRoute: "/",
+        routes: {
+          "profile": (context) => ProfileScreen(
+                authCubit: AuthCubit.instance(),
+              )
+        },
+      ),
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.person),

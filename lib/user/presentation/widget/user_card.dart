@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:sharewithme/auth/auth_export.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/shared/home/page_cubit.dart';
 import 'package:sharewithme/user/application/user_list_cubit/user_list_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sharewithme/user/presentation/_presentation_exporter.dart';
@@ -9,7 +10,13 @@ import 'package:sharewithme/user/presentation/_presentation_exporter.dart';
 class UserCard extends StatefulWidget {
   final UserEntity userEntity;
   final UserListCubit cubit;
-  const UserCard({super.key, required this.userEntity, required this.cubit});
+  final PageCubit pageCubit;
+  const UserCard({
+    super.key,
+    required this.userEntity,
+    required this.cubit,
+    required this.pageCubit,
+  });
 
   @override
   State<UserCard> createState() => _UserCardState();
@@ -23,7 +30,9 @@ class _UserCardState extends State<UserCard> {
         Expanded(
           child: InkWell(
             onTap: () {
-              PersistentNavBarNavigator.pushNewScreen(
+              widget.pageCubit.updateShowing(false);
+              PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+                settings: const RouteSettings(name: "/prodsdfile"),
                 context,
                 screen: UserDetailScreen(userEntity: widget.userEntity),
                 withNavBar: true,

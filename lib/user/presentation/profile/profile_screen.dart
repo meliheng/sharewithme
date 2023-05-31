@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sharewithme/activity/application/activity_cubit/activity_cubit.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/main.dart';
 import 'package:sharewithme/user/application/user_cubit/user_cubit.dart';
 import 'package:sharewithme/user/presentation/profile/add_dialog.dart';
 import 'package:sharewithme/user/presentation/profile/setting_list_tile.dart';
@@ -106,8 +107,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //print(cubit.state.user!.email);
                       await widget.authCubit.logout(context);
                       // ignore: use_build_context_synchronously
-                      PersistentNavBarNavigator.pushNewScreen(context,
-                          screen: const WelcomeScreen(), withNavBar: false);
+                      Navigator.of(context, rootNavigator: true)
+                          .pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const WelcomeScreen();
+                          },
+                        ),
+                        (route) => false,
+                      );
                     },
                   ),
                   const SizedBox(

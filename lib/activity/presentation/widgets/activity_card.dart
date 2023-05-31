@@ -31,7 +31,6 @@ class _ActivityCardState extends State<ActivityCard> {
       children: [
         Expanded(
           child: Container(
-            constraints: const BoxConstraints(minHeight: 100, maxHeight: 200),
             child: widget.isProfileScreen ? _slidableCard() : _buildCard(),
           ),
         ),
@@ -74,96 +73,130 @@ class _ActivityCardState extends State<ActivityCard> {
 
   Card _buildNormalCard() {
     return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(widget.activityEntity.username),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  DateFormat.yMMMMEEEEd().format(widget.activityEntity.date),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Text(widget.activityEntity.content),
-              ),
-            ],
-          ),
-          if (widget.activityEntity.imagePath.isNotEmpty)
-            Row(
-              children: [
-                Expanded(
-                  child: CachedNetworkImage(
-                    height: 50,
-                    fit: BoxFit.fitWidth,
-                    progressIndicatorBuilder: (context, url, progress) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    imageUrl: widget.activityEntity.imagePath,
-                  ),
-                ),
-              ],
+      elevation: 2,
+      color: const Color(0xFFF4661B),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _firstRow(),
             ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (!widget.activityEntity.likes.contains(widget.userEntity.uid))
-                IconButton(
-                  onPressed: () async {
-                    await widget.cubit
-                        .likeActivity(widget.activityEntity, widget.userEntity);
-                  },
-                  icon: const Icon(
-                    Icons.favorite_outline,
-                    color: Colors.pink,
-                    fill: 1,
-                  ),
-                )
-              else
-                const IconButton(
-                  onPressed: null,
-                  icon: Icon(
-                    Icons.favorite,
-                    color: Colors.pink,
-                    fill: 1,
-                  ),
-                ),
-              Text(widget.activityEntity.totalLikeString),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.comment_outlined,
-                  color: Colors.blue,
-                  fill: 1,
-                ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _contentRow(),
+            ),
+            if (widget.activityEntity.imagePath.isNotEmpty) _imageRow(),
+            _actionRow(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container _actionRow() {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (!widget.activityEntity.likes.contains(widget.userEntity.uid))
+            IconButton(
+              onPressed: () async {
+                await widget.cubit
+                    .likeActivity(widget.activityEntity, widget.userEntity);
+              },
+              icon: const Icon(
+                Icons.favorite_outline,
+                color: Colors.pink,
+                fill: 1,
               ),
-            ],
+            )
+          else
+            const IconButton(
+              onPressed: null,
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.pink,
+                fill: 1,
+              ),
+            ),
+          Text(widget.activityEntity.totalLikeString),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.comment_outlined,
+              color: Colors.blue,
+              fill: 1,
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  Row _imageRow() {
+    return Row(
+      children: [
+        Expanded(
+          child: CachedNetworkImage(
+            height: 50,
+            fit: BoxFit.fitWidth,
+            progressIndicatorBuilder: (context, url, progress) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            imageUrl: widget.activityEntity.imagePath,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _contentRow() {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(widget.activityEntity.content),
+        ),
+      ],
+    );
+  }
+
+  Row _firstRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.white),
+            child: Text(widget.activityEntity.username),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            DateFormat.yMMMMEEEEd().format(widget.activityEntity.date),
+            textAlign: TextAlign.end,
+          ),
+        ),
+      ],
     );
   }
 
