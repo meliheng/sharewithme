@@ -2,7 +2,6 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/home/home_screen.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

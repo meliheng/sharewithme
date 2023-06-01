@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sharewithme/auth/presentation/screen/login_screen.dart';
-import 'package:sharewithme/auth/presentation/screen/signup_screen.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/_shared_exporter.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const route = '/welcome';

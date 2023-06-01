@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/auth/domain/model/appeal_entity.dart';

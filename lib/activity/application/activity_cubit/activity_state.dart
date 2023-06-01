@@ -9,12 +9,14 @@ class ActivityState {
   final DateTime date;
   final ActivityStatus status;
   final List<ActivityEntity> activityList;
+  final List<CommentEntity>? commentList;
   ActivityState({
     required this.content,
     required this.image,
     required this.date,
     required this.status,
     required this.activityList,
+    this.commentList = const [],
   });
   factory ActivityState.initial() {
     return ActivityState(
@@ -23,6 +25,7 @@ class ActivityState {
       activityList: [],
       date: DateTime.now(),
       image: File(''),
+      commentList: [],
     );
   }
 
@@ -32,6 +35,7 @@ class ActivityState {
     List<ActivityEntity>? activityList,
     DateTime? date,
     File? image,
+    List<CommentEntity>? commentList,
   }) {
     return ActivityState(
       content: content ?? this.content,
@@ -39,6 +43,7 @@ class ActivityState {
       activityList: activityList ?? this.activityList,
       date: date ?? this.date,
       image: image ?? this.image,
+      commentList: commentList ?? this.commentList,
     );
   }
 
@@ -48,7 +53,8 @@ class ActivityState {
         other.status == status &&
         activityList == other.activityList &&
         date == other.date &&
-        image == other.image;
+        image == other.image &&
+        commentList == other.commentList;
   }
 
   @override
@@ -57,5 +63,6 @@ class ActivityState {
       status.hashCode ^
       activityList.hashCode ^
       date.hashCode ^
-      image.hashCode;
+      image.hashCode ^
+      commentList.hashCode;
 }

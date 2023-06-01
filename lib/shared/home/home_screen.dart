@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/page_cubit.dart';
-import 'package:sharewithme/shared/home/page_state.dart';
 import 'package:sharewithme/user/presentation/_presentation_exporter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -21,43 +20,42 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context),
-      body: BlocConsumer<PageCubit, PageState>(
-        bloc: cubit,
+      body: BlocConsumer<AuthCubit, AuthState>(
+        bloc: widget.authCubit,
         listener: (context, state) {},
         builder: (context, state) {
-          return PersistentTabView(
-            context,
-            controller: PersistentTabController(initialIndex: 0),
-            screens: _buildScreens(
-              authCubit: widget.authCubit,
-              pageCubit: cubit,
-            ),
-            items: _navBarsItems(),
-            hideNavigationBar: !state.showNavigationBar,
-            confineInSafeArea: true,
-            backgroundColor: ColorConstants.primaryBackground,
-            resizeToAvoidBottomInset: true,
-            stateManagement: false,
-            hideNavigationBarWhenKeyboardShows: true,
-            decoration: NavBarDecoration(
-              borderRadius: BorderRadius.circular(10),
-              colorBehindNavBar: ColorConstants.primaryBackground,
-            ),
-            popAllScreensOnTapOfSelectedTab: true,
-            popActionScreens: PopActionScreensType.once,
-            itemAnimationProperties: const ItemAnimationProperties(
-              // Navigation Bar's items animation properties.
-              duration: Duration(milliseconds: 200),
-              curve: Curves.ease,
-            ),
-            screenTransitionAnimation: const ScreenTransitionAnimation(
-              // Screen transition animation on change of selected tab.
-              animateTabTransition: true,
-              curve: Curves.ease,
-              duration: Duration(milliseconds: 200),
-            ),
-            navBarStyle: NavBarStyle.style4,
-          );
+          return state.status == AuthStatus.submitting
+              ? const CircularProgressIndicator()
+              : PersistentTabView(
+                  context,
+                  controller: PersistentTabController(initialIndex: 0),
+                  screens: _buildScreens(
+                    authCubit: widget.authCubit,
+                    pageCubit: cubit,
+                  ),
+                  items: _navBarsItems(),
+                  confineInSafeArea: true,
+                  backgroundColor: ColorConstants.primaryBackground,
+                  resizeToAvoidBottomInset: true,
+                  stateManagement: false,
+                  hideNavigationBarWhenKeyboardShows: true,
+                  decoration: NavBarDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    colorBehindNavBar: ColorConstants.primaryBackground,
+                  ),
+                  itemAnimationProperties: const ItemAnimationProperties(
+                    // Navigation Bar's items animation properties.
+                    duration: Duration(milliseconds: 200),
+                    curve: Curves.ease,
+                  ),
+                  screenTransitionAnimation: const ScreenTransitionAnimation(
+                    // Screen transition animation on change of selected tab.
+                    animateTabTransition: true,
+                    curve: Curves.ease,
+                    duration: Duration(milliseconds: 200),
+                  ),
+                  navBarStyle: NavBarStyle.style4,
+                );
         },
       ),
     );
@@ -67,10 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
 AppBar _appBar(BuildContext context) {
   return AppBar(
     title: const Text('Share With Me'),
-    leading: IconButton(
-      onPressed: () {},
-      icon: const Icon(Icons.arrow_back),
-    ),
     backgroundColor: ColorConstants.primaryBackground,
   );
 }

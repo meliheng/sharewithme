@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sharewithme/export.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../application/_application_exporter.dart';
@@ -74,7 +75,6 @@ class _ActivityCardState extends State<ActivityCard> {
   Card _buildNormalCard() {
     return Card(
       elevation: 2,
-      color: const Color(0xFFF4661B),
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Column(
@@ -134,7 +134,16 @@ class _ActivityCardState extends State<ActivityCard> {
             ),
           Text(widget.activityEntity.totalLikeString),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: ActivityDetailScreen(
+                  activityCubit: widget.cubit,
+                  activityEntity: widget.activityEntity,
+                  userEntity: widget.userEntity,
+                ),
+              );
+            },
             icon: const Icon(
               Icons.comment_outlined,
               color: Colors.blue,
@@ -151,7 +160,6 @@ class _ActivityCardState extends State<ActivityCard> {
       children: [
         Expanded(
           child: CachedNetworkImage(
-            height: 50,
             fit: BoxFit.fitWidth,
             progressIndicatorBuilder: (context, url, progress) {
               return const Center(

@@ -22,6 +22,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("---------------------------");
+    print(widget.authCubit.state.user!.uid);
     return SingleChildScrollView(
       child: BlocConsumer<ActivityCubit, ActivityState>(
         bloc: cubit,

@@ -8,6 +8,7 @@ class TextFieldWithIcon extends StatelessWidget {
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final TextInputType? inputType;
+  final TextEditingController? controller;
   const TextFieldWithIcon({
     Key? key,
     required this.hintText,
@@ -16,6 +17,7 @@ class TextFieldWithIcon extends StatelessWidget {
     this.validator,
     this.inputType,
     this.obscureText = false,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class TextFieldWithIcon extends StatelessWidget {
         ),
         TextFormField(
           obscureText: obscureText,
+          controller: controller,
           validator: validator,
           onChanged: onChanged,
           keyboardType: inputType,
@@ -65,7 +68,7 @@ class TextFieldWithIcon extends StatelessWidget {
                 Radius.circular(20),
               ),
             ),
-            enabledBorder:  OutlineInputBorder(
+            enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ColorConstants.primaryOrange,
                 width: 0,
