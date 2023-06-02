@@ -35,14 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   items: _navBarsItems(),
                   confineInSafeArea: true,
-                  backgroundColor: ColorConstants.primaryBackground,
+                  backgroundColor: ColorConstants.kBlue,
                   resizeToAvoidBottomInset: true,
-                  stateManagement: false,
+                  stateManagement: true,
+                  navBarHeight: 70,
                   hideNavigationBarWhenKeyboardShows: true,
-                  decoration: NavBarDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    colorBehindNavBar: ColorConstants.primaryBackground,
-                  ),
                   itemAnimationProperties: const ItemAnimationProperties(
                     // Navigation Bar's items animation properties.
                     duration: Duration(milliseconds: 200),
@@ -54,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     curve: Curves.ease,
                     duration: Duration(milliseconds: 200),
                   ),
-                  navBarStyle: NavBarStyle.style4,
+                  navBarStyle: NavBarStyle.style13,
                 );
         },
       ),
@@ -81,63 +78,33 @@ List<Widget> _buildScreens(
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: const Icon(CupertinoIcons.home),
+      icon: Icon(
+        CupertinoIcons.house_fill,
+        color: ColorConstants.primaryOrange,
+        size: 30,
+      ),
       title: ("Anasayfa"),
       activeColorPrimary: ColorConstants.primaryOrange,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
-      icon: const Icon(CupertinoIcons.search),
+      icon: Icon(
+        CupertinoIcons.search,
+        color: ColorConstants.primaryOrange,
+        size: 30,
+      ),
       title: ("Arama"),
       activeColorPrimary: ColorConstants.primaryOrange,
       inactiveColorPrimary: CupertinoColors.systemGrey,
-      routeAndNavigatorSettings: RouteAndNavigatorSettings(
-        initialRoute: "/",
-        routes: {
-          "profile": (context) => ProfileScreen(
-                authCubit: AuthCubit.instance(),
-              )
-        },
-      ),
     ),
     PersistentBottomNavBarItem(
-      icon: const Icon(CupertinoIcons.person),
+      icon: const Icon(
+        CupertinoIcons.person_alt_circle_fill,
+        size: 30,
+      ),
       title: ("Profil"),
       activeColorPrimary: ColorConstants.primaryOrange,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
   ];
 }
-// return BlocConsumer<PageCubit, PageState>(
-//       bloc: cubit,
-//       listener: (context, state) {},
-//       builder: (context, state) {
-//         return Scaffold(
-//           appBar: AppBar(title: const Text('Share With Me')),
-//           body: IndexedStack(
-//             index: state.activeTabIndex,
-//             children:  [
-//               ActivityScreen(authCubit: widget.authCubit),
-//               const UserListScreen(),
-//              if(widget.authCubit.state.user!=null) ProfileScreen(authCubit: widget.authCubit),
-//             ],
-//           ),
-//           bottomNavigationBar: BottomNavigationBar(
-//             type: BottomNavigationBarType.fixed,
-//             currentIndex: state.activeTabIndex,
-//             selectedItemColor: ColorConstants.primaryOrange,
-//             iconSize: 30,
-//             onTap: (value) {
-//               cubit.updateActiveTab(value);
-//             },
-//             items: const [
-//               BottomNavigationBarItem(
-//                   icon: Icon(Icons.home), label: "Anasayfa"),
-//               BottomNavigationBarItem(icon: Icon(Icons.search), label: "Ara"),
-//               BottomNavigationBarItem(
-//                   icon: Icon(Icons.account_box), label: "Profil"),
-//             ],
-//           ),
-//         );
-//       },
-//     );

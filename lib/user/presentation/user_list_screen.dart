@@ -39,10 +39,13 @@ class _UserListScreenState extends State<UserListScreen> {
             const SizedBox(
               height: 10,
             ),
-            TextFieldWithIcon(
-              hintText: "Search",
-              icon: Icons.search,
-              onChanged: cubit.filterTextChanged,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFieldWithIcon(
+                hintText: "Search",
+                icon: Icons.search,
+                onChanged: cubit.filterTextChanged,
+              ),
             ),
             const SizedBox(
               height: 10,

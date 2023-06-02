@@ -64,14 +64,18 @@ class _ActivityDetailCardState extends State<ActivityDetailCard> {
     return Row(
       children: [
         Expanded(
-          child: CachedNetworkImage(
-            fit: BoxFit.fitWidth,
-            progressIndicatorBuilder: (context, url, progress) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-            imageUrl: widget.activityEntity.imagePath,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CachedNetworkImage(
+              fit: BoxFit.fitWidth,
+              height: 300,
+              progressIndicatorBuilder: (context, url, progress) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+              imageUrl: widget.activityEntity.imagePath,
+            ),
           ),
         ),
       ],

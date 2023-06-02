@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sharewithme/export.dart';
 
 class SubmitButton extends StatelessWidget {
   final String title;
@@ -12,36 +13,19 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          title,
-          textAlign: TextAlign.end,
-          style: const TextStyle(
-            color: Color(0xff262626),
-            fontSize: 25,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(
-          width: 15,
-        ),
         InkWell(
           onTap: onTap,
           child: Container(
-            width: 56,
-            height: 34,
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(17),
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xfff97794), Color(0xff623aa2)],
-              ),
+              borderRadius: BorderRadius.circular(20),
+              color: ColorConstants.primaryOrange,
             ),
-            child: const Icon(
-              Icons.arrow_forward_outlined,
-              color: Colors.white,
+            child: const Text(
+              "Sign In",
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ),

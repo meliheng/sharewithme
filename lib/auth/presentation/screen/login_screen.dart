@@ -80,46 +80,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                   obscureText: true,
                                 ),
-                                const SizedBox(height: 5),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            cubit.signUpWithGoogle(context);
-                                          },
-                                          icon: const FaIcon(
-                                            FontAwesomeIcons.google,
-                                          ),
-                                        ),
-                                        SubmitButton(
-                                          title: "Sign In",
-                                          onTap: () {
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              cubit.loginUser(context);
-
-                                              // Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) {
-                                              //       return HomeScreen(
-                                              //         authCubit: cubit,
-                                              //       );
-                                              //     },
-                                              //   ),
-                                              // );
-                                            }
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                const SizedBox(height: 10),
+                                SubmitButton(
+                                  title: "Sign In",
+                                  onTap: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      cubit.loginUser(context);
+                                    }
+                                  },
                                 ),
                               ],
                             ),

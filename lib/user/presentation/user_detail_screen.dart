@@ -75,12 +75,22 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             decoration: BoxDecoration(
-              color: Colors.greenAccent,
+              color: ColorConstants.primaryOrange,
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Text(
-              widget.userEntity.totalFollowersString,
-              style: const TextStyle(fontSize: 12),
+            child: Column(
+              children: [
+                Text(
+                  widget.userEntity.totalFollowersString,
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Takipçi",
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ),
@@ -92,12 +102,22 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             decoration: BoxDecoration(
-              color: Colors.blueAccent,
+              color: ColorConstants.kBlue,
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Text(
-              widget.userEntity.totalFollowingString,
-              style: const TextStyle(fontSize: 12),
+            child: Column(
+              children: [
+                Text(
+                  widget.userEntity.totalFollowingString,
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Takip",
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ),
@@ -105,16 +125,21 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
     );
   }
 
-  ExpansionTileCard _aboutMeCard(BuildContext context) {
-    return ExpansionTileCard(
-      title: const Text("Hakkımda"),
+  Column _aboutMeCard(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Divider(
-          thickness: 1.0,
-          height: 1.0,
+        Title(
+          color: ColorConstants.primaryOrange,
+          child: const Text(
+            "Hakkımda",
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
         ),
-        Align(
-          alignment: Alignment.centerLeft,
+        Card(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(

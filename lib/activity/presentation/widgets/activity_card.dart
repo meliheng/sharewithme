@@ -75,7 +75,15 @@ class _ActivityCardState extends State<ActivityCard> {
   Card _buildNormalCard() {
     return Card(
       elevation: 2,
-      
+      color: ColorConstants.kBlue,
+      surfaceTintColor: Colors.blue,
+      shape: ContinuousRectangleBorder(
+        side: BorderSide(
+          width: 1,
+          color: ColorConstants.kBlue,
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Column(
@@ -159,14 +167,18 @@ class _ActivityCardState extends State<ActivityCard> {
     return Row(
       children: [
         Expanded(
-          child: CachedNetworkImage(
-            fit: BoxFit.fitWidth,
-            progressIndicatorBuilder: (context, url, progress) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-            imageUrl: widget.activityEntity.imagePath,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CachedNetworkImage(
+              fit: BoxFit.fitWidth,
+              height: 300,
+              progressIndicatorBuilder: (context, url, progress) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+              imageUrl: widget.activityEntity.imagePath,
+            ),
           ),
         ),
       ],
