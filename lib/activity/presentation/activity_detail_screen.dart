@@ -1,20 +1,19 @@
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sharewithme/activity/application/_application_exporter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sharewithme/activity/application/activity_cubit/activity_cubit.dart';
 import 'package:sharewithme/activity/domain/_domain_exporter.dart';
-import 'package:sharewithme/activity/presentation/widgets/activity_card.dart';
+import 'package:sharewithme/activity/presentation/widgets/activity_detail_card.dart';
 import 'package:sharewithme/auth/domain/_domain_exporter.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
 
 class ActivityDetailScreen extends StatefulWidget {
-  final ActivityCubit activityCubit;
   final ActivityEntity activityEntity;
   final UserEntity userEntity;
 
   const ActivityDetailScreen({
     super.key,
-    required this.activityCubit,
     required this.activityEntity,
     required this.userEntity,
   });
@@ -24,11 +23,13 @@ class ActivityDetailScreen extends StatefulWidget {
 }
 
 class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
+  late ActivityCubit activityCubit;
   @override
   void initState() {
     super.initState();
-    widget.activityCubit.getAllComments(activityId: widget.activityEntity.id);
-    print(widget.activityCubit.state.commentList!.length);
+    activityCubit =
+        ActivityCubit.instance(activityEntity: widget.activityEntity);
+    activityCubit.getAllComments();
   }
 
   final TextEditingController commentController =
@@ -36,21 +37,28 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          ActivityCard(
-            cubit: widget.activityCubit,
-            activityEntity: widget.activityEntity,
-            userEntity: widget.userEntity,
-            isProfileScreen: false,
-          ),
-          _aboutMeCard(context),
-        ],
+      body: BlocConsumer<ActivityCubit, ActivityState>(
+        bloc: activityCubit,
+        listener: (context, state) {},
+        builder: (context, state) {
+          return ListView(
+            children: [
+              ActivityDetailCard(
+                activityEntity: widget.activityEntity,
+                userEntity: widget.userEntity,
+              ),
+              if (state.status == ActivityStatus.submitting)
+                const CircularProgressIndicator()
+              else
+                _commentCard(context, state),
+            ],
+          );
+        },
       ),
     );
   }
 
-  ExpansionTileCard _aboutMeCard(BuildContext context) {
+  ExpansionTileCard _commentCard(BuildContext context, ActivityState state) {
     return ExpansionTileCard(
       title: const Text("Yorumlar"),
       children: [
@@ -58,16 +66,24 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
           thickness: 1.0,
           height: 1.0,
         ),
-        if (widget.activityCubit.state.commentList!.isNotEmpty)
-          for (var i in widget.activityCubit.state.commentList!) ...[
-            widget.activityCubit.state.status == ActivityStatus.submitting
-                ? const CircularProgressIndicator()
-                : Container(
-                    decoration: const BoxDecoration(shape: BoxShape.rectangle),
-                    child: Text(
-                      i.comment,
+        if (activityCubit.state.commentList.isNotEmpty)
+          for (var i in activityCubit.state.commentList) ...[
+            Container(
+              decoration: const BoxDecoration(shape: BoxShape.rectangle),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        i.comment,
+                        style: const TextStyle(fontSize: 16),
+                      ),
                     ),
                   ),
+                ],
+              ),
+            ),
           ],
         TextFieldWithIcon(
           hintText: "Haydi yorumunu yaz",
@@ -78,13 +94,15 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
         CustomButton(
           title: "Paylaş",
           color: ColorConstants.primaryOrange,
-          onPressed: () {
+          onPressed: () async {
             CommentEntity comment = CommentEntity(
               activityId: widget.activityEntity.id,
               userId: FirebaseAuth.instance.currentUser!.uid,
               comment: commentController.text,
             );
-            widget.activityCubit.addComment(comment);
+            activityCubit.onCommentAdded(comment);
+
+            await activityCubit.addComment(comment);
           },
         ),
       ],

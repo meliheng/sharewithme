@@ -9,7 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../application/_application_exporter.dart';
 
 class ActivityCard extends StatefulWidget {
-  final ActivityCubit cubit;
+  final ActivityListCubit cubit;
   final ActivityEntity activityEntity;
   final UserEntity userEntity;
   final bool isProfileScreen;
@@ -75,6 +75,7 @@ class _ActivityCardState extends State<ActivityCard> {
   Card _buildNormalCard() {
     return Card(
       elevation: 2,
+      
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Column(
@@ -138,7 +139,6 @@ class _ActivityCardState extends State<ActivityCard> {
               PersistentNavBarNavigator.pushNewScreen(
                 context,
                 screen: ActivityDetailScreen(
-                  activityCubit: widget.cubit,
                   activityEntity: widget.activityEntity,
                   userEntity: widget.userEntity,
                 ),

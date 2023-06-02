@@ -18,13 +18,17 @@ class SettingListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ColorConstants.primaryOrange,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: ColorConstants.primaryOrange),
       ),
       child: ListTile(
         leading: icon,
-        title: Text(text),
+        iconColor: Colors.white,
+        title: Text(
+          text,
+          style: const TextStyle(color: Colors.white),
+        ),
         trailing: showSwitch
             ? Switch(
                 value: false,

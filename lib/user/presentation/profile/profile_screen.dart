@@ -2,12 +2,12 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sharewithme/activity/application/activity_cubit/activity_cubit.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/application/user_cubit/user_cubit.dart';
 import 'package:sharewithme/user/presentation/profile/add_dialog.dart';
 import 'package:sharewithme/user/presentation/profile/setting_list_tile.dart';
 
+import '../../../activity/application/_application_exporter.dart';
 import '../../application/user_cubit/user_state.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -121,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   _followersCard(),
                   _aboutMeCard(context),
-                  context.read<ActivityCubit>().getAllActivity(
+                  context.read<ActivityListCubit>().getAllActivity(
                       userEntity: userCubit.state.userEntity, onlyOwn: true),
                 ],
               ),
@@ -138,14 +138,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Expanded(
           flex: 2,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.greenAccent,
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Text(
-              userCubit.userEntity.totalFollowersString,
-              style: const TextStyle(fontSize: 12),
+            child: Column(
+              children: [
+                Text(
+                  userCubit.userEntity.totalFollowersString,
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Takipçi",
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ),
@@ -155,14 +165,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Expanded(
           flex: 2,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             decoration: BoxDecoration(
-              color: Colors.blueAccent,
+              color: const Color(0xFF3AB0FF),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Text(
-              userCubit.userEntity.totalFollowingString,
-              style: const TextStyle(fontSize: 12),
+            child: Column(
+              children: [
+                Text(
+                  userCubit.userEntity.totalFollowingString,
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Takip",
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ),

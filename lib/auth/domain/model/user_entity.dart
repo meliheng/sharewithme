@@ -51,11 +51,11 @@ class UserEntity {
   }
 
   String get totalFollowersString {
-    return "${followers.length} Followers";
+    return "${followers.length}";
   }
 
   String get totalFollowingString {
-    return "${following.length} Following";
+    return "${following.length}";
   }
 
   UserEntity copyWith({

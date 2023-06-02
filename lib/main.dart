@@ -6,7 +6,7 @@ import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/home_screen.dart';
 import 'package:sharewithme/shared/init/register.dart';
 
-import '../../activity/application/activity_cubit/activity_cubit.dart';
+import 'activity/application/_application_exporter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthCubit authCubit = AuthCubit();
-    print("builddeyim");
+    final AuthCubit authCubit = AuthCubit.instance();
     return MultiBlocProvider(
       providers: [
         BlocProvider<ApplyCubit>(
@@ -30,8 +29,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthCubit>(
           create: (BuildContext context) => authCubit,
         ),
-        BlocProvider<ActivityCubit>(
-          create: (context) => ActivityCubit(),
+        BlocProvider<ActivityListCubit>(
+          create: (context) => ActivityListCubit(),
         )
       ],
       child: MaterialApp(
@@ -49,6 +48,7 @@ class MyApp extends StatelessWidget {
               if (user == null) {
                 return const WelcomeScreen();
               } else {
+                print(user.uid);
                 authCubit.getUser();
 
                 return HomeScreen(

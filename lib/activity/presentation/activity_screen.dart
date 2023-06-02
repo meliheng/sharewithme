@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sharewithme/activity/application/activity_cubit/activity_cubit.dart';
+import 'package:sharewithme/activity/application/_application_exporter.dart';
 import 'package:sharewithme/export.dart';
 
 class ActivityScreen extends StatefulWidget {
@@ -13,7 +13,7 @@ class ActivityScreen extends StatefulWidget {
 }
 
 class _ActivityScreenState extends State<ActivityScreen> {
-  final ActivityCubit cubit = ActivityCubit.instance();
+  final ActivityListCubit cubit = ActivityListCubit.instance();
   @override
   void initState() {
     cubit.getActivities(context);
@@ -22,14 +22,12 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("---------------------------");
-    print(widget.authCubit.state.user!.uid);
     return SingleChildScrollView(
-      child: BlocConsumer<ActivityCubit, ActivityState>(
+      child: BlocConsumer<ActivityListCubit, ActivityListState>(
         bloc: cubit,
         listener: (context, state) {},
         builder: (context, state) {
-          return state.status == ActivityStatus.submitting
+          return state.status == ActivityListStatus.submitting
               ? const CircularProgressIndicator()
               : Column(
                   children: [

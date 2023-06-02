@@ -125,7 +125,6 @@ class AuthCubit extends Cubit<AuthState> {
       (l) => null,
       (r) {
         if (r) {
-          print("object");
           loginUser(context);
         } else {
           emit(state.copyWith(status: AuthStatus.error));
@@ -181,7 +180,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void getUser() async {
-    print(FirebaseAuth.instance.currentUser!.uid);
     var user = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -190,7 +188,6 @@ class AuthCubit extends Cubit<AuthState> {
           (value) => UserEntity.fromFirestore(value),
         );
     emit(state.copyWith(user: user));
-    print(state.user!.email);
   }
 
   Future logout(BuildContext context) async {

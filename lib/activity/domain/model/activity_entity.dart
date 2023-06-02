@@ -33,6 +33,18 @@ class ActivityEntity {
     };
   }
 
+  factory ActivityEntity.def() {
+    return ActivityEntity(
+      content: "",
+      userId: "",
+      username: "",
+      date: DateTime.now(),
+      id: "",
+      likes: [],
+      imagePath: "",
+    );
+  }
+
   factory ActivityEntity.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();

@@ -12,7 +12,7 @@ class AddActivityDialog extends StatefulWidget {
     required this.cubit,
   });
 
-  final ActivityCubit cubit;
+  final ActivityListCubit cubit;
 
   @override
   State<AddActivityDialog> createState() => _AddActivityDialogState();
