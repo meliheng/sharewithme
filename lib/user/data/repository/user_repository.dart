@@ -21,7 +21,9 @@ class UserRepository extends IUserRepository {
             }
           },
         );
-        return users.filter((t) => t.uid!=FirebaseAuth.instance.currentUser!.uid).toList();
+        return users
+            .filter((t) => t.uid != FirebaseAuth.instance.currentUser!.uid)
+            .toList();
       },
       (error, stackTrace) {
         return AuthFailures.def();
