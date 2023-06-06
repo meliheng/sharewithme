@@ -1,19 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/page_cubit.dart';
-import 'package:sharewithme/user/application/user_list_cubit/user_list_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sharewithme/user/application/search_cubit/search_cubit.dart';
+import 'package:sharewithme/user/application/search_cubit/search_state.dart';
 import 'package:sharewithme/user/presentation/_presentation_exporter.dart';
 
 class UserCard extends StatefulWidget {
   final UserEntity userEntity;
-  final UserListCubit cubit;
+
   final PageCubit pageCubit;
   const UserCard({
     super.key,
     required this.userEntity,
-    required this.cubit,
     required this.pageCubit,
   });
 
@@ -22,6 +24,13 @@ class UserCard extends StatefulWidget {
 }
 
 class _UserCardState extends State<UserCard> {
+  late SearchCubit searchCubit;
+  @override
+  void initState() {
+    super.initState();
+    searchCubit = SearchCubit.instance(userEntity: widget.userEntity);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -46,72 +55,124 @@ class _UserCardState extends State<UserCard> {
                   decoration: BoxDecoration(
                     border: Border(
                       left: BorderSide(
-                          color: ColorConstants.primaryOrange, width: 5),
+                        color: ColorConstants.primaryOrange,
+                        width: 5,
+                      ),
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: BlocConsumer<SearchCubit, SearchState>(
+                    bloc: searchCubit,
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      return Column(
                         children: [
-                          Text(widget.userEntity.email),
-                          if (!widget.cubit
-                              .isFollowed(userEntity: widget.userEntity))
-                            IconButton(
-                              icon: const Icon(
-                                Icons.add,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(widget.userEntity.email),
+                              if (!searchCubit.isFollowed())
+                                IconButton(
+                                  icon: const FaIcon(
+                                      FontAwesomeIcons.personCirclePlus),
+                                  onPressed: () {
+                                    searchCubit.onFollowButtonClicked(
+                                      userId: FirebaseAuth
+                                          .instance.currentUser!.uid,
+                                    );
+                                    searchCubit.addFollow(
+                                      userEntity: widget.userEntity,
+                                    );
+                                    setState(() {});
+                                  },
+                                )
+                              else
+                                IconButton(
+                                  icon: const FaIcon(
+                                      FontAwesomeIcons.personCircleCheck),
+                                  onPressed: () {
+                                    searchCubit.onUnFollowButtonClicked(
+                                      userId: FirebaseAuth
+                                          .instance.currentUser!.uid,
+                                    );
+                                    searchCubit.unFollow(
+                                      userEntity: widget.userEntity,
+                                    );
+                                    setState(() {});
+                                  },
+                                ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 5,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.greenAccent,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        widget.userEntity.totalFollowersString,
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const Text(
+                                        "Takipçi",
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              onPressed: () {
-                                widget.cubit
-                                    .addFollow(userEntity: widget.userEntity);
-                                setState(() {});
-                              },
-                            )
-                          else
-                            const FaIcon(FontAwesomeIcons.faceKiss)
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 5,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueAccent,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        widget.userEntity.totalFollowingString,
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const Text(
+                                        "Takip",
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const Spacer(
+                                flex: 2,
+                              ),
+                            ],
+                          ),
                         ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 5),
-                              decoration: BoxDecoration(
-                                color: Colors.greenAccent,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Text(
-                                widget.userEntity.totalFollowersString,
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 5),
-                              decoration: BoxDecoration(
-                                color: Colors.blueAccent,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Text(
-                                widget.userEntity.totalFollowingString,
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                            ),
-                          ),
-                          const Spacer(
-                            flex: 2,
-                          ),
-                        ],
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
               ),

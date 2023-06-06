@@ -28,7 +28,8 @@ class UserListCubit extends Cubit<UserListState> {
       },
       (r) {
         emit(
-          state.copyWith(status: UserListStatus.success, userList: r,filteredUserList: r),
+          state.copyWith(
+              status: UserListStatus.success, userList: r, filteredUserList: r),
         );
       },
     );
@@ -40,41 +41,20 @@ class UserListCubit extends Cubit<UserListState> {
       emit(
         state.copyWith(filteredUserList: state.userList),
       );
-    }else {
-    List<UserEntity> filteredList =
-       state.userList.filter((t) => t.email.contains(value)).toList();
-    emit(
-      state.copyWith(filteredUserList: filteredList),
-    );
-
+    } else {
+      List<UserEntity> filteredList =
+          state.userList.filter((t) => t.email.contains(value)).toList();
+      emit(
+        state.copyWith(filteredUserList: filteredList),
+      );
     }
   }
-
-  void addFollow({required UserEntity userEntity}) async {
-    emit(state.copyWith(status: UserListStatus.submitting));
-    var response =
-        await FollowUserUsecase.i.execute(userEntity: userEntity).run();
-    response.fold(
-      (l) => null,
-      (r) {
-        emit(state.copyWith(status: UserListStatus.success));
-        return r;
-      },
-    );
-  }
-
-
 
   void filterTextChanged(String value) {
     emit(
       state.copyWith(filterText: value),
     );
     applyFilter(value: state.filterText);
-  }
-
-  bool isFollowed({required UserEntity userEntity}) {
-    return userEntity.followers
-        .any((element) => element == FirebaseAuth.instance.currentUser!.uid);
   }
 
   static UserListCubit instance() {

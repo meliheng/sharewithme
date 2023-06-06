@@ -77,4 +77,34 @@ class UserRepository extends IUserRepository {
       },
     );
   }
+
+  @override
+  TaskEither<BaseFailure, Unit> unFollow({required UserEntity userEntity}) {
+    return TaskEither.tryCatch(
+      () async {
+        await db.collection("users").doc(userEntity.uid).update(
+          {
+            "followers": FieldValue.arrayRemove(
+              [FirebaseAuth.instance.currentUser!.uid],
+            ),
+          },
+        );
+        await db
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            "following": FieldValue.arrayRemove(
+              [userEntity.uid],
+            ),
+          },
+        );
+
+        return unit;
+      },
+      (error, stackTrace) {
+        return AuthFailures.def();
+      },
+    );
+  }
 }

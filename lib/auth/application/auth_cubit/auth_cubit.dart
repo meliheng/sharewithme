@@ -207,6 +207,12 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
+  Future deleteAccount(BuildContext context) async {
+    emit(state.copyWith(status: AuthStatus.submitting));
+    await FirebaseAuth.instance.currentUser!.delete();
+    emit(state.copyWith(status: AuthStatus.success));
+  }
+
   Future<User?> getCurrentUser() async {
     var user = FirebaseAuth.instance.currentUser;
     return user;

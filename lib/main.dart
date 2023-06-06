@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/home_screen.dart';
 import 'package:sharewithme/shared/init/register.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'activity/application/_application_exporter.dart';
 
@@ -12,7 +13,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Register.setUp();
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  print("tokennnnn");
+  print(fcmToken);
+  print("token bittiii");
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
+}
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message");
 }
 
 class MyApp extends StatelessWidget {
@@ -48,7 +59,6 @@ class MyApp extends StatelessWidget {
               if (user == null) {
                 return const WelcomeScreen();
               } else {
-                print(user.uid);
                 authCubit.getUser();
 
                 return HomeScreen(

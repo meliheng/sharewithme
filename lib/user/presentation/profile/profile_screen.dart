@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/application/user_cubit/user_cubit.dart';
 import 'package:sharewithme/user/presentation/profile/add_dialog.dart';
@@ -20,21 +24,29 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late String image = "";
+  String image = "";
   late UserCubit userCubit;
   @override
   void initState() {
     super.initState();
-    // FirebaseStorage.instance
-    //     .ref(widget.authCubit.state.user!.email)
-    //     .child("${widget.authCubit.state.user!.uid}_avatar")
-    //     .getDownloadURL()
-    //     .then((value) {
-    //   image = value;
-    // });
-    // print("init");
-    // print(widget.authCubit.state.user!.uid);
+    getAvatar();
     userCubit = UserCubit.instance(userEntity: widget.authCubit.state.user!);
+  }
+
+  void getAvatar() {
+    FirebaseStorage.instance
+        .ref(widget.authCubit.state.user!.email)
+        .child("${widget.authCubit.state.user!.uid}_avatar")
+        .getDownloadURL()
+        .then(
+      (value) {
+        if (value.isNotEmpty) {
+          setState(() {
+            image = value;
+          });
+        }
+      },
+    );
   }
 
   @override
@@ -57,21 +69,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   InkWell(
                     onTap: () async {
-                      // final ImagePicker picker = ImagePicker();
-                      // final XFile? image =
-                      //     await picker.pickImage(source: ImageSource.gallery);
-                      // if(image!=null){
-                      // final storageRef = FirebaseStorage.instance
-                      //     .ref(widget.authCubit.state.user!.email)
-                      //     .child("${widget.authCubit.state.user!.uid}_avatar");
-                      // await storageRef.putFile(File(image.path));
+                      final ImagePicker picker = ImagePicker();
+                      final XFile? image =
+                          await picker.pickImage(source: ImageSource.gallery);
+                      if (image != null) {
+                        final storageRef = FirebaseStorage.instance
+                            .ref(widget.authCubit.state.user!.email)
+                            .child(
+                                "${widget.authCubit.state.user!.uid}_avatar");
+                        await storageRef.putFile(File(image.path));
 
-                      // }
+                        getAvatar();
+                      }
                     },
-                    child: const CircleAvatar(
+                    child: CircleAvatar(
                       radius: 50,
                       backgroundImage: NetworkImage(
-                          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"),
+                        image.isEmpty
+                            ? "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
+                            : image,
+                      ),
                     ),
                   ),
                   Text(
@@ -104,6 +121,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () async {
                       //print(cubit.state.user!.email);
                       await widget.authCubit.logout(context);
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context, rootNavigator: true)
+                          .pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const WelcomeScreen();
+                          },
+                        ),
+                        (route) => false,
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SettingListTile(
+                    icon: const FaIcon(FontAwesomeIcons.xmark),
+                    text: "Hesabımı Sil",
+                    showSwitch: false,
+                    onTap: () async {
+                      //print(cubit.state.user!.email);
+                      await widget.authCubit.deleteAccount(context);
                       // ignore: use_build_context_synchronously
                       Navigator.of(context, rootNavigator: true)
                           .pushAndRemoveUntil(

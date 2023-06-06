@@ -34,7 +34,7 @@ class _UserListScreenState extends State<UserListScreen> {
       bloc: cubit,
       listener: (context, state) {},
       builder: (context, state) {
-        return Column(
+        return ListView(
           children: [
             const SizedBox(
               height: 10,
@@ -62,7 +62,6 @@ class _UserListScreenState extends State<UserListScreen> {
         .map(
           (e) => UserCard(
             userEntity: e,
-            cubit: cubit,
             pageCubit: widget.pageCubit,
           ),
         )

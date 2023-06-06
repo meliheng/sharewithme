@@ -6,4 +6,5 @@ abstract class IUserRepository {
   TaskEither<BaseFailure, List<UserEntity>> getAll();
   TaskEither<BaseFailure, Unit> add({required UserEntity userEntity});
   TaskEither<BaseFailure, Unit> follow({required UserEntity userEntity});
+  TaskEither<BaseFailure, Unit> unFollow({required UserEntity userEntity});
 }
