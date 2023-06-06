@@ -101,7 +101,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
               comment: commentController.text,
             );
             activityCubit.onCommentAdded(comment);
-
+            commentController.clear();
             await activityCubit.addComment(comment);
           },
         ),

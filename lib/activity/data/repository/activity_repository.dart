@@ -19,17 +19,22 @@ class ActivityRepository extends IActivityRepository {
   }) {
     return TaskEither.tryCatch(
       () async {
-        final storageRef = FirebaseStorage.instance
-            .ref(FirebaseAuth.instance.currentUser!.email)
-            .child("post_image");
-        var uploadTask = await storageRef.putFile(file);
-        var downloadPath = await uploadTask.ref.getDownloadURL();
+        if (file.path.isNotEmpty) {
+          final storageRef = FirebaseStorage.instance
+              .ref(FirebaseAuth.instance.currentUser!.email)
+              .child("post_image");
+          var uploadTask = await storageRef.putFile(file);
+          var downloadPath = await uploadTask.ref.getDownloadURL();
 
-        await db
-            .collection("activities")
-            .doc()
-            .set(activityEntity.copyWith(imagePath: downloadPath).toMap());
-        return unit;
+          await db
+              .collection("activities")
+              .doc()
+              .set(activityEntity.copyWith(imagePath: downloadPath).toMap());
+          return unit;
+        } else {
+          await db.collection("activities").doc().set(activityEntity.toMap());
+          return unit;
+        }
       },
       (error, stackTrace) {
         print(error);
