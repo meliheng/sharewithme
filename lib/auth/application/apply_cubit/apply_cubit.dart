@@ -1,14 +1,15 @@
 import 'dart:io';
 
+import 'package:bloc/bloc.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sharewithme/auth/application/apply_cubit/apply_state.dart';
 import 'package:sharewithme/auth/domain/model/appeal_entity.dart';
 import 'package:sharewithme/auth/domain/usecase/apply_usecase.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
 
-part 'apply_state.dart';
-
 class ApplyCubit extends Cubit<ApplyState> {
+  String get fileName => state.file.path.split('/').last;
   ApplyCubit() : super(ApplyState.initial());
 
   void fullnameChanged(String value) {
@@ -47,8 +48,24 @@ class ApplyCubit extends Cubit<ApplyState> {
     );
   }
 
-  void onFileSelected(File file) {
-    emit(state.copyWith(file: file, status: ApplyStatus.initial));
+  void onFileSelected() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.first.path ?? '');
+      // if (!mounted) {
+      //   return;
+      // }
+      emit(state.copyWith(file: file, status: ApplyStatus.initial));
+    }
+  }
+
+  bool isPasswordValid(String password) => password.length == 6;
+
+  bool isEmailValid(String email) {
+    final bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.edu+\.[a-zA-Z]+")
+        .hasMatch(email);
+    return emailValid;
   }
 
   void newApply(BuildContext context) async {

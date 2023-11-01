@@ -8,8 +8,8 @@ class RouterManager {
     switch (settings.name) {
       case LoginScreen.route:
         return pageGenerator(const LoginScreen());
-      case WelcomeScreen.route:
-        return pageGenerator(const WelcomeScreen());
+      case AuthScreen.route:
+        return pageGenerator(const AuthScreen());
       case ActivityScreen.route:
         return pageGenerator(
           ActivityScreen(
@@ -22,6 +22,8 @@ class RouterManager {
             pageCubit: PageCubit.instance(),
           ),
         );
+      case AppealPage.route:
+        return pageGenerator(const AppealPage());
       default:
         return pageGenerator(const Text("error"));
     }

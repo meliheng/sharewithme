@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           .pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) {
-                            return const WelcomeScreen();
+                            return const AuthScreen();
                           },
                         ),
                         (route) => false,
@@ -149,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           .pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) {
-                            return const WelcomeScreen();
+                            return const AuthScreen();
                           },
                         ),
                         (route) => false,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 
 class SignUpPage extends StatefulWidget {
+  static const route = '/Signup';
   const SignUpPage({super.key});
 
   @override

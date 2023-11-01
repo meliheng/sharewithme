@@ -1,4 +1,4 @@
-part of 'apply_cubit.dart';
+import 'dart:io';
 
 enum ApplyStatus { initial, submitting, success, error }
 

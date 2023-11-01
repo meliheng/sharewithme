@@ -31,38 +31,21 @@ class TextFieldWithIcon extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: Icon(
           icon,
-          color: ColorConstants.primaryOrange,
+          color: Colors.blueGrey,
         ),
         filled: true,
-        fillColor: ColorConstants.primaryOrange.withOpacity(.2),
-        contentPadding: const EdgeInsets.symmetric(vertical: 20),
+        fillColor: ColorConstants.primaryWhite,
         hintText: hintText,
         hintStyle: const TextStyle(),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorConstants.primaryOrange, width: 2),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.blueGrey),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
           ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red.shade700),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red.shade700),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: ColorConstants.primaryOrange,
-            width: 2,
-          ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
           ),
         ),
       ),
