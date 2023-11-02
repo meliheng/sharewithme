@@ -14,9 +14,8 @@ class AppealPage extends StatefulWidget {
   State<AppealPage> createState() => _AppealPageState();
 }
 
-class _AppealPageState extends State<AppealPage> with InputValidationMixin {
-  final _formKey = GlobalKey<FormState>();
-  final ApplyCubit cubit = ApplyCubit.instance();
+class _AppealPageState extends State<AppealPage> {
+  final ApplyCubit cubit = ApplyCubit();
   @override
   Widget build(BuildContext context) {
     return ScreenTemplate(
@@ -35,9 +34,9 @@ class _AppealPageState extends State<AppealPage> with InputValidationMixin {
                   autoCloseDuration: const Duration(seconds: 2),
                 );
               }
-              if (state.status == ApplyStatus.success) {
-                Navigator.pop(context);
-              }
+              // if (state.status == ApplyStatus.success) {
+              //   Navigator.pop(context);
+              // }
             },
             builder: (context, state) {
               return Column(
@@ -58,7 +57,7 @@ class _AppealPageState extends State<AppealPage> with InputValidationMixin {
                   ),
                   const SizedBox(height: 20),
                   Form(
-                    key: _formKey,
+                    key: cubit.formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,27 +141,12 @@ class _AppealPageState extends State<AppealPage> with InputValidationMixin {
                             SubmitButton(
                               title: AuthC.submit,
                               onTap: () {
-                                if (_formKey.currentState!.validate()) {
-                                  cubit.newApply(context);
-                                }
+                                cubit.newApply(context);
                               },
                             ),
                           ],
                         ),
                       ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: 209,
-                    height: 24,
-                    child: Text(
-                      AuthC.dontHaveAccount,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Color(0xff262626),
-                        fontSize: 15,
-                      ),
                     ),
                   ),
                 ],
@@ -174,5 +158,3 @@ class _AppealPageState extends State<AppealPage> with InputValidationMixin {
     );
   }
 }
-
-mixin InputValidationMixin {}

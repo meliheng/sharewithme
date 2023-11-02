@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/failures/auth_failures.dart';
 import 'package:sharewithme/shared/failures/base_failure.dart';
@@ -15,6 +14,14 @@ class AuthRepository extends IAuthRepository {
   TaskEither<BaseFailure, Unit> apply({required AppealEntity appealEntity}) {
     return TaskEither.tryCatch(
       () async {
+        // var apply =
+        //     await db.collection('appe').doc(appealEntity.email).get().then(
+        //   (value) {
+        //     if (value.exists) {
+        //       return TaskEither.left(AuthFailures.def());
+        //     }
+        //   },
+        // );
         await db
             .collection("appeals")
             .doc(appealEntity.email)
@@ -26,6 +33,9 @@ class AuthRepository extends IAuthRepository {
         return unit;
       },
       (error, stackTrace) {
+        if (error is FirebaseAuthException) {
+          print(error.message);
+        }
         return AuthFailures.def();
       },
     );
@@ -134,6 +144,23 @@ class AuthRepository extends IAuthRepository {
         return response;
       },
       (error, stackTrace) => AuthFailures.def(),
+    );
+  }
+
+  @override
+  TaskEither<BaseFailure, bool> validateEmail({required String email}) {
+    return TaskEither(
+      () async {
+        return await db.collection("appeals").doc(email).get().then(
+          (value) {
+            if (value.exists) {
+              return Either.left(AuthFailures.def());
+            } else {
+              return Either.right(true);
+            }
+          },
+        );
+      },
     );
   }
 }

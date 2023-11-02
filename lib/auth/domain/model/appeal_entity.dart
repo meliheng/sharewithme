@@ -5,12 +5,12 @@ import 'dart:io';
 import 'package:sharewithme/export.dart';
 
 class AppealEntity {
-  final Name fullname;
-  final Name school;
-  final Name department;
-  final String email;
-  final File file;
-  final bool isApprovad;
+  Name fullname;
+  Name school;
+  Name department;
+  String email;
+  File file;
+  bool isApprovad;
   AppealEntity({
     required this.fullname,
     required this.school,
