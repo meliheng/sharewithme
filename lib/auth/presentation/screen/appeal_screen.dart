@@ -27,13 +27,13 @@ class _AppealPageState extends State<AppealPage> {
           child: BlocConsumer<ApplyCubit, ApplyState>(
             bloc: cubit,
             listener: (context, state) {
-              if (state.status == ApplyStatus.submitting) {
-                CoolAlert.show(
-                  context: context,
-                  type: CoolAlertType.loading,
-                  autoCloseDuration: const Duration(seconds: 2),
-                );
-              }
+              // if (state.status == ApplyStatus.submitting) {
+              //   CoolAlert.show(
+              //     context: context,
+              //     type: CoolAlertType.loading,
+              //     autoCloseDuration: const Duration(seconds: 2),
+              //   );
+              // }
               // if (state.status == ApplyStatus.success) {
               //   Navigator.pop(context);
               // }

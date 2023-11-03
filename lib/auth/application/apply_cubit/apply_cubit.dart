@@ -83,6 +83,10 @@ class ApplyCubit extends Cubit<ApplyState> {
       response.fold(
         (l) {
           emit(state.copyWith(status: ApplyStatus.error));
+          showErrorDialog(
+            context: context,
+            message: l.message,
+          );
         },
         (r) {
           emit(state.copyWith(status: ApplyStatus.success));

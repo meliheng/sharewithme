@@ -14,14 +14,6 @@ class AuthRepository extends IAuthRepository {
   TaskEither<BaseFailure, Unit> apply({required AppealEntity appealEntity}) {
     return TaskEither.tryCatch(
       () async {
-        // var apply =
-        //     await db.collection('appe').doc(appealEntity.email).get().then(
-        //   (value) {
-        //     if (value.exists) {
-        //       return TaskEither.left(AuthFailures.def());
-        //     }
-        //   },
-        // );
         await db
             .collection("appeals")
             .doc(appealEntity.email)
@@ -154,7 +146,11 @@ class AuthRepository extends IAuthRepository {
         return await db.collection("appeals").doc(email).get().then(
           (value) {
             if (value.exists) {
-              return Either.left(AuthFailures.def());
+              return Either.left(
+                AuthFailures(
+                  "Bu maile kayıtlı bir başvuru zaten bulunmaktadır.",
+                ),
+              );
             } else {
               return Either.right(true);
             }
