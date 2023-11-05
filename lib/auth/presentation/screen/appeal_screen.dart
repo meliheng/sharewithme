@@ -1,4 +1,3 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/auth/application/apply_cubit/apply_state.dart';
@@ -68,12 +67,7 @@ class _AppealPageState extends State<AppealPage> {
                           onChanged: (p0) {
                             cubit.fullnameChanged(p0);
                           },
-                          validator: (p0) {
-                            if (p0 == '') {
-                              return 'boş olamaz';
-                            }
-                            return null;
-                          },
+                          // validator: Validator.nameValidator,
                         ),
                         const SizedBox(
                           height: 20,
@@ -84,6 +78,7 @@ class _AppealPageState extends State<AppealPage> {
                             cubit.schoolChanged(p0);
                           },
                           icon: Icons.school,
+                          // validator: Validator.nameValidator,
                         ),
                         const SizedBox(
                           height: 20,
@@ -94,6 +89,7 @@ class _AppealPageState extends State<AppealPage> {
                           onChanged: (p0) {
                             cubit.departmentChanged(p0);
                           },
+                          // validator: Validator.nameValidator,
                         ),
                         const SizedBox(
                           height: 20,

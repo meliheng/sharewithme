@@ -10,3 +10,4 @@ export 'constants/color_constants.dart';
 export 'constants/string_constants.dart';
 export 'constants/image_constants.dart';
 export 'widgets/_widget_exporter.dart';
+export 'helper/validator.dart';
