@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final AuthCubit cubit = AuthCubit.instance();
+  // final AuthCubit cubit = AuthCubit.instance();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 20),
                     BlocConsumer<AuthCubit, AuthState>(
-                      bloc: cubit,
+                      // bloc: cubit,
                       listener: (context, state) {},
                       builder: (context, state) {
                         if (state.status == AuthStatus.submitting) {
@@ -61,10 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintText: "Mail",
                                   icon: Icons.mail,
                                   onChanged: (p0) {
-                                    cubit.emailChanged(p0);
-                                  },
-                                  validator: (p0) {
-                                    return Email.create(p0!).validate();
+                                    // cubit.emailChanged(p0);
                                   },
                                   inputType: TextInputType.emailAddress,
                                 ),
@@ -75,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintText: "Password",
                                   icon: Icons.lock,
                                   onChanged: (p0) {
-                                    cubit.passwordChanged(p0);
+                                    // cubit.passwordChanged(p0);
                                   },
                                   obscureText: true,
                                 ),
@@ -84,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   title: "Sign In",
                                   onTap: () {
                                     if (_formKey.currentState!.validate()) {
-                                      cubit.loginUser(context);
+                                      // cubit.loginUser(context);
                                     }
                                   },
                                 ),

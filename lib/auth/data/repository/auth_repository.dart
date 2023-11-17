@@ -33,15 +33,30 @@ class AuthRepository extends IAuthRepository {
     );
   }
 
+  // TaskEither<AuthFailures, Unit> checkUserIsExists({
+  //   required String email,
+  // }) {
+  //   return TaskEither.tryCatch(
+  //     () async {
+  //       var response = await db.collection('users').doc();
+  //     },
+  //     (error, stackTrace) {},
+  //   );
+  // }
+
   @override
-  TaskEither<BaseFailure, UserEntity> signUpWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required String username}) {
+  TaskEither<BaseFailure, UserEntity> signUpWithEmailAndPassword({
+    required String email,
+    required String password,
+    required String username,
+  }) {
     return TaskEither.tryCatch(
       () async {
         var response = await auth.createUserWithEmailAndPassword(
-            email: email, password: password);
+          email: email,
+          password: password,
+        );
+
         return UserEntity(
           email: email,
           followers: [],
@@ -53,7 +68,19 @@ class AuthRepository extends IAuthRepository {
       },
       (error, stackTrace) {
         if (error is FirebaseAuthException) {
-          print(error);
+          switch (error.code) {
+            case 'email-already-in-use':
+              return AuthFailures('Email address $email already in use.');
+            case 'invalid-email':
+              return AuthFailures('Email address $email is invalid.');
+            case 'operation-not-allowed':
+              return AuthFailures('Error during sign up.');
+            case 'weak-password':
+              return AuthFailures(
+                  'Password is not strong enough. Add additional characters including special characters and numbers.');
+            default:
+              break;
+          }
         }
         return AuthFailures.def();
       },

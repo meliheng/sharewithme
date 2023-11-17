@@ -1,7 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
 
-void showErrorDialog({required BuildContext context, required String message}) {
+class CustomDialog {
+  static void success({
+    required BuildContext context,
+    required String message,
+  }) {
+    showCustomDialog(
+      context: context,
+      message: message,
+      isSuccess: true,
+    );
+  }
+
+  static void error({
+    required BuildContext context,
+    required String message,
+  }) {
+    showCustomDialog(
+      context: context,
+      message: message,
+      isSuccess: false,
+    );
+  }
+}
+
+void showCustomDialog({
+  required BuildContext context,
+  required String message,
+  required bool isSuccess,
+}) {
   showDialog(
     context: context,
     builder: (context) {
@@ -10,18 +38,33 @@ void showErrorDialog({required BuildContext context, required String message}) {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            padding: const EdgeInsets.all(20),
             width: MediaQuery.sizeOf(context).width * .7,
-            height: MediaQuery.sizeOf(context).height * .2,
+            height: MediaQuery.sizeOf(context).height * .3,
             color: ColorConstants.kBlue,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(message),
-                CustomButton(
-                  title: "TAMAM",
-                  color: ColorConstants.primaryOrange,
-                  onPressed: () {},
+                Image(
+                  image: isSuccess
+                      ? AssetImage(ImageC.checkIcon)
+                      : AssetImage(ImageC.errorIcon),
+                  fit: BoxFit.cover,
+                  height: MediaQuery.sizeOf(context).height * .1,
+                ),
+                Text(
+                  message,
+                  textAlign: TextAlign.center,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        title: StringC.close,
+                        color: ColorConstants.primaryOrange,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

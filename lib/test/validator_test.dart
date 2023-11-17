@@ -7,11 +7,10 @@ void main() {
     () {
       final result = Validator.validate(
         [
-          StringValidator(),
+          StringValidator.isNotEmptyValidate("value"),
         ],
-        "",
       );
-      expect(result, false);
+      expect(result.length, 0);
     },
   );
 }

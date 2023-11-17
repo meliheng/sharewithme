@@ -7,6 +7,7 @@ class AuthStringConstants {
   static String get department => "Department";
   static String get school => "School";
   static String get fullname => "Fullname";
+  static String get accountCreated => "Account created successfully";
 }
 
 typedef AuthC = AuthStringConstants;

@@ -12,24 +12,20 @@ class SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: ColorConstants.primaryOrange,
-            ),
-            child: const Text(
-              "Sign In",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: ColorConstants.primaryOrange,
         ),
-      ],
+        child: Text(
+          title,
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
     );
   }
 }

@@ -25,9 +25,9 @@ class TextFieldWithIcon extends StatelessWidget {
     return TextFormField(
       obscureText: obscureText,
       controller: controller,
-      validator: validator,
       onChanged: onChanged,
       keyboardType: inputType,
+      validator: validator,
       decoration: InputDecoration(
         prefixIcon: Icon(
           icon,
@@ -44,6 +44,11 @@ class TextFieldWithIcon extends StatelessWidget {
           ),
         ),
         enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),

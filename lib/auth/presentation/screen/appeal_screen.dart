@@ -38,115 +38,122 @@ class _AppealPageState extends State<AppealPage> {
               // }
             },
             builder: (context, state) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const AuthTitle(
-                    title: "Share With Me",
-                  ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    "Apply Now",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xff262626),
-                      fontSize: 18,
+              if (state.status == ApplyStatus.submitting) {
+                return const LoadingGif();
+              } else {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    AuthTitle(
+                      title: StringC.appName,
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  Form(
-                    key: cubit.formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        TextFieldWithIcon(
-                          hintText: AuthC.fullname,
-                          icon: Icons.person,
-                          onChanged: (p0) {
-                            cubit.fullnameChanged(p0);
-                          },
-                          // validator: Validator.nameValidator,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFieldWithIcon(
-                          hintText: AuthC.school,
-                          onChanged: (p0) {
-                            cubit.schoolChanged(p0);
-                          },
-                          icon: Icons.school,
-                          // validator: Validator.nameValidator,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFieldWithIcon(
-                          hintText: AuthC.department,
-                          icon: Icons.work,
-                          onChanged: (p0) {
-                            cubit.departmentChanged(p0);
-                          },
-                          // validator: Validator.nameValidator,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFieldWithIcon(
-                          hintText: AuthC.mail,
-                          icon: Icons.mail,
-                          onChanged: (p0) {
-                            cubit.emailChanged(p0);
-                          },
-                          validator: (p0) {
-                            return Email.create(p0!).validate();
-                          },
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            if (cubit.fileName.isNotEmpty)
-                              Expanded(child: Text(cubit.fileName)),
-                            Expanded(
-                              child: CustomButton(
-                                onPressed: () {
-                                  cubit.onFileSelected();
+                    const SizedBox(height: 5),
+                    Text(
+                      StringC.applyNow,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color(0xff262626),
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Form(
+                      key: cubit.formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TextFieldWithIcon(
+                            hintText: AuthC.fullname,
+                            icon: Icons.person,
+                            onChanged: (p0) {
+                              cubit.fullnameChanged(p0);
+                            },
+                            // validator: Validator.nameValidator,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFieldWithIcon(
+                            hintText: AuthC.school,
+                            onChanged: (p0) {
+                              cubit.schoolChanged(p0);
+                            },
+                            icon: Icons.school,
+                            // validator: Validator.nameValidator,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFieldWithIcon(
+                            hintText: AuthC.department,
+                            icon: Icons.work,
+                            onChanged: (p0) {
+                              cubit.departmentChanged(p0);
+                            },
+                            // validator: Validator.nameValidator,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFieldWithIcon(
+                            hintText: AuthC.mail,
+                            icon: Icons.mail,
+                            onChanged: (p0) {
+                              cubit.emailChanged(p0);
+                            },
+                            validator: cubit.validateEmail,
+                            // validator: (p0) {
+                            //   return Email.create(p0!).validate();
+                            // },
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              if (cubit.fileName.isNotEmpty)
+                                Expanded(
+                                  child: Text(cubit.fileName),
+                                ),
+                              Expanded(
+                                child: CustomButton(
+                                  onPressed: () {
+                                    cubit.onFileSelected();
+                                  },
+                                  color: Colors.black,
+                                  title: AuthC.selectFile,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                AuthC.forgotYourPassword,
+                                textAlign: TextAlign.end,
+                                style: const TextStyle(
+                                  color: Color(0xffbebebe),
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              SubmitButton(
+                                title: AuthC.submit,
+                                onTap: () {
+                                  cubit.newApply(context);
                                 },
-                                color: Colors.black,
-                                title: AuthC.selectFile,
                               ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              AuthC.forgotYourPassword,
-                              textAlign: TextAlign.end,
-                              style: const TextStyle(
-                                color: Color(0xffbebebe),
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            SubmitButton(
-                              title: AuthC.submit,
-                              onTap: () {
-                                cubit.newApply(context);
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              );
+                  ],
+                );
+              }
             },
           ),
         ),

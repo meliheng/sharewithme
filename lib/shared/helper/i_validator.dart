@@ -1,15 +1,10 @@
 import 'package:fpdart/fpdart.dart';
 
-abstract class IValidator<T> {
-  bool validate(T value);
-}
-
-class StringValidator implements IValidator<String> {
-  @override
-  bool validate(String value) {
+class StringValidator {
+  static Option<String> isNotEmptyValidate(String value) {
     return value.isNotEmpty.match(
-      () => false,
-      () => true,
+      () => const Some("Bu alanın doldurulması zorunludur."),
+      () => const None(),
     );
   }
 
@@ -17,14 +12,11 @@ class StringValidator implements IValidator<String> {
 }
 
 class Validator {
-  static bool validate(List<IValidator> validators, String value) {
-    var validate = true;
+  static List<String> validate(List<Option<String>> validators) {
+    List<String> errors = [];
     for (var validator in validators) {
-      validate = validator.validate(value);
-      if (!validate) {
-        break;
-      }
+      validator.fold(() => null, (t) => errors.add(t));
     }
-    return validate;
+    return errors;
   }
 }

@@ -11,3 +11,4 @@ export 'constants/string_constants.dart';
 export 'constants/image_constants.dart';
 export 'widgets/_widget_exporter.dart';
 export 'helper/validator.dart';
+export 'helper/_shared_helper_exporter.dart';

@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:expansion_tile_card/expansion_tile_card.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,25 +28,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    getAvatar();
-    userCubit = UserCubit.instance(userEntity: widget.authCubit.state.user!);
+    // getAvatar();
+    // userCubit = UserCubit.instance(userEntity: widget.authCubit.state.user!);
   }
 
-  void getAvatar() {
-    FirebaseStorage.instance
-        .ref(widget.authCubit.state.user!.email)
-        .child("${widget.authCubit.state.user!.uid}_avatar")
-        .getDownloadURL()
-        .then(
-      (value) {
-        if (value.isNotEmpty) {
-          setState(() {
-            image = value;
-          });
-        }
-      },
-    );
-  }
+  // void getAvatar() {
+  //   FirebaseStorage.instance
+  //       .ref(widget.authCubit.state.user!.email)
+  //       .child("${widget.authCubit.state.user!.uid}_avatar")
+  //       .getDownloadURL()
+  //       .then(
+  //     (value) {
+  //       if (value.isNotEmpty) {
+  //         setState(() {
+  //           image = value;
+  //         });
+  //       }
+  //     },
+  //   );
+  // }
 
   @override
   void didChangeDependencies() {
@@ -73,15 +71,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       final ImagePicker picker = ImagePicker();
                       final XFile? image =
                           await picker.pickImage(source: ImageSource.gallery);
-                      if (image != null) {
-                        final storageRef = FirebaseStorage.instance
-                            .ref(widget.authCubit.state.user!.email)
-                            .child(
-                                "${widget.authCubit.state.user!.uid}_avatar");
-                        await storageRef.putFile(File(image.path));
+                      // if (image != null) {
+                      //   final storageRef = FirebaseStorage.instance
+                      //       .ref(widget.authCubit.state.user!.email)
+                      //       .child(
+                      //           "${widget.authCubit.state.user!.uid}_avatar");
+                      //   await storageRef.putFile(File(image.path));
 
-                        getAvatar();
-                      }
+                      //   // getAvatar();
+                      // }
                     },
                     child: CircleAvatar(
                       radius: 50,
@@ -92,13 +90,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  Text(
-                    widget.authCubit.state.user!.username,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                    ),
-                  ),
+                  // Text(
+                  //   widget.authCubit.state.user!.username,
+                  //   style: const TextStyle(
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: 22,
+                  //   ),
+                  // ),
                   const Text(
                     "Marmara University",
                     style: TextStyle(color: Colors.grey),
@@ -121,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     showSwitch: false,
                     onTap: () async {
                       //print(cubit.state.user!.email);
-                      await widget.authCubit.logout(context);
+                      // await widget.authCubit.logout(context);
                       // ignore: use_build_context_synchronously
                       Navigator.of(context, rootNavigator: true)
                           .pushAndRemoveUntil(
@@ -143,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     showSwitch: false,
                     onTap: () async {
                       //print(cubit.state.user!.email);
-                      await widget.authCubit.deleteAccount(context);
+                      // await widget.authCubit.deleteAccount(context);
                       // ignore: use_build_context_synchronously
                       Navigator.of(context, rootNavigator: true)
                           .pushAndRemoveUntil(

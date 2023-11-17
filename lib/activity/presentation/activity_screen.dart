@@ -31,8 +31,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
               ? const CircularProgressIndicator()
               : Column(
                   children: [
-                    cubit.getAllActivity(
-                        userEntity: widget.authCubit.state.user!),
+                    // cubit.getAllActivity(
+                    //     userEntity: widget.authCubit.state.user!),
                     _buildAddActivityButton(context),
                   ],
                 );

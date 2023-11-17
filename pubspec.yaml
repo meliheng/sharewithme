@@ -36,6 +36,7 @@ dependencies:
   cached_network_image: ^3.2.3
   firebase_messaging: ^14.6.2
   flutter_local_notifications: ^14.1.0
+  flutter_email_sender: ^6.0.2
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
@@ -51,4 +52,5 @@ flutter:
         - asset: assets/fonts/Poppins-Regular.ttf
   assets:
     - assets/icons/
+    - assets/gifs/
   uses-material-design: true

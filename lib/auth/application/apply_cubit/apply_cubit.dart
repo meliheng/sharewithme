@@ -6,6 +6,7 @@ import 'package:sharewithme/auth/application/apply_cubit/apply_state.dart';
 import 'package:sharewithme/auth/domain/model/appeal_entity.dart';
 import 'package:sharewithme/auth/domain/repository/i_auth_repository.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
+import 'package:sharewithme/shared/helper/i_validator.dart';
 
 class ApplyCubit extends Cubit<ApplyState> {
   final IAuthRepository authRepository = IAuthRepository.i;
@@ -56,6 +57,18 @@ class ApplyCubit extends Cubit<ApplyState> {
 
   final formKey = GlobalKey<FormState>();
 
+  String? validateEmail(String? value) {
+    var errorList = Validator.validate(
+      [
+        StringValidator.isNotEmptyValidate(value ?? ''),
+      ],
+    );
+    if (errorList.isNotEmpty) {
+      return errorList.join('/n');
+    }
+    return null;
+  }
+
   void newApply(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(status: ApplyStatus.submitting));
@@ -83,13 +96,14 @@ class ApplyCubit extends Cubit<ApplyState> {
       response.fold(
         (l) {
           emit(state.copyWith(status: ApplyStatus.error));
-          showErrorDialog(
+          CustomDialog.error(
             context: context,
             message: l.message,
           );
         },
         (r) {
           emit(state.copyWith(status: ApplyStatus.success));
+          EmailService.sendEmail(email: model.email);
           Navigator.pop(context);
         },
       );

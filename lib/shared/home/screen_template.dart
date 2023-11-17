@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/custom_navigation_bar.dart';
-import 'package:sharewithme/shared/constants/color_constants.dart';
 
 class ScreenTemplate extends StatelessWidget {
   final Widget body;
@@ -16,7 +15,13 @@ class ScreenTemplate extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       body: Center(
-        child: body,
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width - 100,
+            height: MediaQuery.of(context).size.height,
+            child: body,
+          ),
+        ),
       ),
       bottomNavigationBar:
           showNavigationBar ? const CustomNavigationBar() : null,

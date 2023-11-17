@@ -10,10 +10,12 @@ class RouterManager {
         return pageGenerator(const LoginScreen());
       case AuthScreen.route:
         return pageGenerator(const AuthScreen());
+      case SignUpPage.route:
+        return pageGenerator(const SignUpPage());
       case ActivityScreen.route:
         return pageGenerator(
           ActivityScreen(
-            authCubit: AuthCubit.instance(),
+            authCubit: AuthCubit(),
           ),
         );
       case UserListScreen.route:
