@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -113,10 +115,7 @@ class AuthRepository extends IAuthRepository {
         );
       },
       (error, stackTrace) {
-        print(error);
-        if (error is FirebaseAuthException) {
-          print(error);
-        }
+        if (error is FirebaseAuthException) {}
         return AuthFailures.def();
       },
     );
@@ -163,7 +162,7 @@ class AuthRepository extends IAuthRepository {
   TaskEither<BaseFailure, Unit> logout() {
     return TaskEither.tryCatch(
       () async {
-        var response = await auth.signOut();
+        var _ = await auth.signOut();
         return unit;
       },
       (error, stackTrace) {
@@ -204,6 +203,31 @@ class AuthRepository extends IAuthRepository {
             }
           },
         );
+      },
+    );
+  }
+
+  @override
+  TaskEither<BaseFailure, String> addProfileImage({
+    required String email,
+    required File file,
+  }) {
+    return TaskEither.tryCatch(
+      () async {
+        if (file.path.isNotEmpty) {
+          final storageRef =
+              FirebaseStorage.instance.ref(email).child("profile_image");
+          var uploadTask = await storageRef.putFile(file);
+          var downloadPath = await uploadTask.ref.getDownloadURL();
+
+          await db.collection("users").doc(email).set({'avatar': downloadPath});
+          return downloadPath;
+        } else {
+          return '';
+        }
+      },
+      (error, stackTrace) {
+        return AuthFailures.def();
       },
     );
   }

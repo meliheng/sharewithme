@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            print(snapshot.data?.email);
             return const ScreenTemplate();
           } else {
             return const AuthScreen();

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/auth/presentation/avatar_widget.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/auth_screen_template.dart';
+import 'package:sharewithme/shared/vo/status_enum.dart';
 
 class SignUpPage extends StatefulWidget {
   static const route = '/Signup';
@@ -13,7 +14,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final AuthCubit cubit = AuthCubit();
+  final SignUpCubit cubit = SignUpCubit();
   @override
   Widget build(BuildContext context) {
     return AuthScreenTemplate(
@@ -30,11 +31,11 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           const SizedBox(height: 40),
-          BlocConsumer<AuthCubit, AuthState>(
+          BlocConsumer<SignUpCubit, SignUpState>(
             bloc: cubit,
             listener: (context, state) {},
             builder: (context, state) {
-              if (state.status == AuthStatus.submitting) {
+              if (state.status.isSubmitting) {
                 return const LoadingGif();
               } else {
                 return Form(
@@ -44,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircularAvatarWithEditIcon(
-                        image: cubit.state.imagePath,
+                        file: cubit.state.avatar,
                         onFileSelected: cubit.avatarSelected,
                       ),
                       const SizedBox(

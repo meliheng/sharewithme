@@ -34,16 +34,13 @@ class TaskHelper<T> {
     );
   }
 
-  void executeTaskWithoutError({
+  void executeTaskWithoutLoading({
     required BuildContext context,
     required TaskEither<Unit, T> task,
     void Function(T)? onRight,
     bool disableSuccessToast = false,
   }) async {
-    showLoadingDialog(context);
-    await Future.delayed(const Duration(milliseconds: 50));
     var result = await task.run();
-    Navigator.pop(context);
     result.fold(
       (l) {
         return;

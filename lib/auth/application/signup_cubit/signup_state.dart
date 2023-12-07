@@ -1,60 +1,63 @@
-part of 'auth_cubit.dart';
+import 'dart:io';
+import 'package:sharewithme/shared/vo/status_enum.dart';
 
-enum AuthStatus { initial, submitting, success, error }
-
-class AuthState {
+class SignUpState {
   final String email;
   final String password;
   final String nickname;
   final File avatar;
-  final AuthStatus status;
-  AuthState({
+  final Status status;
+
+  SignUpState({
     required this.email,
     required this.password,
     required this.nickname,
     required this.avatar,
     required this.status,
   });
-  factory AuthState.initial() {
-    return AuthState(
+  factory SignUpState.initial() {
+    return SignUpState(
       email: '',
       password: '',
       nickname: '',
-      avatar: File(ImageC.userProfileIcon),
-      status: AuthStatus.initial,
+      avatar: File(''),
+      status: Status.initial,
     );
   }
 
-  AuthState copyWith({
+  SignUpState copyWith({
     String? email,
     String? password,
     String? nickname,
     File? avatar,
-    AuthStatus? status,
+    Status? status,
   }) {
-    return AuthState(
+    return SignUpState(
       email: email ?? this.email,
       password: password ?? this.password,
-      status: status ?? this.status,
       nickname: nickname ?? this.nickname,
       avatar: avatar ?? this.avatar,
+      status: status ?? this.status,
     );
   }
 
   @override
-  bool operator ==(covariant AuthState other) {
+  bool operator ==(covariant SignUpState other) {
+    if (identical(this, other)) return true;
+
     return other.email == email &&
         other.password == password &&
-        other.status == status &&
         other.nickname == nickname &&
-        other.avatar == avatar;
+        other.avatar == avatar &&
+        other.status == status;
   }
 
   @override
-  int get hashCode =>
-      email.hashCode ^
-      password.hashCode ^
-      status.hashCode ^
-      nickname.hashCode ^
-      avatar.hashCode;
+  int get hashCode {
+    return email.hashCode ^
+        password.hashCode ^
+        nickname.hashCode ^
+        avatar.hashCode ^
+        status.hashCode;
+  }
 }

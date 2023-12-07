@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:fpdart/fpdart.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sharewithme/auth/auth_export.dart';
@@ -18,6 +19,10 @@ abstract class IAuthRepository {
   TaskEither<BaseFailure, Unit> logout();
   TaskEither<BaseFailure, bool> checkApply({required String email});
   TaskEither<BaseFailure, bool> validateEmail({required String email});
+  TaskEither<BaseFailure, String> addProfileImage({
+    required String email,
+    required File file,
+  });
 
   static IAuthRepository get i => GetIt.instance<IAuthRepository>();
 }

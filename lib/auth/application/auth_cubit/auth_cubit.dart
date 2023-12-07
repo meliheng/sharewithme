@@ -1,14 +1,16 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/screen_template.dart';
-import 'package:sharewithme/user/domain/usecase/add_user_usecase.dart';
+import 'package:sharewithme/user/domain/repository/i_user_repository.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final formKey = GlobalKey<FormState>();
+
+  final IAuthRepository authRepository = IAuthRepository.i;
+  final IUserRepository userRepository = IUserRepository.i;
 
   AuthCubit() : super(AuthState.initial());
 
@@ -23,7 +25,7 @@ class AuthCubit extends Cubit<AuthState> {
   void avatarSelected(File file) {
     emit(
       state.copyWith(
-        imagePath: file.path,
+        avatar: file,
       ),
     );
   }
@@ -42,54 +44,6 @@ class AuthCubit extends Cubit<AuthState> {
         nickname: value,
       ),
     );
-  }
-
-  void createUser(BuildContext context) async {
-    if (formKey.currentState!.validate()) {
-      emit(state.copyWith(status: AuthStatus.submitting));
-      var response = await CreateUserUsecase.i
-          .execute(
-            email: state.email,
-            password: state.password,
-            username: state.nickname,
-          )
-          .run();
-      Future.delayed(const Duration(seconds: 3));
-      response.fold(
-        (l) {
-          emit(state.copyWith(status: AuthStatus.error));
-          if (state.status == AuthStatus.error) {
-            CustomDialog.error(
-              context: context,
-              message: l.message,
-            );
-          }
-        },
-        (r) async {
-          var response2 = await AddUserUsecase.i.execute(userEntity: r).run();
-          response2.fold(
-            (l) => print(l),
-            (r) {
-              emit(
-                state.copyWith(status: AuthStatus.success),
-              );
-              CustomDialog.success(
-                context: context,
-                message: AuthC.accountCreated,
-                onSubmit: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    LoginScreen.route,
-                    (route) => false,
-                  );
-                },
-              );
-              // getUser();
-            },
-          );
-        },
-      );
-    }
   }
 
   void loginUser(BuildContext context) async {

@@ -37,7 +37,7 @@ class UserRepository extends IUserRepository {
       () async {
         await db
             .collection("users")
-            .doc(userEntity.uid)
+            .doc(userEntity.email)
             .set(userEntity.toMap());
 
         return unit;

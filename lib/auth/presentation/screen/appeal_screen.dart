@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/auth/application/apply_cubit/apply_state.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/auth_screen_template.dart';
-import 'package:sharewithme/shared/home/screen_template.dart';
 
 class AppealPage extends StatefulWidget {
   static const route = '/Appeal';

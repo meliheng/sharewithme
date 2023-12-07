@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:sharewithme/shared/helper/_shared_helper_exporter.dart';
+import 'package:sharewithme/export.dart';
 
 class CircularAvatarWithEditIcon extends StatefulWidget {
-  final String image;
+  final File file;
   final Function(File file)? onFileSelected;
   const CircularAvatarWithEditIcon({
     Key? key,
-    required this.image,
     this.onFileSelected,
+    required this.file,
   }) : super(key: key);
 
   @override
@@ -22,27 +22,36 @@ class _CircularAvatarWithEditIconState
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Circular Avatar
-        Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: AssetImage(
-                widget.image,
-              ), // Replace with your image URL
-              fit: BoxFit.cover,
+        if (widget.file.path.isNotEmpty)
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: FileImage(widget.file),
+                fit: BoxFit.cover,
+              ),
+            ),
+          )
+        else
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage(ImageC.userProfileIcon),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        // Edit Icon in the top-right corner
         Positioned(
           top: 0,
           right: 0,
           child: GestureDetector(
             onTap: () {
-              TaskHelper<File>().executeTaskWithoutError(
+              TaskHelper<File>().executeTaskWithoutLoading(
                 context: context,
                 task: FileHelper.pickImage(),
                 onRight: (f) {
