@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/home/page_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sharewithme/user/application/search_cubit/search_cubit.dart';
 import 'package:sharewithme/user/application/search_cubit/search_state.dart';
-import 'package:sharewithme/user/presentation/_presentation_exporter.dart';
 
 class UserCard extends StatefulWidget {
   final UserEntity userEntity;
@@ -38,14 +36,14 @@ class _UserCardState extends State<UserCard> {
         Expanded(
           child: InkWell(
             onTap: () {
-              widget.pageCubit.updateShowing(false);
-              PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
-                settings: const RouteSettings(name: "/prodsdfile"),
-                context,
-                screen: UserDetailScreen(userEntity: widget.userEntity),
-                withNavBar: true,
-                pageTransitionAnimation: PageTransitionAnimation.cupertino,
-              );
+              // widget.pageCubit.updateShowing(false);
+              // PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+              //   settings: const RouteSettings(name: "/prodsdfile"),
+              //   context,
+              //   screen: UserDetailScreen(userEntity: widget.userEntity),
+              //   withNavBar: true,
+              //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              // );
             },
             child: Card(
               shape: const BeveledRectangleBorder(),

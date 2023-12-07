@@ -1,20 +1,20 @@
 class PageState {
-  final bool showNavigationBar;
+  final int currentIndex;
   PageState({
-    required this.showNavigationBar,
+    required this.currentIndex,
   });
 
   factory PageState.initial() {
     return PageState(
-      showNavigationBar: true,
+      currentIndex: 0,
     );
   }
 
   PageState copyWith({
-    bool? showNavigationBar,
+    int? currentIndex,
   }) {
     return PageState(
-      showNavigationBar: showNavigationBar ?? this.showNavigationBar,
+      currentIndex: currentIndex ?? this.currentIndex,
     );
   }
 
@@ -22,9 +22,9 @@ class PageState {
   bool operator ==(covariant PageState other) {
     if (identical(this, other)) return true;
 
-    return other.showNavigationBar == showNavigationBar;
+    return other.currentIndex == currentIndex;
   }
 
   @override
-  int get hashCode => showNavigationBar.hashCode;
+  int get hashCode => currentIndex.hashCode;
 }

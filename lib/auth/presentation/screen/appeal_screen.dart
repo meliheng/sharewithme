@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/auth/application/apply_cubit/apply_state.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/shared/home/auth_screen_template.dart';
 import 'package:sharewithme/shared/home/screen_template.dart';
 
 class AppealPage extends StatefulWidget {
@@ -17,8 +18,7 @@ class _AppealPageState extends State<AppealPage> {
   final ApplyCubit cubit = ApplyCubit();
   @override
   Widget build(BuildContext context) {
-    return ScreenTemplate(
-      showNavigationBar: false,
+    return AuthScreenTemplate(
       body: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.of(context).size.width - 100,

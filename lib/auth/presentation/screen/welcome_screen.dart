@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/auth/application/navigation/navigation_cubit.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/home/screen_template.dart';
+import 'package:sharewithme/shared/home/auth_screen_template.dart';
 
 class AuthScreen extends StatefulWidget {
   static const route = '/welcome';
@@ -15,8 +15,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var cb = NavigationCubit();
   @override
   Widget build(BuildContext context) {
-    return ScreenTemplate(
-      showNavigationBar: false,
+    return AuthScreenTemplate(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,

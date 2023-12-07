@@ -21,7 +21,7 @@ class RouterManager {
       case UserListScreen.route:
         return pageGenerator(
           UserListScreen(
-            pageCubit: PageCubit.instance(),
+            pageCubit: PageCubit(),
           ),
         );
       case AppealPage.route:

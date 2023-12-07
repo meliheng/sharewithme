@@ -31,27 +31,14 @@ class TextFieldWithIcon extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: Icon(
           icon,
-          color: Colors.blueGrey,
         ),
-        filled: true,
-        fillColor: ColorConstants.primaryWhite,
         hintText: hintText,
         hintStyle: const TextStyle(),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blueGrey),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorConstants.greenV1),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorConstants.grayV1),
         ),
       ),
     );

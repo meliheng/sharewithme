@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/activity/application/_application_exporter.dart';
+import 'package:sharewithme/activity/presentation/widgets/activity_card.dart';
 import 'package:sharewithme/export.dart';
 
 class ActivityScreen extends StatefulWidget {
@@ -22,70 +23,25 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: BlocConsumer<ActivityListCubit, ActivityListState>(
-        bloc: cubit,
-        listener: (context, state) {},
-        builder: (context, state) {
-          return state.status == ActivityListStatus.submitting
-              ? const CircularProgressIndicator()
-              : Column(
-                  children: [
-                    // cubit.getAllActivity(
-                    //     userEntity: widget.authCubit.state.user!),
-                    _buildAddActivityButton(context),
-                  ],
-                );
-        },
-      ),
-    );
-  }
-
-  FloatingActionButton _buildAddActivityButton(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: ColorConstants.primaryOrange,
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AddActivityDialog(cubit: cubit);
-          },
-        );
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection("activities").snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              return ActivityCard(
+                cubit: cubit,
+                activityEntity: ActivityEntity.fromFirestore(
+                  snapshot.data!.docs[index],
+                ),
+              );
+            },
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
       },
-      child: const Icon(Icons.add),
-    );
-  }
-}
-
-class NavigationBar extends StatelessWidget {
-  const NavigationBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            onPressed: () {},
-            iconSize: 30,
-            icon: const Icon(Icons.home),
-          ),
-          IconButton(
-            onPressed: () {},
-            iconSize: 30,
-            icon: const Icon(Icons.person),
-          ),
-          IconButton(
-            onPressed: () {},
-            iconSize: 30,
-            icon: const Icon(Icons.settings),
-          )
-        ],
-      ),
     );
   }
 }

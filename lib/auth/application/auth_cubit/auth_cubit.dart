@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/shared/home/screen_template.dart';
 import 'package:sharewithme/user/domain/usecase/add_user_usecase.dart';
 part 'auth_state.dart';
 
@@ -13,6 +16,14 @@ class AuthCubit extends Cubit<AuthState> {
     emit(
       state.copyWith(
         email: value,
+      ),
+    );
+  }
+
+  void avatarSelected(File file) {
+    emit(
+      state.copyWith(
+        imagePath: file.path,
       ),
     );
   }
@@ -65,6 +76,13 @@ class AuthCubit extends Cubit<AuthState> {
               CustomDialog.success(
                 context: context,
                 message: AuthC.accountCreated,
+                onSubmit: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    LoginScreen.route,
+                    (route) => false,
+                  );
+                },
               );
               // getUser();
             },
@@ -74,50 +92,38 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  // void loginUser(BuildContext context) async {
-  //   emit(state.copyWith(status: AuthStatus.submitting));
-  //   var response = await LoginUsecase.i
-  //       .execute(email: state.email, password: state.password)
-  //       .run();
-  //   Future.delayed(const Duration(seconds: 3));
-  //   response.fold(
-  //     (l) {
-  //       emit(state.copyWith(status: AuthStatus.error));
-  //       if (state.status == AuthStatus.error) {
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           const SnackBar(
-  //             content: Text('Böyle bir hesap zaten mevcut'),
-  //           ),
-  //         );
-  //       }
-  //     },
-  //     (r) {
-  //       emit(
-  //         state.copyWith(status: AuthStatus.success, user: r),
-  //       );
-  //       Navigator.pushAndRemoveUntil(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) {
-  //             return HomeScreen(authCubit: this);
-  //           },
-  //         ),
-  //         (route) => false,
-  //       );
-  //       // Navigator.push(
-  //       //   context,
-  //       //   MaterialPageRoute(
-  //       //     builder: (context) {
-  //       //       return HomeScreen(
-  //       //         authCubit: this,
-  //       //       );
-  //       //     },
-  //       //   ),
-  //       // );
-  //       // print(state.user!.email);
-  //     },
-  //   );
-  // }
+  void loginUser(BuildContext context) async {
+    emit(state.copyWith(status: AuthStatus.submitting));
+    var response = await LoginUsecase.i
+        .execute(email: state.email, password: state.password)
+        .run();
+    Future.delayed(const Duration(seconds: 3));
+    response.fold(
+      (l) {
+        emit(state.copyWith(status: AuthStatus.error));
+        if (state.status == AuthStatus.error) {
+          CustomDialog.error(
+            context: context,
+            message: l.message,
+          );
+        }
+      },
+      (r) {
+        emit(
+          state.copyWith(status: AuthStatus.success),
+        );
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const ScreenTemplate();
+            },
+          ),
+          (route) => false,
+        );
+      },
+    );
+  }
 
   // void getUser() async {
   //   var user = await FirebaseFirestore.instance

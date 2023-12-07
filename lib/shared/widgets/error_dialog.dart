@@ -5,11 +5,13 @@ class CustomDialog {
   static void success({
     required BuildContext context,
     required String message,
+    VoidCallback? onSubmit,
   }) {
     showCustomDialog(
       context: context,
       message: message,
       isSuccess: true,
+      onSubmit: onSubmit,
     );
   }
 
@@ -29,6 +31,7 @@ void showCustomDialog({
   required BuildContext context,
   required String message,
   required bool isSuccess,
+  VoidCallback? onSubmit,
 }) {
   showDialog(
     context: context,
@@ -61,7 +64,10 @@ void showCustomDialog({
                       child: CustomButton(
                         title: StringC.close,
                         color: ColorConstants.primaryOrange,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                          onSubmit?.call();
+                        },
                       ),
                     ),
                   ],

@@ -104,8 +104,6 @@ class ActivityListCubit extends Cubit<ActivityListState> {
                   ActivityCard(
                     cubit: this,
                     activityEntity: ac,
-                    userEntity: userEntity,
-                    isProfileScreen: true,
                   ),
                 );
               }
@@ -114,8 +112,6 @@ class ActivityListCubit extends Cubit<ActivityListState> {
                 ActivityCard(
                   cubit: this,
                   activityEntity: ac,
-                  userEntity: userEntity,
-                  isProfileScreen: false,
                 ),
               );
             }

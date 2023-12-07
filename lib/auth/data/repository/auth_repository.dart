@@ -122,20 +122,41 @@ class AuthRepository extends IAuthRepository {
     );
   }
 
+  TaskEither<BaseFailure, Unit> checkUserIsExists({required String email}) {
+    return TaskEither(
+      () async {
+        var response = await auth.fetchSignInMethodsForEmail(email);
+        if (response.isEmpty) {
+          print("if left girdi");
+          return Either.left(
+            AuthFailures("Böyle bir kullanıcı bulunamadı."),
+          );
+        }
+        return Either.right(unit);
+      },
+    );
+  }
+
   @override
   TaskEither<BaseFailure, UserEntity> signIn(
       {required String email, required String password}) {
-    return TaskEither.tryCatch(() async {
-      var response = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      var user =
-          await db.collection('users').doc(response.user!.uid).get().then(
-                (value) => UserEntity.fromFirestore(value),
-              );
-      return user;
-    }, (error, stackTrace) {
-      return AuthFailures.def();
-    });
+    return checkUserIsExists(email: email).flatMap(
+      (r) => TaskEither.tryCatch(
+        () async {
+          await auth.fetchSignInMethodsForEmail(email);
+          var response = await auth.signInWithEmailAndPassword(
+              email: email, password: password);
+          var user =
+              await db.collection('users').doc(response.user!.uid).get().then(
+                    (value) => UserEntity.fromFirestore(value),
+                  );
+          return user;
+        },
+        (error, stackTrace) {
+          return AuthFailures.def();
+        },
+      ),
+    );
   }
 
   @override

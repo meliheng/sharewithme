@@ -1,9 +1,9 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sharewithme/export.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../application/_application_exporter.dart';
@@ -11,14 +11,10 @@ import '../../application/_application_exporter.dart';
 class ActivityCard extends StatefulWidget {
   final ActivityListCubit cubit;
   final ActivityEntity activityEntity;
-  final UserEntity userEntity;
-  final bool isProfileScreen;
   const ActivityCard({
     super.key,
     required this.cubit,
     required this.activityEntity,
-    required this.userEntity,
-    required this.isProfileScreen,
   });
 
   @override
@@ -26,16 +22,78 @@ class ActivityCard extends StatefulWidget {
 }
 
 class _ActivityCardState extends State<ActivityCard> {
+  ActivityEntity get m => widget.activityEntity;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            child: widget.isProfileScreen ? _slidableCard() : _buildCard(),
-          ),
+    return Container(
+      height: 300,
+      margin: const EdgeInsets.only(
+        bottom: 20,
+      ),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(m.imagePath),
+          fit: BoxFit.cover,
         ),
-      ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const CircleAvatar(),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Melihcan Yıldız",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      m.date.toIso8601String(),
+                      style: TextStyle(
+                        color: ColorConstants.grayV1,
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                SvgPicture.asset(
+                  ImageConstants.optionsIcon,
+                ),
+              ],
+            ),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: ColorConstants.grayV2.withOpacity(.4),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstants.favoriteIcon,
+                      ),
+                      const SizedBox(width: 10),
+                      const Text("5.2k")
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -101,67 +159,67 @@ class _ActivityCardState extends State<ActivityCard> {
               child: _contentRow(),
             ),
             if (widget.activityEntity.imagePath.isNotEmpty) _imageRow(),
-            _actionRow(),
+            // _actionRow(),
           ],
         ),
       ),
     );
   }
 
-  Container _actionRow() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (!widget.activityEntity.likes.contains(widget.userEntity.uid))
-            IconButton(
-              onPressed: () async {
-                await widget.cubit
-                    .likeActivity(widget.activityEntity, widget.userEntity);
-              },
-              icon: const Icon(
-                Icons.favorite_outline,
-                color: Colors.pink,
-                fill: 1,
-              ),
-            )
-          else
-            const IconButton(
-              onPressed: null,
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.pink,
-                fill: 1,
-              ),
-            ),
-          Text(widget.activityEntity.totalLikeString),
-          IconButton(
-            onPressed: () {
-              PersistentNavBarNavigator.pushNewScreen(
-                context,
-                screen: ActivityDetailScreen(
-                  activityEntity: widget.activityEntity,
-                  userEntity: widget.userEntity,
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.comment_outlined,
-              color: Colors.blue,
-              fill: 1,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Container _actionRow() {
+  //   return Container(
+  //     decoration: const BoxDecoration(
+  //       color: Colors.white,
+  //       borderRadius: BorderRadius.only(
+  //         bottomLeft: Radius.circular(10),
+  //         bottomRight: Radius.circular(10),
+  //       ),
+  //     ),
+  //     child: Row(
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: [
+  //         if (!widget.activityEntity.likes.contains(widget.userEntity.uid))
+  //           IconButton(
+  //             onPressed: () async {
+  //               await widget.cubit
+  //                   .likeActivity(widget.activityEntity, widget.userEntity);
+  //             },
+  //             icon: const Icon(
+  //               Icons.favorite_outline,
+  //               color: Colors.pink,
+  //               fill: 1,
+  //             ),
+  //           )
+  //         else
+  //           const IconButton(
+  //             onPressed: null,
+  //             icon: Icon(
+  //               Icons.favorite,
+  //               color: Colors.pink,
+  //               fill: 1,
+  //             ),
+  //           ),
+  //         Text(widget.activityEntity.totalLikeString),
+  //         IconButton(
+  //           onPressed: () {
+  //             // PersistentNavBarNavigator.pushNewScreen(
+  //             //   context,
+  //             //   screen: ActivityDetailScreen(
+  //             //     activityEntity: widget.activityEntity,
+  //             //     userEntity: widget.userEntity,
+  //             //   ),
+  //             // );
+  //           },
+  //           icon: const Icon(
+  //             Icons.comment_outlined,
+  //             color: Colors.blue,
+  //             fill: 1,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Row _imageRow() {
     return Row(

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/shared/home/screen_template.dart';
 import 'package:sharewithme/shared/init/register.dart';
 
 void main() async {
@@ -19,11 +21,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       onGenerateRoute: RouterManager.generateRoute,
       theme: ThemeData(
-        iconTheme: const IconThemeData(
-          color: Colors.white,
+        textSelectionTheme: const TextSelectionThemeData(
+          selectionColor: Colors.red,
         ),
       ),
-      home: const AuthScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const ScreenTemplate();
+          } else {
+            return const AuthScreen();
+          }
+        },
+      ),
       // home: const Scaffold(
       //   bottomNavigationBar: CustomNavigationBar(),
       // ),
