@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/constants/style_constants.dart';
+import 'package:sharewithme/shared/widgets/password_text_field.dart';
 
 class SignUpPage extends StatefulWidget {
   static const route = '/Signup';
@@ -73,10 +74,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      TextFieldWithIcon(
+                      PasswordTextField(
                         hintText: StringC.password,
-                        obscureText: true,
-                        icon: Icons.lock,
                         onChanged: (p0) {
                           cubit.passwordChanged(p0);
                         },

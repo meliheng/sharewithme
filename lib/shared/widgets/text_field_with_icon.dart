@@ -4,7 +4,6 @@ import 'package:sharewithme/export.dart';
 class TextFieldWithIcon extends StatefulWidget {
   final String hintText;
   final IconData icon;
-  final bool obscureText;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final TextInputType? inputType;
@@ -16,7 +15,6 @@ class TextFieldWithIcon extends StatefulWidget {
     required this.onChanged,
     this.validator,
     this.inputType,
-    this.obscureText = false,
     this.controller,
   }) : super(key: key);
 
@@ -51,27 +49,10 @@ class _TextFieldWithIconState extends State<TextFieldWithIcon> {
             focusNode: _focusNode,
             onFocusChange: _onFocusChange,
             child: TextFormField(
-              obscureText: widget.obscureText,
               controller: widget.controller,
               onChanged: widget.onChanged,
               keyboardType: widget.inputType,
               validator: widget.validator,
-              decoration: InputDecoration(
-                hintText: widget.hintText,
-                hintStyle: const TextStyle(),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: ColorConstants.primaryBlue,
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: ColorConstants.grayV1,
-                    width: 2,
-                  ),
-                ),
-              ),
             ),
           ),
         ),

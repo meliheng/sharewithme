@@ -19,11 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateRoute: RouterManager.generateRoute,
-      theme: ThemeData(
-        textSelectionTheme: const TextSelectionThemeData(
-          selectionColor: Colors.red,
-        ),
-      ),
+      theme: AppTheme.appTheme(),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
