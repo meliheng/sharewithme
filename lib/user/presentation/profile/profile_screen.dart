@@ -117,15 +117,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //print(cubit.state.user!.email);
                       // await widget.authCubit.logout(context);
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context, rootNavigator: true)
-                          .pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const AuthScreen();
-                          },
-                        ),
-                        (route) => false,
-                      );
+                      // Navigator.of(context, rootNavigator: true)
+                      //     .pushAndRemoveUntil(
+                      //   MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return const AuthScreen();
+                      //     },
+                      //   ),
+                      //   (route) => false,
+                      // );
                     },
                   ),
                   const SizedBox(
@@ -139,15 +139,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //print(cubit.state.user!.email);
                       // await widget.authCubit.deleteAccount(context);
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context, rootNavigator: true)
-                          .pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const AuthScreen();
-                          },
-                        ),
-                        (route) => false,
-                      );
+                      // Navigator.of(context, rootNavigator: true)
+                      //     .pushAndRemoveUntil(
+                      //   MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return const AuthScreen();
+                      //     },
+                      //   ),
+                      //   (route) => false,
+                      // );
                     },
                   ),
                   const SizedBox(

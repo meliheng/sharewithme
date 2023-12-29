@@ -3,30 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/constants/style_constants.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const route = '/Login';
-  const LoginScreen({super.key});
+class ForgetPasswordScreen extends StatefulWidget {
+  static const route = '/ForgetPassword';
+  const ForgetPasswordScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final AuthCubit cubit = AuthCubit();
   @override
   Widget build(BuildContext context) {
     return AuthScreenTemplate(
-      showAppBar: true,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Image.asset(
-              ImageConstants.loginImage,
-              height: MediaQuery.sizeOf(context).height * .3,
-            ),
-          ),
+          Image.asset(ImageConstants.loginImage),
           Text(
             StringC.signIn,
             style: StyleContants.blackBold20,
@@ -88,6 +82,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 20),
                       const GoogleButton(),
+                      const SizedBox(height: 20),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Colors.grey,
+                          ),
+                          children: [
+                            TextSpan(text: AuthStringConstants.newToHere),
+                            const TextSpan(text: " "),
+                            TextSpan(
+                              text: AuthStringConstants.register,
+                              style: StyleContants.blueMedium,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 );

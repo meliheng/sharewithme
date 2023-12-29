@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
@@ -33,7 +34,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(ImageConstants.signupImage),
+                      Image.asset(
+                        ImageConstants.signupImage,
+                      ),
                       // CircularAvatarWithEditIcon(
                       //   file: cubit.state.avatar,
                       //   onFileSelected: cubit.avatarSelected,
@@ -145,6 +148,13 @@ class _SignUpPageState extends State<SignUpPage> {
                             TextSpan(text: AuthStringConstants.joinUsBefore),
                             const TextSpan(text: " "),
                             TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    LoginScreen.route,
+                                  );
+                                },
                               text: StringConstants.login,
                               style: StyleContants.blueMedium,
                             ),

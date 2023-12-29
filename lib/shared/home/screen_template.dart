@@ -1,16 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:sharewithme/activity/domain/_domain_exporter.dart';
 import 'package:sharewithme/custom_navigation_bar.dart';
 import 'package:sharewithme/shared/constants/image_constants.dart';
 import 'package:sharewithme/shared/constants/string_constants.dart';
-import 'package:sharewithme/shared/helper/task_helper.dart';
 import 'package:sharewithme/shared/home/page_cubit.dart';
 import 'package:sharewithme/shared/home/page_state.dart';
 
