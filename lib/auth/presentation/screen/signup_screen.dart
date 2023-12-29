@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sharewithme/auth/presentation/avatar_widget.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/home/auth_screen_template.dart';
-import 'package:sharewithme/shared/vo/status_enum.dart';
+import 'package:sharewithme/shared/constants/style_constants.dart';
 
 class SignUpPage extends StatefulWidget {
   static const route = '/Signup';
@@ -22,15 +20,6 @@ class _SignUpPageState extends State<SignUpPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            StringC.signUp,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xff262626),
-              fontSize: 18,
-            ),
-          ),
-          const SizedBox(height: 40),
           BlocConsumer<SignUpCubit, SignUpState>(
             bloc: cubit,
             listener: (context, state) {},
@@ -44,9 +33,18 @@ class _SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CircularAvatarWithEditIcon(
-                        file: cubit.state.avatar,
-                        onFileSelected: cubit.avatarSelected,
+                      Image.asset(ImageConstants.signupImage),
+                      // CircularAvatarWithEditIcon(
+                      //   file: cubit.state.avatar,
+                      //   onFileSelected: cubit.avatarSelected,
+                      // ),
+                      Row(
+                        children: [
+                          Text(
+                            StringC.signUp,
+                            style: StyleContants.blackBold20,
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 40,
@@ -80,33 +78,78 @@ class _SignUpPageState extends State<SignUpPage> {
                           cubit.passwordChanged(p0);
                         },
                       ),
-                      const SizedBox(height: 5),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 20,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Colors.grey,
                           ),
-                          SubmitButton(
-                            title: StringC.signUp,
-                            onTap: () {
-                              cubit.createUser(context);
-                              // if (_formKey.currentState!.validate()) {
-                              //   cubit.checkUser(context);
-                              //   // cubit.getUser();
+                          children: [
+                            TextSpan(
+                              text:
+                                  AuthStringConstants.bySignUpYouareAgreeToOur,
+                            ),
+                            TextSpan(
+                              text: AuthStringConstants.termAndCondition,
+                              style: StyleContants.blueMediumBold,
+                            ),
+                            TextSpan(
+                              text: AuthStringConstants.and,
+                            ),
+                            TextSpan(
+                              text: AuthStringConstants.privacyPolicy,
+                              style: StyleContants.blueMediumBold,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SubmitButton(
+                              title: StringC.signUp,
+                              onTap: () {
+                                cubit.createUser(context);
+                                // if (_formKey.currentState!.validate()) {
+                                //   cubit.checkUser(context);
+                                //   // cubit.getUser();
 
-                              //   // Navigator.pushAndRemoveUntil(context,
-                              //   //     MaterialPageRoute(
-                              //   //   builder: (context) {
-                              //   //     return HomeScreen(
-                              //   //       authCubit: cubit,
-                              //   //     );
-                              //   //   },
-                              //   // ), (route) => false);
-                              // }
-                            },
+                                //   // Navigator.pushAndRemoveUntil(context,
+                                //   //     MaterialPageRoute(
+                                //   //   builder: (context) {
+                                //   //     return HomeScreen(
+                                //   //       authCubit: cubit,
+                                //   //     );
+                                //   //   },
+                                //   // ), (route) => false);
+                                // }
+                              },
+                            ),
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Colors.grey,
+                          ),
+                          children: [
+                            TextSpan(text: AuthStringConstants.joinUsBefore),
+                            const TextSpan(text: " "),
+                            TextSpan(
+                              text: StringConstants.login,
+                              style: StyleContants.blueMedium,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

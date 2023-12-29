@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,8 +7,6 @@ import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/application/user_cubit/user_cubit.dart';
 import 'package:sharewithme/user/presentation/profile/add_dialog.dart';
 import 'package:sharewithme/user/presentation/profile/setting_list_tile.dart';
-
-import '../../../activity/application/_application_exporter.dart';
 import '../../application/user_cubit/user_state.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -159,8 +155,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   _followersCard(),
                   _aboutMeCard(context),
-                  context.read<ActivityListCubit>().getAllActivity(
-                      userEntity: userCubit.state.userEntity, onlyOwn: true),
+                  // context.read<ActivityListCubit>().getAllActivity(
+                  //     userEntity: userCubit.state.userEntity, onlyOwn: true),
                 ],
               ),
             ),

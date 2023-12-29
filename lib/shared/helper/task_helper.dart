@@ -1,9 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
-import 'package:sharewithme/shared/failures/base_failure.dart';
 
 class TaskHelper<T> {
   void executeTask({
@@ -59,6 +57,45 @@ class TaskHelper<T> {
         return const Dialog(
           backgroundColor: Colors.red,
           child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  FutureBuilder futureBuilder({
+    required BuildContext context,
+    required TaskEither<BaseFailure, T> task,
+    required Widget Function(BaseFailure) onLeft,
+    required Widget Function(T) onRight,
+    String? key,
+    Option<Widget Function()> loadingBuilder = const None(),
+    int? loadingFlex,
+  }) {
+    return FutureBuilder<Either<BaseFailure, T>>(
+      key: key != null ? Key(key) : null,
+      future: task.run(),
+      builder: (context, s) {
+        if (s.connectionState == ConnectionState.waiting) {
+          return loadingBuilder.match(
+            () {
+              if (loadingFlex == null) {
+                return const LoadingGif();
+              } else {
+                return Expanded(
+                  flex: loadingFlex,
+                  child: const LoadingGif(),
+                );
+              }
+            },
+            (t) => t(),
+          );
+        }
+        if (s.data == null) {
+          return onLeft(AuthFailures.def());
+        }
+        return s.data!.fold(
+          (l) => onLeft(l),
+          (r) => onRight(r),
         );
       },
     );

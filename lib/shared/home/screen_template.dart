@@ -1,8 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -47,19 +46,20 @@ class ScreenTemplate extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () async {
-                  final pickerFile = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-                  if (pickerFile != null) {
-                    File file = File(pickerFile.path);
-                    TaskHelper().executeTask(
-                      context: context,
-                      task: AddActivityUsecase.i.execute(
-                        activityEntity:
-                            ActivityEntity.def().copyWith(imagePath: file.path),
-                        file: file,
-                      ),
-                    );
-                  }
+                  await FirebaseAuth.instance.signOut();
+                  // final pickerFile = await ImagePicker()
+                  //     .pickImage(source: ImageSource.gallery);
+                  // if (pickerFile != null) {
+                  //   File file = File(pickerFile.path);
+                  //   TaskHelper().executeTask(
+                  //     context: context,
+                  //     task: AddActivityUsecase.i.execute(
+                  //       activityEntity:
+                  //           ActivityEntity.def().copyWith(imagePath: file.path),
+                  //       file: file,
+                  //     ),
+                  //   );
+                  // }
                   // final ImagePicker picker = ImagePicker();
                   // // Pick an image.
                   // final XFile? image =

@@ -52,5 +52,6 @@ flutter:
         - asset: assets/fonts/Poppins-Regular.ttf
   assets:
     - assets/icons/
+    - assets/images/
     - assets/gifs/
   uses-material-design: true

@@ -107,4 +107,20 @@ class UserRepository extends IUserRepository {
       },
     );
   }
+
+  @override
+  TaskEither<BaseFailure, UserEntity> getById(String id) {
+    return TaskEither.tryCatch(
+      () async {
+        return db.collection("users").doc(id).get().then(
+          (value) {
+            return UserEntity.fromFirestore(value);
+          },
+        );
+      },
+      (error, stackTrace) {
+        return AuthFailures.def();
+      },
+    );
+  }
 }

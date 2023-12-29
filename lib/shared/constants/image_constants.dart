@@ -1,6 +1,6 @@
 class ImageConstants {
   static String get appIcon => 'assets/icons/app_icon.png';
-  static String get loadingGif => 'assets/gifs/Walk.gif';
+  static String get loadingGif => 'assets/gifs/loading_gif.gif';
   static String get checkIcon => 'assets/icons/checked.png';
   static String get errorIcon => 'assets/icons/close.png';
 
@@ -13,6 +13,10 @@ class ImageConstants {
   static String get addIcon => "assets/icons/addicon.svg";
   static String get signupIcon => "assets/icons/signup.png";
   static String get userProfileIcon => "assets/icons/user.png";
+  static String get signupImage => "assets/images/signup-image.png";
+  static String get loginImage => "assets/images/login-image.png";
+
+  static String get googleIcon => "assets/icons/google-icon.png";
 }
 
 typedef ImageC = ImageConstants;

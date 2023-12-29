@@ -84,4 +84,26 @@ class ActivityRepository extends IActivityRepository {
       },
     );
   }
+
+  @override
+  TaskEither<BaseFailure, Unit> like(
+      {required String id, required String userId}) {
+    return TaskEither.tryCatch(
+      () async {
+        DocumentReference ref =
+            FirebaseFirestore.instance.collection('activities').doc(id);
+        ref.update(
+          {
+            'likes': FieldValue.arrayUnion(
+              [userId],
+            ),
+          },
+        );
+        return unit;
+      },
+      (error, stackTrace) {
+        return AuthFailures.def();
+      },
+    );
+  }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/constants/style_constants.dart';
-import 'package:sharewithme/shared/home/auth_screen_template.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = '/Login';

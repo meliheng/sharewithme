@@ -220,7 +220,10 @@ class AuthRepository extends IAuthRepository {
           var uploadTask = await storageRef.putFile(file);
           var downloadPath = await uploadTask.ref.getDownloadURL();
 
-          await db.collection("users").doc(email).set({'avatar': downloadPath});
+          await db
+              .collection("users")
+              .doc(email)
+              .update({'avatar': downloadPath});
           return downloadPath;
         } else {
           return '';

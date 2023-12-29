@@ -5,6 +5,7 @@ import 'package:sharewithme/shared/failures/base_failure.dart';
 
 abstract class IUserRepository {
   TaskEither<BaseFailure, List<UserEntity>> getAll();
+  TaskEither<BaseFailure, UserEntity> getById(String id);
   TaskEither<BaseFailure, Unit> add({required UserEntity userEntity});
   TaskEither<BaseFailure, Unit> follow({required UserEntity userEntity});
   TaskEither<BaseFailure, Unit> unFollow({required UserEntity userEntity});

@@ -1,5 +1,6 @@
 class StringConstants {
   static String get signIn => "Sign In";
+  static String get login => "Login";
   static String get createAccount => "Create Account";
   static String get applyNow => "Apply Now";
   static String get appName => "Share With Me";

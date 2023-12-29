@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/shared/home/screen_template.dart';
 import 'package:sharewithme/shared/vo/status_enum.dart';
 import 'package:sharewithme/user/domain/repository/i_user_repository.dart';
 
@@ -84,9 +84,11 @@ class SignUpCubit extends Cubit<SignUpState> {
             context: context,
             message: AuthC.accountCreated,
             onSubmit: () {
-              Navigator.pushNamedAndRemoveUntil(
+              Navigator.pushAndRemoveUntil(
                 context,
-                LoginScreen.route,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenTemplate(),
+                ),
                 (route) => false,
               );
             },

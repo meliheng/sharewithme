@@ -14,15 +14,16 @@ class SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: ColorConstants.primaryOrange,
+          borderRadius: BorderRadius.circular(10),
+          color: ColorConstants.primaryBlue,
         ),
         child: Text(
           title,
+          textAlign: TextAlign.center,
           style: const TextStyle(color: Colors.white),
         ),
       ),

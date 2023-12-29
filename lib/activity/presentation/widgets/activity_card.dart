@@ -1,19 +1,11 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:sharewithme/export.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import '../../application/_application_exporter.dart';
 
 class ActivityCard extends StatefulWidget {
-  final ActivityListCubit cubit;
   final ActivityEntity activityEntity;
   const ActivityCard({
     super.key,
-    required this.cubit,
     required this.activityEntity,
   });
 
@@ -23,6 +15,14 @@ class ActivityCard extends StatefulWidget {
 
 class _ActivityCardState extends State<ActivityCard> {
   ActivityEntity get m => widget.activityEntity;
+  late ActivityCubit cb;
+  @override
+  void initState() {
+    super.initState();
+    print('activity card init');
+    cb = ActivityCubit(activityEntity: m);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,11 +49,25 @@ class _ActivityCardState extends State<ActivityCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Melihcan Yıldız",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                    TaskHelper<UserEntity>().futureBuilder(
+                      context: context,
+                      task: cb.userRepository.getById(m.userId),
+                      onLeft: (_) {
+                        return const Text(
+                          '-',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                      onRight: (s) {
+                        return Text(
+                          s.username,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        );
+                      },
                     ),
                     Text(
                       m.date.toIso8601String(),
@@ -73,93 +87,12 @@ class _ActivityCardState extends State<ActivityCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: ColorConstants.grayV2.withOpacity(.4),
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        ImageConstants.favoriteIcon,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text("5.2k")
-                    ],
-                  ),
+                LikeButton(
+                  likes: m.likes,
+                  onTap: cb.likeActivity,
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Slidable _slidableCard() {
-    return Slidable(
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (context) {
-              CoolAlert.show(
-                context: context,
-                type: CoolAlertType.error,
-                cancelBtnText: "İptal",
-                confirmBtnText: "Sil",
-                title: "Opsss...",
-                showCancelBtn: true,
-                confirmBtnColor: ColorConstants.primaryOrange,
-                text: 'Silmek istediğine emin misin?',
-                onConfirmBtnTap: () {
-                  widget.cubit
-                      .deleteActivity(activityEntity: widget.activityEntity);
-                },
-              );
-            },
-            backgroundColor: const Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-            label: 'Delete',
-          ),
-        ],
-      ),
-      child: _buildNormalCard(),
-    );
-  }
-
-  Card _buildNormalCard() {
-    return Card(
-      elevation: 2,
-      color: ColorConstants.kBlue,
-      surfaceTintColor: Colors.blue,
-      shape: ContinuousRectangleBorder(
-        side: BorderSide(
-          width: 1,
-          color: ColorConstants.kBlue,
-        ),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _firstRow(),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _contentRow(),
-            ),
-            if (widget.activityEntity.imagePath.isNotEmpty) _imageRow(),
-            // _actionRow(),
           ],
         ),
       ),
@@ -220,96 +153,4 @@ class _ActivityCardState extends State<ActivityCard> {
   //     ),
   //   );
   // }
-
-  Row _imageRow() {
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CachedNetworkImage(
-              fit: BoxFit.fitWidth,
-              height: 300,
-              progressIndicatorBuilder: (context, url, progress) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              imageUrl: widget.activityEntity.imagePath,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row _contentRow() {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(widget.activityEntity.content),
-        ),
-      ],
-    );
-  }
-
-  Row _firstRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white),
-            child: Text(widget.activityEntity.username),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            DateFormat.yMMMMEEEEd().format(widget.activityEntity.date),
-            textAlign: TextAlign.end,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Slidable _buildCard() {
-    return Slidable(
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (context) {
-              CoolAlert.show(
-                context: context,
-                type: CoolAlertType.error,
-                cancelBtnText: "İptal",
-                confirmBtnText: "Şikayet Et",
-                title: "Emin misin?",
-                showCancelBtn: true,
-                confirmBtnColor: ColorConstants.primaryOrange,
-                text: 'Şikayet etmek istediğine emin misin?',
-                onConfirmBtnTap: () {
-                  widget.cubit.addComplaint(
-                    activityEntity: widget.activityEntity,
-                    context: context,
-                  );
-                },
-              );
-            },
-            backgroundColor: const Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
-            icon: FontAwesomeIcons.xmark,
-            label: 'Şikayet Et',
-          ),
-        ],
-      ),
-      child: _buildNormalCard(),
-    );
-  }
 }

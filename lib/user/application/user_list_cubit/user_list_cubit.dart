@@ -1,12 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/user/domain/usecase/follow_user_usecase.dart';
-
 import '../../domain/usecase/get_all_user_usecase.dart';
-
 part 'user_list_state.dart';
 
 class UserListCubit extends Cubit<UserListState> {

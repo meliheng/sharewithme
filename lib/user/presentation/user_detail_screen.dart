@@ -1,9 +1,5 @@
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
-
-import '../../activity/application/_application_exporter.dart';
 
 class UserDetailScreen extends StatefulWidget {
   final UserEntity userEntity;
@@ -57,8 +53,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 ),
                 _followersCard(),
                 _aboutMeCard(context),
-                context.read<ActivityListCubit>().getAllActivity(
-                    userEntity: widget.userEntity, onlyOwn: true),
+                // context.read<ActivityListCubit>().getAllActivity(
+                //     userEntity: widget.userEntity, onlyOwn: true),
               ],
             ),
           ),

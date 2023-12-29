@@ -1,10 +1,7 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
-
-import '../../application/_application_exporter.dart';
 
 class AddActivityDialog extends StatefulWidget {
   const AddActivityDialog({
@@ -70,7 +67,6 @@ class _AddActivityDialogState extends State<AddActivityDialog> {
               color: ColorConstants.primaryOrange,
               onPressed: () {
                 widget.cubit.addActivity(context);
-                widget.cubit.getActivities(context);
               },
             )
           ],
