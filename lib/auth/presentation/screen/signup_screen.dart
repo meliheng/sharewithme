@@ -27,7 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
             listener: (context, state) {},
             builder: (context, state) {
               if (state.status.isSubmitting) {
-                return const LoadingGif();
+                return const LoadingDialog();
               } else {
                 return Form(
                   key: cubit.formKey,

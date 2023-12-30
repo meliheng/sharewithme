@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/home/screen_template.dart';
 import 'package:sharewithme/user/domain/repository/i_user_repository.dart';
 part 'auth_state.dart';
 
@@ -51,6 +50,13 @@ class AuthCubit extends Cubit<AuthState> {
     var response = await LoginUsecase.i
         .execute(email: state.email, password: state.password)
         .run();
+    // ignore: use_build_context_synchronously
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const LoadingDialog();
+      },
+    );
     Future.delayed(const Duration(seconds: 3));
     response.fold(
       (l) {
@@ -69,9 +75,7 @@ class AuthCubit extends Cubit<AuthState> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) {
-              return const ScreenTemplate();
-            },
+            builder: (context) => const ScreenTemplate(),
           ),
           (route) => false,
         );

@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/domain/repository/i_user_repository.dart';
-import 'package:uuid/uuid.dart';
 
 class ActivityListCubit extends Cubit<ActivityListState> {
   ActivityListCubit() : super(ActivityListState.initial());
@@ -29,38 +29,31 @@ class ActivityListCubit extends Cubit<ActivityListState> {
   void addActivity(BuildContext context) async {
     emit(state.copyWith(status: ActivityListStatus.submitting));
     final user = FirebaseAuth.instance.currentUser;
-    var response = await AddActivityUsecase.i
-        .execute(
-          activityEntity: ActivityEntity(
-            userId: user!.uid,
-            date: state.date,
-            id: const Uuid().v1(),
-            likes: [],
-            imagePath: '',
+    final userEntity = (await userRepository.getById(user!.email ?? '').run())
+        .fold((l) => null, (r) => r);
+    final pickerFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickerFile != null) {
+      File file = File(pickerFile.path);
+      // ignore: use_build_context_synchronously
+      TaskHelper().executeTask(
+        context: context,
+        task: AddActivityUsecase.i.execute(
+          activityEntity: ActivityEntity.def().copyWith(
+            imagePath: file.path,
+            date: DateTime.now(),
+            userId: user.email,
+            username: userEntity!.username,
           ),
-          file: state.image,
-        )
-        .run();
-    Future.delayed(const Duration(seconds: 3));
-    response.fold(
-      (l) {
-        emit(state.copyWith(status: ActivityListStatus.error));
-        if (state.status == ActivityListStatus.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Birşeyler yanlış gitti 🧐'),
-            ),
+          file: file,
+        ),
+        onRight: (p0) {
+          emit(
+            state.copyWith(status: ActivityListStatus.success),
           );
-        }
-      },
-      (r) {
-        emit(
-          state.copyWith(status: ActivityListStatus.success),
-        );
-        Navigator.pop(context);
-        emit(state.copyWith());
-      },
-    );
+        },
+      );
+    }
   }
 
   // StreamBuilder getAllActivity(

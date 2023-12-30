@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/constants/style_constants.dart';
+import 'package:sharewithme/shared/widgets/password_text_field.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   static const route = '/ForgetPassword';
@@ -31,7 +32,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             listener: (context, state) {},
             builder: (context, state) {
               if (state.status == AuthStatus.submitting) {
-                return const LoadingGif();
+                return const LoadingDialog();
               } else {
                 return Form(
                   key: cubit.formKey,
@@ -50,13 +51,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       const SizedBox(
                         height: 30,
                       ),
-                      TextFieldWithIcon(
+                      PasswordTextField(
                         hintText: StringC.password,
-                        icon: Icons.lock,
                         onChanged: (p0) {
                           cubit.passwordChanged(p0);
                         },
-                        obscureText: true,
                       ),
                       const SizedBox(height: 10),
                       Row(
