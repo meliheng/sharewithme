@@ -79,11 +79,11 @@ class TaskHelper<T> {
           return loadingBuilder.match(
             () {
               if (loadingFlex == null) {
-                return const LoadingGif();
+                return const LoadingDialog();
               } else {
                 return Expanded(
                   flex: loadingFlex,
-                  child: const LoadingGif(),
+                  child: const LoadingDialog(),
                 );
               }
             },
