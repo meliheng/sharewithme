@@ -8,6 +8,7 @@ import 'package:sharewithme/activity/domain/model/activity_entity.dart';
 import 'package:sharewithme/activity/domain/repository/i_activity_repository.dart';
 import 'package:sharewithme/shared/failures/auth_failures.dart';
 import 'package:sharewithme/shared/failures/base_failure.dart';
+import 'package:uuid/uuid.dart';
 
 class ActivityRepository extends IActivityRepository {
   final db = FirebaseFirestore.instance;
@@ -19,25 +20,20 @@ class ActivityRepository extends IActivityRepository {
   }) {
     return TaskEither.tryCatch(
       () async {
-        if (file.path.isNotEmpty) {
-          final storageRef = FirebaseStorage.instance
-              .ref(FirebaseAuth.instance.currentUser!.email)
-              .child("post_image");
-          var uploadTask = await storageRef.putFile(file);
-          var downloadPath = await uploadTask.ref.getDownloadURL();
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('/${FirebaseAuth.instance.currentUser!.email}')
+            .child('/postimage_${const Uuid().v1()}');
+        var uploadTask = await storageRef.putFile(file);
+        var downloadPath = await uploadTask.ref.getDownloadURL();
 
-          await db
-              .collection("activities")
-              .doc()
-              .set(activityEntity.copyWith(imagePath: downloadPath).toMap());
-          return unit;
-        } else {
-          await db.collection("activities").doc().set(activityEntity.toMap());
-          return unit;
-        }
+        await db
+            .collection("activities")
+            .doc()
+            .set(activityEntity.copyWith(imagePath: downloadPath).toMap());
+        return unit;
       },
       (error, stackTrace) {
-        print(error);
         return AuthFailures.def();
       },
     );
@@ -48,8 +44,6 @@ class ActivityRepository extends IActivityRepository {
     return TaskEither.tryCatch(
       () async {
         List<ActivityEntity> activities = [];
-        await db.collection("activities").snapshots();
-
         await db.collection("activities").get().then(
           (querySnapshot) {
             for (var item in querySnapshot.docs) {
