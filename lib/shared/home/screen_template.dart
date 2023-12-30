@@ -4,11 +4,9 @@ import 'package:sharewithme/custom_navigation_bar.dart';
 import 'package:sharewithme/export.dart';
 
 class ScreenTemplate extends StatelessWidget {
-  final Widget? body;
   final VoidCallback? onFloatActionButtonPressed;
   const ScreenTemplate({
     super.key,
-    this.body,
     this.onFloatActionButtonPressed,
   });
 
@@ -20,6 +18,7 @@ class ScreenTemplate extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+          backgroundColor: ColorConstants.grayV2,
           appBar: CustomAppBar(
             appBar: AppBar(),
           ),
@@ -28,7 +27,7 @@ class ScreenTemplate extends StatelessWidget {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width - 30,
                 height: MediaQuery.of(context).size.height,
-                child: body ?? cubit.getCurrentScreen,
+                child: cubit.getCurrentScreen,
               ),
             ),
           ),

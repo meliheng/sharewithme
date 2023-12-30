@@ -50,6 +50,9 @@ flutter:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
   assets:
     - assets/icons/
     - assets/images/
