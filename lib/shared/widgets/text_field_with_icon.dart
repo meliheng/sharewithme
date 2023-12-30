@@ -53,6 +53,7 @@ class _TextFieldWithIconState extends State<TextFieldWithIcon> {
               onChanged: widget.onChanged,
               keyboardType: widget.inputType,
               validator: widget.validator,
+              decoration: InputDecoration(hintText: widget.hintText),
             ),
           ),
         ),
