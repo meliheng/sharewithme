@@ -1,20 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:sharewithme/custom_navigation_bar.dart';
-import 'package:sharewithme/shared/constants/image_constants.dart';
-import 'package:sharewithme/shared/constants/string_constants.dart';
-import 'package:sharewithme/shared/home/page_cubit.dart';
-import 'package:sharewithme/shared/home/page_state.dart';
+import 'package:sharewithme/export.dart';
 
 class ScreenTemplate extends StatelessWidget {
   final Widget? body;
-  final bool showNavigationBar;
+  final VoidCallback? onFloatActionButtonPressed;
   const ScreenTemplate({
     super.key,
     this.body,
-    this.showNavigationBar = true,
+    this.onFloatActionButtonPressed,
   });
 
   @override
@@ -25,44 +20,8 @@ class ScreenTemplate extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.white,
-            centerTitle: false,
-            title: Text(
-              StringC.appName,
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            actions: [
-              IconButton(
-                padding: EdgeInsets.zero,
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                  // final pickerFile = await ImagePicker()
-                  //     .pickImage(source: ImageSource.gallery);
-                  // if (pickerFile != null) {
-                  //   File file = File(pickerFile.path);
-                  //   TaskHelper().executeTask(
-                  //     context: context,
-                  //     task: AddActivityUsecase.i.execute(
-                  //       activityEntity:
-                  //           ActivityEntity.def().copyWith(imagePath: file.path),
-                  //       file: file,
-                  //     ),
-                  //   );
-                  // }
-                  // final ImagePicker picker = ImagePicker();
-                  // // Pick an image.
-                  // final XFile? image =
-                  //     await picker.pickImage(source: ImageSource.gallery);
-                  // final File file = File(image!.path);
-                },
-                icon: SvgPicture.asset(ImageC.addIcon),
-              ),
-            ],
+          appBar: CustomAppBar(
+            appBar: AppBar(),
           ),
           body: Center(
             child: SingleChildScrollView(
@@ -73,13 +32,12 @@ class ScreenTemplate extends StatelessWidget {
               ),
             ),
           ),
+          floatingActionButton: cubit.showFloatActionButton(context),
           extendBody: true,
           extendBodyBehindAppBar: true,
-          bottomNavigationBar: showNavigationBar
-              ? CustomNavigationBar(
-                  cubit: cubit,
-                )
-              : null,
+          bottomNavigationBar: CustomNavigationBar(
+            cubit: cubit,
+          ),
         );
       },
     );
