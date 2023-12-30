@@ -1,6 +1,6 @@
 class ImageConstants {
   static String get appIcon => 'assets/images/logo.png';
-  static String get loadingGif => 'assets/gifs/loading_gif.gif';
+  static String get loadingGif => 'assets/gifs/loading-gif.gif';
   static String get checkIcon => 'assets/icons/checked.png';
   static String get errorIcon => 'assets/icons/close.png';
 
