@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
 
-class PageCubit extends Cubit<PageState> {
-  PageCubit() : super(PageState.initial());
+class NavigationBarCubit extends Cubit<NavigationBarState> {
+  NavigationBarCubit() : super(NavigationBarState.initial());
 
   void changeIndex(int index) {
     emit(state.copyWith(currentIndex: index));
@@ -25,7 +25,7 @@ class PageCubit extends Cubit<PageState> {
   }
 
   Color? iconColor(int index) =>
-      index == state.currentIndex ? ColorConstants.greenV1 : null;
+      index == state.currentIndex ? ColorConstants.primaryBlue : null;
   List<Widget> get screens => [
         ActivityScreen(authCubit: AuthCubit()),
         Container(),

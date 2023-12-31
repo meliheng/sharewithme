@@ -12,8 +12,8 @@ class ScreenTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageCubit cubit = PageCubit();
-    return BlocConsumer<PageCubit, PageState>(
+    final NavigationBarCubit cubit = NavigationBarCubit();
+    return BlocConsumer<NavigationBarCubit, NavigationBarState>(
       bloc: cubit,
       listener: (context, state) {},
       builder: (context, state) {

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/home/page_cubit.dart';
+import 'package:sharewithme/shared/home/navigation_bar_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sharewithme/user/application/search_cubit/search_cubit.dart';
 import 'package:sharewithme/user/application/search_cubit/search_state.dart';
@@ -10,7 +10,7 @@ import 'package:sharewithme/user/application/search_cubit/search_state.dart';
 class UserCard extends StatefulWidget {
   final UserEntity userEntity;
 
-  final PageCubit pageCubit;
+  final NavigationBarCubit pageCubit;
   const UserCard({
     super.key,
     required this.userEntity,
