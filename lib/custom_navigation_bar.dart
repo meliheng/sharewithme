@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sharewithme/shared/constants/image_constants.dart';
-import 'package:sharewithme/shared/home/page_cubit.dart';
+import 'package:sharewithme/shared/home/navigation_bar_cubit.dart';
 
 class CustomNavigationBar extends StatefulWidget {
-  final PageCubit cubit;
+  final NavigationBarCubit cubit;
   const CustomNavigationBar({
     super.key,
     required this.cubit,
@@ -57,7 +56,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   widget.cubit.changeIndex(1);
                 },
                 child: SvgPicture.asset(
-                  ImageConstants.favoriteIcon,
+                  ImageConstants.searchIcon,
                   color: widget.cubit.iconColor(1),
                   height: 30,
                 ),
@@ -66,12 +65,24 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
             Material(
               child: InkWell(
                 onTap: () {
+                  widget.cubit.changeIndex(2);
+                },
+                child: SvgPicture.asset(
+                  ImageConstants.favoriteIcon,
+                  color: widget.cubit.iconColor(2),
+                  height: 30,
+                ),
+              ),
+            ),
+            Material(
+              child: InkWell(
+                onTap: () {
                   // widget.cubit.changeIndex(2);
-                  FirebaseAuth.instance.signOut();
+                  // FirebaseAuth.instance.signOut();
                 },
                 child: SvgPicture.asset(
                   ImageConstants.profileIcon,
-                  color: widget.cubit.iconColor(2),
+                  color: widget.cubit.iconColor(3),
                   height: 30,
                 ),
               ),

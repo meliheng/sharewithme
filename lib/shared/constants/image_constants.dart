@@ -4,6 +4,7 @@ class ImageConstants {
   static String get checkIcon => 'assets/icons/checked.png';
   static String get errorIcon => 'assets/icons/close.png';
 
+  static String get searchIcon => 'assets/icons/searchicon.svg';
   static String get homeIcon => "assets/icons/homeicon.svg";
   static String get profileIcon => "assets/icons/profileicon.svg";
   static String get favoriteIcon => "assets/icons/favoriteicon.svg";

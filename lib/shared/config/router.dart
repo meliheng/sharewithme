@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/user/user_export.dart';
 
 class RouterManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -15,12 +14,7 @@ class RouterManager {
             authCubit: AuthCubit(),
           ),
         );
-      case UserListScreen.route:
-        return pageGenerator(
-          UserListScreen(
-            pageCubit: PageCubit(),
-          ),
-        );
+
       default:
         return pageGenerator(const Text("error"));
     }
