@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/custom_navigation_bar.dart';
 import 'package:sharewithme/export.dart';
 
-class ScreenTemplate extends StatelessWidget {
+class ScreenTemplate extends StatefulWidget {
   final VoidCallback? onFloatActionButtonPressed;
   const ScreenTemplate({
     super.key,
@@ -11,8 +11,14 @@ class ScreenTemplate extends StatelessWidget {
   });
 
   @override
+  State<ScreenTemplate> createState() => _ScreenTemplateState();
+}
+
+class _ScreenTemplateState extends State<ScreenTemplate> {
+  final NavigationBarCubit cubit = NavigationBarCubit();
+
+  @override
   Widget build(BuildContext context) {
-    final NavigationBarCubit cubit = NavigationBarCubit();
     return BlocConsumer<NavigationBarCubit, NavigationBarState>(
       bloc: cubit,
       listener: (context, state) {},
@@ -26,7 +32,11 @@ class ScreenTemplate extends StatelessWidget {
             child: Center(
               child: SizedBox(
                 width: MediaQuery.of(context).size.width - 30,
-                child: cubit.getCurrentScreen,
+                child: PageView(
+                  controller: cubit.pageController,
+                  onPageChanged: cubit.onPageChanged,
+                  children: cubit.screens,
+                ),
               ),
             ),
           ),

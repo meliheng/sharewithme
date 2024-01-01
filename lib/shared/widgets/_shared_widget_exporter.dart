@@ -6,3 +6,4 @@ export 'text_field_with_icon2.dart';
 export 'like_button.dart';
 export 'custom_divider.dart';
 export 'custom_app_bar.dart';
+export 'fade_indexed_stack.dart';

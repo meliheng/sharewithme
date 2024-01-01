@@ -4,10 +4,25 @@ import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/user_export.dart';
 
 class NavigationBarCubit extends Cubit<NavigationBarState> {
-  NavigationBarCubit() : super(NavigationBarState.initial());
+  late PageController pageController;
 
-  void changeIndex(int index) {
+  NavigationBarCubit() : super(NavigationBarState.initial()) {
+    pageController = PageController();
+  }
+
+  @override
+  Future<void> close() {
+    pageController.dispose();
+    return super.close();
+  }
+
+  void onPageChanged(int index) {
     emit(state.copyWith(currentIndex: index));
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
   }
 
   Widget get getCurrentScreen => screens[state.currentIndex];

@@ -41,7 +41,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
             Material(
               child: InkWell(
                 onTap: () {
-                  widget.cubit.changeIndex(0);
+                  widget.cubit.onPageChanged(0);
                 },
                 child: SvgPicture.asset(
                   ImageConstants.homeIcon,
@@ -53,7 +53,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
             Material(
               child: InkWell(
                 onTap: () {
-                  widget.cubit.changeIndex(1);
+                  widget.cubit.onPageChanged(1);
                 },
                 child: SvgPicture.asset(
                   ImageConstants.searchIcon,
@@ -65,7 +65,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
             Material(
               child: InkWell(
                 onTap: () {
-                  widget.cubit.changeIndex(2);
+                  widget.cubit.onPageChanged(2);
                 },
                 child: SvgPicture.asset(
                   ImageConstants.favoriteIcon,
