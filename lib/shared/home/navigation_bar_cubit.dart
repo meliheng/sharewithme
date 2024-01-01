@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
+import 'package:sharewithme/user/user_export.dart';
 
 class NavigationBarCubit extends Cubit<NavigationBarState> {
   NavigationBarCubit() : super(NavigationBarState.initial());
@@ -28,6 +29,6 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
       index == state.currentIndex ? ColorConstants.primaryBlue : null;
   List<Widget> get screens => [
         ActivityScreen(authCubit: AuthCubit()),
-        Container(),
+        const UserListScreen(),
       ];
 }

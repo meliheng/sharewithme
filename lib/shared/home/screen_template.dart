@@ -22,11 +22,10 @@ class ScreenTemplate extends StatelessWidget {
           appBar: CustomAppBar(
             appBar: AppBar(),
           ),
-          body: Center(
-            child: SingleChildScrollView(
+          body: SafeArea(
+            child: Center(
               child: SizedBox(
                 width: MediaQuery.of(context).size.width - 30,
-                height: MediaQuery.of(context).size.height,
                 child: cubit.getCurrentScreen,
               ),
             ),

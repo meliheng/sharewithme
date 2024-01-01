@@ -4,7 +4,7 @@ import 'package:sharewithme/export.dart';
 class AppTheme {
   static ThemeData appTheme() {
     return ThemeData(
-      fontFamily: 'Nunito',
+      fontFamily: 'Poppins',
       inputDecorationTheme: InputDecorationTheme(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(

@@ -53,8 +53,12 @@ flutter:
     - family: Nunito
       fonts:
         - asset: assets/fonts/Nunito-Regular.ttf
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/OpenSans-Regular.ttf
   assets:
     - assets/icons/
     - assets/images/
     - assets/gifs/
+    - assets/fonts/
   uses-material-design: true

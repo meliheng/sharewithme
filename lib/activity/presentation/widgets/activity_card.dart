@@ -19,84 +19,140 @@ class _ActivityCardState extends State<ActivityCard> {
   @override
   void initState() {
     super.initState();
-    print('activity card init');
     cb = ActivityCubit(activityEntity: m);
+    print(m.imagePath);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      margin: const EdgeInsets.only(
-        bottom: 20,
-      ),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(m.imagePath),
-          fit: BoxFit.cover,
-        ),
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const CircleAvatar(),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: SizedBox(
+          height: MediaQuery.sizeOf(context).height * .3,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image(
+                image: NetworkImage(m.imagePath),
+                fit: BoxFit.cover,
+                filterQuality: FilterQuality.high,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
                   children: [
-                    TaskHelper<UserEntity>().futureBuilder(
-                      context: context,
-                      task: cb.userRepository.getById(m.userId),
-                      onLeft: (_) {
-                        return const Text(
-                          '-',
-                          style: TextStyle(
-                            color: Colors.white,
+                    Row(
+                      children: [
+                        const CircleAvatar(),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                m.username,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                m.date.toStringFormat,
+                                style: TextStyle(
+                                  color: ColorConstants.grayV1,
+                                ),
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                      onRight: (s) {
-                        return Text(
-                          s.username,
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    ),
-                    Text(
-                      m.date.toIso8601String(),
-                      style: TextStyle(
-                        color: ColorConstants.grayV1,
-                      ),
+                        ),
+                        const Spacer(),
+                        SvgPicture.asset(
+                          ImageConstants.optionsIcon,
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                const Spacer(),
-                SvgPicture.asset(
-                  ImageConstants.optionsIcon,
-                ),
-              ],
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LikeButton(
-                  likes: m.likes,
-                  onTap: cb.likeActivity,
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
+    // return Container(
+    //   height: 300,
+    //   margin: const EdgeInsets.only(
+    //     bottom: 20,
+    //   ),
+    //   decoration: BoxDecoration(
+    //     image: DecorationImage(
+    //       image: NetworkImage(m.imagePath),
+    //       filterQuality: FilterQuality.high,
+    //       fit: BoxFit.cover,
+    //     ),
+    //     color: Colors.white,
+    //     borderRadius: BorderRadius.circular(15),
+    //   ),
+    //   child: Padding(
+    //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    //     child: Column(
+    //       children: [
+    //         Row(
+    //           children: [
+    //             const CircleAvatar(),
+    //             const SizedBox(width: 10),
+    //             Column(
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: [
+    //                 TaskHelper<UserEntity>().futureBuilder(
+    //                   context: context,
+    //                   task: cb.userRepository.getById(m.userId),
+    //                   onLeft: (_) {
+    //                     return const Text(
+    //                       '-',
+    //                       style: TextStyle(
+    //                         color: Colors.white,
+    //                       ),
+    //                     );
+    //                   },
+    //                   onRight: (s) {
+    //                     return Text(
+    //                       s.username,
+    //                       style: const TextStyle(
+    //                         color: Colors.white,
+    //                       ),
+    //                     );
+    //                   },
+    //                 ),
+    //                 Text(
+    //                   m.date.toIso8601String(),
+    //                   style: TextStyle(
+    //                     color: ColorConstants.grayV1,
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //             const Spacer(),
+    //             SvgPicture.asset(
+    //               ImageConstants.optionsIcon,
+    //             ),
+    //           ],
+    //         ),
+    //         const Spacer(),
+    //         Row(
+    //           mainAxisAlignment: MainAxisAlignment.center,
+    //           children: [
+    //             LikeButton(
+    //               likes: m.likes,
+    //               onTap: cb.likeActivity,
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 
   // Container _actionRow() {

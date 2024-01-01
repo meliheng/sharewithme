@@ -24,4 +24,8 @@ class StyleContants {
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle white12 = TextStyle(
+    color: Colors.white,
+    fontSize: 12,
+  );
 }

@@ -1,30 +1,33 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:sharewithme/auth/auth_export.dart';
-
-enum SearchStateStatus { initial, submitting, success, error }
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class SearchState {
-  final SearchStateStatus status;
-  final UserEntity userEntity;
+  final String filterText;
+  final CollectionReference<Map<String, dynamic>> userCollection;
+  final List<DocumentSnapshot<Map<String, dynamic>>> documents;
   SearchState({
-    required this.status,
-    required this.userEntity,
+    required this.filterText,
+    required this.userCollection,
+    required this.documents,
   });
 
   factory SearchState.initial() {
     return SearchState(
-      status: SearchStateStatus.initial,
-      userEntity: UserEntity.def(),
+      filterText: '',
+      userCollection: FirebaseFirestore.instance.collection('users'),
+      documents: [],
     );
   }
 
   SearchState copyWith({
-    SearchStateStatus? status,
-    UserEntity? userEntity,
+    String? filterText,
+    CollectionReference<Map<String, dynamic>>? userCollection,
+    List<DocumentSnapshot<Map<String, dynamic>>>? documents,
   }) {
     return SearchState(
-      status: status ?? this.status,
-      userEntity: userEntity ?? this.userEntity,
+      filterText: filterText ?? this.filterText,
+      userCollection: userCollection ?? this.userCollection,
+      documents: documents ?? this.documents,
     );
   }
 
@@ -32,12 +35,12 @@ class SearchState {
   bool operator ==(covariant SearchState other) {
     if (identical(this, other)) return true;
 
-    return other.status == status && other.userEntity == userEntity;
+    return other.filterText == filterText &&
+        other.userCollection == userCollection &&
+        listEquals(other.documents, documents);
   }
 
   @override
-  int get hashCode => status.hashCode ^ userEntity.hashCode;
-
-  @override
-  String toString() => 'SearchState(status: $status, userEntity: $userEntity)';
+  int get hashCode =>
+      filterText.hashCode ^ userCollection.hashCode ^ documents.hashCode;
 }
