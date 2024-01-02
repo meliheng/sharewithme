@@ -14,6 +14,11 @@ class StyleContants {
     fontSize: 14,
     fontWeight: FontWeight.w500,
   );
+  static const TextStyle blackBold16 = TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
   static const TextStyle blackBold18 = TextStyle(
     color: Colors.black,
     fontSize: 18,

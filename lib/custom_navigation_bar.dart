@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/constants/image_constants.dart';
 import 'package:sharewithme/shared/home/navigation_bar_cubit.dart';
 
@@ -50,16 +51,14 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                 ),
               ),
             ),
-            Material(
-              child: InkWell(
-                onTap: () {
-                  widget.cubit.onPageChanged(1);
-                },
-                child: SvgPicture.asset(
-                  ImageConstants.searchIcon,
-                  color: widget.cubit.iconColor(1),
-                  height: 30,
-                ),
+            AnimatedNavigationButton(
+              onTap: () {
+                widget.cubit.onPageChanged(1);
+              },
+              icon: SvgPicture.asset(
+                ImageConstants.searchIcon,
+                color: widget.cubit.iconColor(1),
+                height: 30,
               ),
             ),
             Material(
