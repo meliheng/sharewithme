@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sharewithme/custom_navigation_bar.dart';
 import 'package:sharewithme/export.dart';
 
 class ScreenTemplate extends StatefulWidget {
@@ -34,7 +33,6 @@ class _ScreenTemplateState extends State<ScreenTemplate> {
                 width: MediaQuery.of(context).size.width - 30,
                 child: PageView(
                   controller: cubit.pageController,
-                  onPageChanged: cubit.onPageChanged,
                   children: cubit.screens,
                 ),
               ),

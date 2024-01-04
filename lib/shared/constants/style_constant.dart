@@ -37,4 +37,14 @@ class StyleConstant {
     color: Colors.white,
     fontSize: 12,
   );
+  static const TextStyle kGreyBold16 = TextStyle(
+    color: Colors.grey,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
+  static const TextStyle kBlack16 = TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.w200,
+  );
 }

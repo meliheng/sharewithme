@@ -7,6 +7,7 @@ class UserEntity {
   final List following;
   final String? about;
   final String username;
+  final String? avatar;
 
   UserEntity({
     required this.email,
@@ -15,6 +16,7 @@ class UserEntity {
     required this.following,
     this.about,
     required this.username,
+    this.avatar,
   });
 
   factory UserEntity.def() {
@@ -24,6 +26,7 @@ class UserEntity {
       followers: [],
       following: [],
       username: "",
+      avatar: "",
     );
   }
   Map<String, dynamic> toMap() {
@@ -34,6 +37,7 @@ class UserEntity {
       'following': following,
       'about': about,
       'username': username,
+      'avatar': avatar,
     };
   }
 
@@ -47,6 +51,7 @@ class UserEntity {
       following: data?['following'] ?? [],
       about: data?['about'] ?? '',
       username: data?['username'] ?? '',
+      avatar: data?['avatar'],
     );
   }
 
@@ -57,6 +62,7 @@ class UserEntity {
     List? following,
     String? about,
     String? username,
+    String? avatar,
   }) {
     return UserEntity(
       email: email ?? this.email,
@@ -65,6 +71,7 @@ class UserEntity {
       following: following ?? this.following,
       about: about ?? this.about,
       username: username ?? this.username,
+      avatar: avatar ?? this.avatar,
     );
   }
 }

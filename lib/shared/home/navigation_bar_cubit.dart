@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/user/user_export.dart';
 
 class NavigationBarCubit extends Cubit<NavigationBarState> {
   late PageController pageController;
@@ -18,10 +17,8 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
 
   void onPageChanged(int index) {
     emit(state.copyWith(currentIndex: index));
-    pageController.animateToPage(
+    pageController.jumpToPage(
       index,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeOut,
     );
   }
 
@@ -45,5 +42,6 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
   List<Widget> get screens => [
         ActivityScreen(authCubit: AuthCubit()),
         const UserListScreen(),
+        const ProfileScreen(),
       ];
 }

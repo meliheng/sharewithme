@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:sharewithme/shared/failures/auth_failures.dart';
-import 'package:sharewithme/shared/failures/base_failure.dart';
-import 'package:sharewithme/auth/domain/model/user_entity.dart';
+import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/domain/repository/i_user_repository.dart';
 
 class UserRepository extends IUserRepository {
@@ -117,6 +118,30 @@ class UserRepository extends IUserRepository {
             return UserEntity.fromFirestore(value);
           },
         );
+      },
+      (error, stackTrace) {
+        return AuthFailures.def();
+      },
+    );
+  }
+
+  @override
+  TaskEither<BaseFailure, Unit> updateAvatar(
+      {required UserEntity userEntity, required File file}) {
+    return TaskEither.tryCatch(
+      () async {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('/${userEntity.email}')
+            .child('/avatar');
+        var uploadTask = await storageRef.putFile(file);
+        var downloadPath = await uploadTask.ref.getDownloadURL();
+
+        await db
+            .collection(CollectionConstant.kUsers)
+            .doc(userEntity.email)
+            .set(userEntity.copyWith(avatar: downloadPath).toMap());
+        return unit;
       },
       (error, stackTrace) {
         return AuthFailures.def();

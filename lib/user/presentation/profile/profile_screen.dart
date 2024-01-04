@@ -1,164 +1,127 @@
-import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:sharewithme/auth/domain/extension/user_extension.dart';
+import 'package:sharewithme/auth/presentation/avatar_widget.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/user/application/user_cubit/user_cubit.dart';
-import 'package:sharewithme/user/presentation/profile/add_dialog.dart';
-import 'package:sharewithme/user/presentation/profile/setting_list_tile.dart';
-import '../../application/user_cubit/user_state.dart';
+import 'package:sharewithme/shared/constants/style_constant.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final AuthCubit authCubit;
   static const route = '/profile';
-  const ProfileScreen({super.key, required this.authCubit});
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String image = "";
-  late UserCubit userCubit;
-  @override
-  void initState() {
-    super.initState();
-    // getAvatar();
-    // userCubit = UserCubit.instance(userEntity: widget.authCubit.state.user!);
-  }
-
-  // void getAvatar() {
-  //   FirebaseStorage.instance
-  //       .ref(widget.authCubit.state.user!.email)
-  //       .child("${widget.authCubit.state.user!.uid}_avatar")
-  //       .getDownloadURL()
-  //       .then(
-  //     (value) {
-  //       if (value.isNotEmpty) {
-  //         setState(() {
-  //           image = value;
-  //         });
-  //       }
-  //     },
-  //   );
-  // }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserCubit, UserState>(
-      bloc: userCubit,
-      listener: (context, state) {},
-      builder: (context, state) {
-        return ListView(
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection(CollectionConstant.kUsers)
+          .doc(FirebaseAuth.instance.currentUser!.email)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState.isLoading) {
+          return const Center(
+            child: LoadingDialog(),
+          );
+        }
+        final UserEntity user = UserEntity.fromFirestore(snapshot.data!);
+        return Column(
           children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () async {
-                      final ImagePicker picker = ImagePicker();
-                      final XFile? image =
-                          await picker.pickImage(source: ImageSource.gallery);
-                      // if (image != null) {
-                      //   final storageRef = FirebaseStorage.instance
-                      //       .ref(widget.authCubit.state.user!.email)
-                      //       .child(
-                      //           "${widget.authCubit.state.user!.uid}_avatar");
-                      //   await storageRef.putFile(File(image.path));
-
-                      //   // getAvatar();
-                      // }
-                    },
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                        image.isEmpty
-                            ? "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
-                            : image,
-                      ),
-                    ),
+            const SizedBox(height: 20),
+            CircularAvatarWithEditIcon(
+              radius: 50,
+              imagePath: user.avatar,
+              onFileSelected: (file) {
+                ProfileCubit cubit = ProfileCubit(userEntity: user);
+                cubit.updateAvatar(file);
+              },
+            ),
+            Text(
+              user.username,
+              style: StyleConstant.kBlackBold18,
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 0.1,
+                    blurRadius: 1,
+                    offset: const Offset(1, 2),
                   ),
-                  // Text(
-                  //   widget.authCubit.state.user!.username,
-                  //   style: const TextStyle(
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 22,
-                  //   ),
-                  // ),
-                  const Text(
-                    "Marmara University",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const SettingListTile(
-                    icon: Icon(Icons.notification_add),
-                    text: "Bildirimler",
-                    showSwitch: true,
-                    onTap: null,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SettingListTile(
-                    icon: const FaIcon(FontAwesomeIcons.arrowRightFromBracket),
-                    text: "Çıkış Yap",
-                    showSwitch: false,
-                    onTap: () async {
-                      //print(cubit.state.user!.email);
-                      // await widget.authCubit.logout(context);
-                      // ignore: use_build_context_synchronously
-                      // Navigator.of(context, rootNavigator: true)
-                      //     .pushAndRemoveUntil(
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       return const AuthScreen();
-                      //     },
-                      //   ),
-                      //   (route) => false,
-                      // );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SettingListTile(
-                    icon: const FaIcon(FontAwesomeIcons.xmark),
-                    text: "Hesabımı Sil",
-                    showSwitch: false,
-                    onTap: () async {
-                      //print(cubit.state.user!.email);
-                      // await widget.authCubit.deleteAccount(context);
-                      // ignore: use_build_context_synchronously
-                      // Navigator.of(context, rootNavigator: true)
-                      //     .pushAndRemoveUntil(
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       return const AuthScreen();
-                      //     },
-                      //   ),
-                      //   (route) => false,
-                      // );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _followersCard(),
-                  _aboutMeCard(context),
-                  // context.read<ActivityListCubit>().getAllActivity(
-                  //     userEntity: userCubit.state.userEntity, onlyOwn: true),
                 ],
+              ),
+              height: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _infoBox(
+                    count: '20',
+                    title: StringC.kActivities,
+                  ),
+                  _infoBox(
+                    count: user.followers.length.toString(),
+                    title: StringC.kFollowers,
+                  ),
+                  _infoBox(
+                    count: user.following.length.toString(),
+                    title: StringC.kFollowing,
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton.withRadius(
+                    title: StringC.kSettings,
+                    color: ColorConstant.kGrayV1,
+                    onPressed: () {},
+                  ),
+                ),
+                Expanded(
+                  child: CustomButton.withRadius(
+                    title: StringC.kActivities,
+                    color: ColorConstant.kPrimaryBlue,
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+            CustomContainer(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Column(
+                  children: [
+                    SettingsListTile(
+                      iconPath: IconC.kChangePasswordIcon,
+                      title: StringC.kChangePassword,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: CustomDivider(),
+                    ),
+                    SettingsListTile(
+                      iconPath: IconC.kNotificationIcon,
+                      title: StringC.kNotification,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: CustomDivider(),
+                    ),
+                    SettingsListTile(
+                      iconPath: IconC.kChangePasswordIcon,
+                      title: StringC.kChangePassword,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -167,157 +130,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Row _followersCard() {
-    return Row(
+  Column _infoBox({
+    required String count,
+    required String title,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.greenAccent,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  userCubit.userEntity.totalFollowersString,
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-                const Text(
-                  "Takipçi",
-                  style: TextStyle(fontSize: 14, color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
+        Text(
+          count,
+          style: StyleConstant.kBlackBold18,
         ),
-        const SizedBox(
-          width: 5,
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
-              color: const Color(0xFF3AB0FF),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  userCubit.userEntity.totalFollowingString,
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-                const Text(
-                  "Takip",
-                  style: TextStyle(fontSize: 14, color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
+        Text(
+          title,
+          style: StyleConstant.kBlack14W5,
         ),
       ],
-    );
-  }
-
-  ExpansionTileCard _aboutMeCard(BuildContext context) {
-    return ExpansionTileCard(
-      title: const Text("Hakkımda"),
-      children: [
-        const Divider(
-          thickness: 1.0,
-          height: 1.0,
-        ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text(
-              userCubit.state.userEntity.about!,
-            ),
-          ),
-        ),
-        ButtonBar(
-          alignment: MainAxisAlignment.spaceAround,
-          buttonHeight: 52,
-          buttonMinWidth: 90,
-          children: [
-            if (userCubit.state.userEntity.about!.isEmpty)
-              _addButton(context)
-            else
-              _editButton(),
-          ],
-        )
-      ],
-    );
-  }
-
-  TextButton _editButton() {
-    return TextButton(
-      style: TextButton.styleFrom(
-        iconColor: ColorConstant.kPrimaryOrange,
-      ),
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (context) => AddDialog(
-            buttonText: "DÜZENLE",
-            hintText: "Kendin hakkında birşeyler yaz",
-            title: "Hakkımda Ekle",
-            initialText: userCubit.state.userEntity.about!,
-            onChanged: userCubit.onAboutChanged,
-            onPressed: () {
-              userCubit.addAbout(context);
-            },
-          ),
-        );
-      },
-      child: const Column(
-        children: [
-          Icon(Icons.edit),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 2),
-          ),
-          Text("Düzenle")
-        ],
-      ),
-    );
-  }
-
-  TextButton _addButton(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-          iconColor: ColorConstant.kPrimaryOrange,
-          textStyle: const TextStyle(color: Colors.black)),
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (context) => AddDialog(
-            buttonText: "EKLE",
-            hintText: "Kendin hakkında birşeyler yaz",
-            title: "Hakkımda Ekle",
-            initialText: "",
-            onChanged: userCubit.onAboutChanged,
-            onPressed: () {
-              userCubit.addAbout(context);
-            },
-          ),
-        ).then((value) => setState(() {}));
-      },
-      child: const Column(
-        children: [
-          Icon(Icons.add),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 2),
-          ),
-          Text("Ekle")
-        ],
-      ),
     );
   }
 }

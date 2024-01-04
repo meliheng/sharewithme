@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/auth/domain/extension/user_extension.dart';
+import 'package:sharewithme/auth/presentation/avatar_widget.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/constants/style_constant.dart';
 import 'package:sharewithme/user/application/user_cubit/user_cubit.dart';
@@ -50,11 +51,8 @@ class _UserCardState extends State<UserCard> {
             height: 80,
             child: Row(
               children: [
-                const CircleAvatar(
-                  radius: 30,
-                  backgroundImage: NetworkImage(
-                    'https://media.licdn.com/dms/image/D4D03AQE2jB39V6eapQ/profile-displayphoto-shrink_800_800/0/1673728867434?e=1709769600&v=beta&t=5O61Q2CYMQFeyWheBeZ0vtPOoTCkgmzn-JtenmG7dmk',
-                  ),
+                CircularAvatarWithEditIcon(
+                  imagePath: widget.userEntity.avatar,
                 ),
                 const SizedBox(width: 10),
                 Column(

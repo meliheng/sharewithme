@@ -32,17 +32,6 @@ class AuthRepository extends IAuthRepository {
     );
   }
 
-  // TaskEither<AuthFailures, Unit> checkUserIsExists({
-  //   required String email,
-  // }) {
-  //   return TaskEither.tryCatch(
-  //     () async {
-  //       var response = await db.collection('users').doc();
-  //     },
-  //     (error, stackTrace) {},
-  //   );
-  // }
-
   @override
   TaskEither<BaseFailure, UserEntity> signUpWithEmailAndPassword({
     required String email,
@@ -76,7 +65,8 @@ class AuthRepository extends IAuthRepository {
               return AuthFailures('Error during sign up.');
             case 'weak-password':
               return AuthFailures(
-                  'Password is not strong enough. Add additional characters including special characters and numbers.');
+                'Password is not strong enough. Add additional characters including special characters and numbers.',
+              );
             default:
               break;
           }
