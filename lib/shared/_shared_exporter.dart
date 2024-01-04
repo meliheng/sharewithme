@@ -15,5 +15,5 @@ export 'vo/_shared_vo_exporter.dart';
 export 'widgets/_shared_widget_exporter.dart';
 export 'home/_shared_home_exporter.dart';
 export 'constants/_shared_constants_exporter.dart';
-export 'theme/app_theme.dart';
 export 'extensions/_shared_extension_exporter.dart';
+export 'theme/_theme_exporter.dart';

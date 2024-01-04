@@ -40,6 +40,7 @@ class _CircularAvatarWithEditIconState
             height: 100,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
+              border: Border.all(color: Colors.black, width: 2),
               image: DecorationImage(
                 image: AssetImage(IconC.kUserProfileIcon),
                 fit: BoxFit.cover,

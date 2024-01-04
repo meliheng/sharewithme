@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sharewithme/export.dart';
@@ -60,26 +59,27 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                 height: 30,
               ),
             ),
+            // Material(
+            //   child: InkWell(
+            //     onTap: () {
+            //       widget.cubit.onPageChanged(2);
+            //     },
+            //     child: SvgPicture.asset(
+            //       IconC.kFavoriteIcon,
+            //       color: widget.cubit.iconColor(2),
+            //       height: 30,
+            //     ),
+            //   ),
+            // ),
             Material(
               child: InkWell(
                 onTap: () {
+                  // FirebaseAuth.instance.signOut();
                   widget.cubit.onPageChanged(2);
                 },
                 child: SvgPicture.asset(
-                  IconC.kFavoriteIcon,
-                  color: widget.cubit.iconColor(2),
-                  height: 30,
-                ),
-              ),
-            ),
-            Material(
-              child: InkWell(
-                onTap: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                child: SvgPicture.asset(
                   IconC.kProfileIcon,
-                  color: widget.cubit.iconColor(3),
+                  color: widget.cubit.iconColor(2),
                   height: 30,
                 ),
               ),
