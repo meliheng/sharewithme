@@ -22,7 +22,7 @@ class PasswordTextField extends StatefulWidget {
 
 class _PasswordTextFieldState extends State<PasswordTextField> {
   final ValueNotifier<Color> colorNotifier =
-      ValueNotifier<Color>(ColorConstants.grayV1);
+      ValueNotifier<Color>(ColorConstant.kGrayV1);
   final ValueNotifier<bool> passwordVisible = ValueNotifier(false);
   final FocusNode _focusNode = FocusNode();
   @override
@@ -77,7 +77,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
 
   void _onFocusChange(bool value) {
     colorNotifier.value =
-        value ? ColorConstants.primaryBlue : ColorConstants.grayV1;
+        value ? ColorConstant.kPrimaryBlue : ColorConstant.kGrayV1;
   }
 
   @override

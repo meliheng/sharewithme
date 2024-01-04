@@ -1,13 +1,10 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/failures/auth_failures.dart';
-import 'package:sharewithme/shared/failures/base_failure.dart';
 
 class AuthRepository extends IAuthRepository {
   final db = FirebaseFirestore.instance;
@@ -145,10 +142,11 @@ class AuthRepository extends IAuthRepository {
           await auth.fetchSignInMethodsForEmail(email);
           var response = await auth.signInWithEmailAndPassword(
               email: email, password: password);
-          var user =
-              await db.collection('users').doc(response.user!.uid).get().then(
-                    (value) => UserEntity.fromFirestore(value),
-                  );
+          var user = await db
+              .collection('users')
+              .doc(response.user!.email)
+              .get()
+              .then((value) => UserEntity.fromFirestore(value));
           return user;
         },
         (error, stackTrace) {

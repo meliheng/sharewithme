@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/constants/style_constants.dart';
+import 'package:sharewithme/shared/constants/style_constant.dart';
 
 class GoogleButton extends StatelessWidget {
   final void Function()? onTap;
@@ -18,20 +18,20 @@ class GoogleButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: ColorConstants.grayV2,
+          color: ColorConstant.kGrayV2,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              ImageC.googleIcon,
+              IconC.kGoogleIcon,
               height: 20,
             ),
             const SizedBox(width: 20),
             Text(
               AuthStringConstants.loginWithGoogle,
               textAlign: TextAlign.center,
-              style: StyleContants.black14W5,
+              style: StyleContant.kBlack14W5,
             ),
           ],
         ),

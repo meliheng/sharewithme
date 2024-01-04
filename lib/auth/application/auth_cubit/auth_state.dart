@@ -20,7 +20,7 @@ class AuthState {
       email: '',
       password: '',
       nickname: '',
-      avatar: File(ImageC.userProfileIcon),
+      avatar: File(IconC.kUserProfileIcon),
       status: AuthStatus.initial,
     );
   }

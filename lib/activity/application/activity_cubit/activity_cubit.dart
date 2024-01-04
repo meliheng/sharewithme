@@ -21,30 +21,4 @@ class ActivityCubit extends Cubit<ActivityState> {
         )
         .run();
   }
-
-  // Future<void> addComment(CommentEntity commentEntity) async {
-  //   emit(state.copyWith(status: ActivityStatus.submitting));
-  //   await FirebaseFirestore.instance
-  //       .collection('comments')
-  //       .add(commentEntity.toMap());
-  //   emit(state.copyWith(status: ActivityStatus.success));
-  // }
-
-  // void getAllComments() async {
-  //   emit(state.copyWith(status: ActivityStatus.submitting));
-  //   await FirebaseFirestore.instance
-  //       .collection('comments')
-  //       .where('activityId', isEqualTo: state.activityEntity.id)
-  //       .get()
-  //       .then(
-  //     (value) {
-  //       for (var element in value.docs) {
-  //         state.commentList.add(
-  //           CommentEntity.fromFirestore(element),
-  //         );
-  //       }
-  //     },
-  //   );
-  //   emit(state.copyWith(status: ActivityStatus.success));
-  // }
 }

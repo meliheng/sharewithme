@@ -43,14 +43,14 @@ void showCustomDialog({
           child: Container(
             width: MediaQuery.sizeOf(context).width * .7,
             height: MediaQuery.sizeOf(context).height * .3,
-            color: ColorConstants.kBlue,
+            color: ColorConstant.kBlue,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Image(
                   image: isSuccess
-                      ? AssetImage(ImageC.checkIcon)
-                      : AssetImage(ImageC.errorIcon),
+                      ? AssetImage(IconC.kCheckIcon)
+                      : AssetImage(IconC.kErrorIcon),
                   fit: BoxFit.cover,
                   height: MediaQuery.sizeOf(context).height * .1,
                 ),
@@ -62,8 +62,8 @@ void showCustomDialog({
                   children: [
                     Expanded(
                       child: CustomButton(
-                        title: StringC.close,
-                        color: ColorConstants.primaryOrange,
+                        title: StringC.kClose,
+                        color: ColorConstant.kPrimaryOrange,
                         onPressed: () {
                           Navigator.pop(context);
                           onSubmit?.call();

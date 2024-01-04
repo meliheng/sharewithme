@@ -47,16 +47,16 @@ class AuthCubit extends Cubit<AuthState> {
 
   void loginUser(BuildContext context) async {
     emit(state.copyWith(status: AuthStatus.submitting));
-    var response = await LoginUsecase.i
-        .execute(email: state.email, password: state.password)
-        .run();
-    // ignore: use_build_context_synchronously
     showDialog(
       context: context,
       builder: (context) {
         return const LoadingDialog();
       },
     );
+    var response = await LoginUsecase.i
+        .execute(email: state.email, password: state.password)
+        .run();
+
     Future.delayed(const Duration(seconds: 3));
     response.fold(
       (l) {

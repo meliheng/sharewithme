@@ -24,7 +24,7 @@ class _ScreenTemplateState extends State<ScreenTemplate> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: ColorConstants.grayV2,
+          backgroundColor: ColorConstant.kGrayV2,
           appBar: CustomAppBar(
             appBar: AppBar(),
           ),

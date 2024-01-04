@@ -35,7 +35,7 @@ class AddDialog extends StatelessWidget {
             Container(
               height: 50,
               width: double.infinity,
-              color: ColorConstants.primaryOrange,
+              color: ColorConstant.kPrimaryOrange,
               alignment: Alignment.center,
               child: Text(
                 title,
@@ -51,7 +51,7 @@ class AddDialog extends StatelessWidget {
             if (extraWidget != null) extraWidget!,
             CustomButton(
               title: buttonText,
-              color: ColorConstants.primaryOrange,
+              color: ColorConstant.kPrimaryOrange,
               onPressed: onPressed,
             )
           ],

@@ -50,14 +50,6 @@ class UserEntity {
     );
   }
 
-  String get totalFollowersString {
-    return "${followers.length}";
-  }
-
-  String get totalFollowingString {
-    return "${following.length}";
-  }
-
   UserEntity copyWith({
     String? email,
     String? uid,

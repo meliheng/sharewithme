@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/constants/style_constants.dart';
+import 'package:sharewithme/shared/constants/style_constant.dart';
 
 class LikeButton extends StatefulWidget {
   final Function()? onTap;
@@ -30,18 +30,18 @@ class _LikeButtonState extends State<LikeButton> {
           onTap: widget.onTap,
           child: isLiked
               ? SvgPicture.asset(
-                  ImageConstants.likeIcon,
+                  IconC.kLikeIcon,
                   colorFilter:
                       const ColorFilter.mode(Colors.red, BlendMode.srcIn),
                 )
               : SvgPicture.asset(
-                  ImageConstants.favoriteIcon,
+                  IconC.kFavoriteIcon,
                 ),
         ),
         const SizedBox(width: 10),
         Text(
           likeCount,
-          style: StyleContants.blackBold16,
+          style: StyleContant.kBlackBold16,
         ),
       ],
     );

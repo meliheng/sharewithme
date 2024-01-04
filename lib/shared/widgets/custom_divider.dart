@@ -14,7 +14,7 @@ class CustomDivider extends StatelessWidget {
       children: [
         Expanded(
           child: Divider(
-            color: ColorConstants.grayV2,
+            color: ColorConstant.kGrayV2,
             thickness: 2,
           ),
         ),
@@ -25,7 +25,7 @@ class CustomDivider extends StatelessWidget {
           ),
         Expanded(
           child: Divider(
-            color: ColorConstants.grayV2,
+            color: ColorConstant.kGrayV2,
             thickness: 2,
           ),
         ),

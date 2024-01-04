@@ -41,7 +41,7 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
   }
 
   Color? iconColor(int index) =>
-      index == state.currentIndex ? ColorConstants.primaryBlue : null;
+      index == state.currentIndex ? ColorConstant.kPrimaryBlue : null;
   List<Widget> get screens => [
         ActivityScreen(authCubit: AuthCubit()),
         const UserListScreen(),

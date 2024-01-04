@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sharewithme/auth/domain/extension/user_extension.dart';
 import 'package:sharewithme/export.dart';
 
 class UserDetailScreen extends StatefulWidget {
@@ -71,7 +72,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             decoration: BoxDecoration(
-              color: ColorConstants.primaryOrange,
+              color: ColorConstant.kPrimaryOrange,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -98,7 +99,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             decoration: BoxDecoration(
-              color: ColorConstants.kBlue,
+              color: ColorConstant.kBlue,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -127,7 +128,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Title(
-          color: ColorConstants.primaryOrange,
+          color: ColorConstant.kPrimaryOrange,
           child: const Text(
             "Hakkımda",
             style: TextStyle(

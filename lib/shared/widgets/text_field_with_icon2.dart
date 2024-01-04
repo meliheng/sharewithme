@@ -14,7 +14,8 @@ class TextFieldWithIcon2 extends StatelessWidget {
     required this.icon,
     required this.onChanged,
     this.validator,
-    this.obscureText = false, this.initialValue,
+    this.obscureText = false,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -41,7 +42,7 @@ class TextFieldWithIcon2 extends StatelessWidget {
             hintText: hintText,
             hintStyle: const TextStyle(),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorConstants.primaryOrange),
+              borderSide: BorderSide(color: ColorConstant.kPrimaryOrange),
               borderRadius: const BorderRadius.all(
                 Radius.circular(20),
               ),
@@ -58,9 +59,9 @@ class TextFieldWithIcon2 extends StatelessWidget {
                 Radius.circular(20),
               ),
             ),
-            enabledBorder:  OutlineInputBorder(
+            enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: ColorConstants.primaryOrange,
+                color: ColorConstant.kPrimaryOrange,
                 width: 0,
               ),
               borderRadius: const BorderRadius.all(

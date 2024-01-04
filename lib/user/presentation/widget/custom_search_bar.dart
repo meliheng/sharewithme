@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/shared/_shared_exporter.dart';
-import 'package:sharewithme/shared/constants/style_constants.dart';
+import 'package:sharewithme/shared/constants/style_constant.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final TextEditingController searchController;
@@ -38,10 +38,10 @@ class CustomSearchBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(ColorConstants.primaryBlue),
+        backgroundColor: MaterialStateProperty.all(ColorConstant.kPrimaryBlue),
         hintText: 'Search',
-        hintStyle: MaterialStateProperty.all(StyleContants.white12),
-        textStyle: MaterialStateProperty.all(StyleContants.white12),
+        hintStyle: MaterialStateProperty.all(StyleContant.kWhite12),
+        textStyle: MaterialStateProperty.all(StyleContant.kWhite12),
         controller: searchController,
         onChanged: (value) {},
         onTap: () {},

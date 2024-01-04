@@ -1,8 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/constants/image_constants.dart';
-import 'package:sharewithme/shared/home/navigation_bar_cubit.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   final NavigationBarCubit cubit;
@@ -45,7 +44,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   widget.cubit.onPageChanged(0);
                 },
                 child: SvgPicture.asset(
-                  ImageConstants.homeIcon,
+                  IconC.kHomeIcon,
                   color: widget.cubit.iconColor(0),
                   height: 30,
                 ),
@@ -56,7 +55,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                 widget.cubit.onPageChanged(1);
               },
               icon: SvgPicture.asset(
-                ImageConstants.searchIcon,
+                IconC.kSearchIcon,
                 color: widget.cubit.iconColor(1),
                 height: 30,
               ),
@@ -67,7 +66,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   widget.cubit.onPageChanged(2);
                 },
                 child: SvgPicture.asset(
-                  ImageConstants.favoriteIcon,
+                  IconC.kFavoriteIcon,
                   color: widget.cubit.iconColor(2),
                   height: 30,
                 ),
@@ -76,11 +75,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
             Material(
               child: InkWell(
                 onTap: () {
-                  // widget.cubit.changeIndex(2);
-                  // FirebaseAuth.instance.signOut();
+                  FirebaseAuth.instance.signOut();
                 },
                 child: SvgPicture.asset(
-                  ImageConstants.profileIcon,
+                  IconC.kProfileIcon,
                   color: widget.cubit.iconColor(3),
                   height: 30,
                 ),

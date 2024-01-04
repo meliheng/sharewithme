@@ -31,7 +31,7 @@ class _AddActivityDialogState extends State<AddActivityDialog> {
             Container(
               height: 50,
               width: double.infinity,
-              color: ColorConstants.primaryOrange,
+              color: ColorConstant.kPrimaryOrange,
               alignment: Alignment.center,
               child: const Text(
                 "Yeni Paylaşım",
@@ -59,12 +59,12 @@ class _AddActivityDialogState extends State<AddActivityDialog> {
               },
               icon: Icon(
                 Icons.image,
-                color: ColorConstants.primaryOrange,
+                color: ColorConstant.kPrimaryOrange,
               ),
             ),
             CustomButton(
               title: "Paylaş",
-              color: ColorConstants.primaryOrange,
+              color: ColorConstant.kPrimaryOrange,
               onPressed: () {
                 widget.cubit.addActivity(context);
               },

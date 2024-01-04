@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/constants/style_constants.dart';
+import 'package:sharewithme/shared/constants/style_constant.dart';
 import 'package:sharewithme/shared/widgets/password_text_field.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -21,10 +21,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(ImageConstants.loginImage),
+          Image.asset(ImageConstant.kLoginImage),
           Text(
-            StringC.signIn,
-            style: StyleContants.blackBold20,
+            AuthC.signIn,
+            style: StyleContant.kBlackBold20,
           ),
           const SizedBox(height: 10),
           BlocConsumer<AuthCubit, AuthState>(
@@ -41,7 +41,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       TextFieldWithIcon(
-                        hintText: StringC.mail,
+                        hintText: AuthC.mail,
                         icon: Icons.mail,
                         onChanged: (p0) {
                           cubit.emailChanged(p0);
@@ -52,7 +52,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         height: 30,
                       ),
                       PasswordTextField(
-                        hintText: StringC.password,
+                        hintText: AuthC.password,
                         onChanged: (p0) {
                           cubit.passwordChanged(p0);
                         },
@@ -62,15 +62,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            AuthStringConstants.forgetPassword,
+                            AuthC.forgetPassword,
                             textAlign: TextAlign.end,
-                            style: StyleContants.blueMediumBold,
+                            style: StyleContant.kBlueMediumBold,
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
                       AuthCustomButton(
-                        title: StringC.signIn,
+                        title: AuthC.signIn,
                         onTap: () {
                           cubit.loginUser(context);
                         },
@@ -92,7 +92,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             const TextSpan(text: " "),
                             TextSpan(
                               text: AuthStringConstants.register,
-                              style: StyleContants.blueMedium,
+                              style: StyleContant.kBlueMedium,
                             ),
                           ],
                         ),

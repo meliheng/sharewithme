@@ -18,9 +18,9 @@ class SettingListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: ColorConstants.primaryOrange,
+        color: ColorConstant.kPrimaryOrange,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: ColorConstants.primaryOrange),
+        border: Border.all(color: ColorConstant.kPrimaryOrange),
       ),
       child: ListTile(
         leading: icon,
@@ -32,7 +32,7 @@ class SettingListTile extends StatelessWidget {
         trailing: showSwitch
             ? Switch(
                 value: false,
-                activeColor: ColorConstants.primaryOrange,
+                activeColor: ColorConstant.kPrimaryOrange,
                 onChanged: (value) {},
               )
             : null,

@@ -61,7 +61,7 @@ class _ActivityCardState extends State<ActivityCard> {
                                   Text(
                                     m.date.toStringFormat,
                                     style: TextStyle(
-                                      color: ColorConstants.grayV1,
+                                      color: ColorConstant.kGrayV1,
                                     ),
                                   ),
                                 ],
@@ -69,7 +69,7 @@ class _ActivityCardState extends State<ActivityCard> {
                             ),
                             const Spacer(),
                             SvgPicture.asset(
-                              ImageConstants.optionsIcon,
+                              IconC.kOptionsIcon,
                             ),
                           ],
                         ),
@@ -81,7 +81,7 @@ class _ActivityCardState extends State<ActivityCard> {
             ),
             Container(
               height: 30,
-              color: ColorConstants.grayV1.withOpacity(0.5),
+              color: ColorConstant.kGrayV1.withOpacity(0.5),
               width: double.infinity,
               child: LikeButton(
                 likes: m.likes,

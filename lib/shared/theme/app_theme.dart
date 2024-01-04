@@ -8,13 +8,13 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: ColorConstants.primaryBlue,
+            color: ColorConstant.kPrimaryBlue,
             width: 2,
           ),
         ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: ColorConstants.grayV1,
+            color: ColorConstant.kGrayV1,
             width: 2,
           ),
         ),

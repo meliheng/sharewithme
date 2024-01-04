@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sharewithme/auth/domain/extension/user_extension.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/application/user_cubit/user_cubit.dart';
 import 'package:sharewithme/user/presentation/profile/add_dialog.dart';
@@ -259,7 +260,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextButton _editButton() {
     return TextButton(
       style: TextButton.styleFrom(
-        iconColor: ColorConstants.primaryOrange,
+        iconColor: ColorConstant.kPrimaryOrange,
       ),
       onPressed: () {
         showDialog(
@@ -291,7 +292,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextButton _addButton(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-          iconColor: ColorConstants.primaryOrange,
+          iconColor: ColorConstant.kPrimaryOrange,
           textStyle: const TextStyle(color: Colors.black)),
       onPressed: () {
         showDialog(

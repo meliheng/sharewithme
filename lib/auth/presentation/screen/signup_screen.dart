@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharewithme/export.dart';
-import 'package:sharewithme/shared/constants/style_constants.dart';
+import 'package:sharewithme/shared/constants/style_constant.dart';
 import 'package:sharewithme/shared/widgets/password_text_field.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -36,17 +36,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image.asset(
-                        ImageConstants.signupImage,
+                        ImageConstant.kSignupImage,
                       ),
-                      // CircularAvatarWithEditIcon(
-                      //   file: cubit.state.avatar,
-                      //   onFileSelected: cubit.avatarSelected,
-                      // ),
                       Row(
                         children: [
                           Text(
-                            StringC.signUp,
-                            style: StyleContants.blackBold20,
+                            AuthC.signUp,
+                            style: StyleContant.kBlackBold20,
                           ),
                         ],
                       ),
@@ -54,7 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 40,
                       ),
                       TextFieldWithIcon(
-                        hintText: StringC.mail,
+                        hintText: AuthC.mail,
                         inputType: TextInputType.emailAddress,
                         icon: Icons.mail,
                         onChanged: (p0) {
@@ -65,7 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 30,
                       ),
                       TextFieldWithIcon(
-                        hintText: StringC.nickname,
+                        hintText: AuthC.nickname,
                         onChanged: (p0) {
                           cubit.nicknameChanged(p0);
                         },
@@ -75,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 30,
                       ),
                       PasswordTextField(
-                        hintText: StringC.password,
+                        hintText: AuthC.password,
                         onChanged: (p0) {
                           cubit.passwordChanged(p0);
                         },
@@ -90,19 +86,18 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           children: [
                             TextSpan(
-                              text:
-                                  AuthStringConstants.bySignUpYouareAgreeToOur,
+                              text: AuthC.bySignUpYouareAgreeToOur,
                             ),
                             TextSpan(
-                              text: AuthStringConstants.termAndCondition,
-                              style: StyleContants.blueMediumBold,
+                              text: AuthC.termAndCondition,
+                              style: StyleContant.kBlueMediumBold,
                             ),
                             TextSpan(
-                              text: AuthStringConstants.and,
+                              text: AuthC.and,
                             ),
                             TextSpan(
-                              text: AuthStringConstants.privacyPolicy,
-                              style: StyleContants.blueMediumBold,
+                              text: AuthC.privacyPolicy,
+                              style: StyleContant.kBlueMediumBold,
                             ),
                           ],
                         ),
@@ -114,22 +109,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         children: [
                           Expanded(
                             child: SubmitButton(
-                              title: StringC.signUp,
+                              title: AuthC.signUp,
                               onTap: () {
                                 cubit.createUser(context);
-                                // if (_formKey.currentState!.validate()) {
-                                //   cubit.checkUser(context);
-                                //   // cubit.getUser();
-
-                                //   // Navigator.pushAndRemoveUntil(context,
-                                //   //     MaterialPageRoute(
-                                //   //   builder: (context) {
-                                //   //     return HomeScreen(
-                                //   //       authCubit: cubit,
-                                //   //     );
-                                //   //   },
-                                //   // ), (route) => false);
-                                // }
                               },
                             ),
                           ),
@@ -144,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             color: Colors.grey,
                           ),
                           children: [
-                            TextSpan(text: AuthStringConstants.joinUsBefore),
+                            TextSpan(text: AuthC.joinUsBefore),
                             const TextSpan(text: " "),
                             TextSpan(
                               recognizer: TapGestureRecognizer()
@@ -154,8 +136,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                     LoginScreen.route,
                                   );
                                 },
-                              text: StringConstants.login,
-                              style: StyleContants.blueMedium,
+                              text: AuthC.login,
+                              style: StyleContant.kBlueMedium,
                             ),
                           ],
                         ),

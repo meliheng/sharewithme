@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       centerTitle: false,
       title: Text(
-        StringC.appName,
+        StringC.kAppName,
         style: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,

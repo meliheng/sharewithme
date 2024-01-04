@@ -24,7 +24,7 @@ class TextFieldWithIcon extends StatefulWidget {
 
 class _TextFieldWithIconState extends State<TextFieldWithIcon> {
   final ValueNotifier<Color> colorNotifier =
-      ValueNotifier<Color>(ColorConstants.grayV1);
+      ValueNotifier<Color>(ColorConstant.kGrayV1);
   final FocusNode _focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _TextFieldWithIconState extends State<TextFieldWithIcon> {
 
   void _onFocusChange(bool value) {
     colorNotifier.value =
-        value ? ColorConstants.primaryBlue : ColorConstants.grayV1;
+        value ? ColorConstant.kPrimaryBlue : ColorConstant.kGrayV1;
   }
 
   @override

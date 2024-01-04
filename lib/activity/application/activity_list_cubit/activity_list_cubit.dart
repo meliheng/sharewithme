@@ -56,43 +56,6 @@ class ActivityListCubit extends Cubit<ActivityListState> {
     }
   }
 
-  // StreamBuilder getAllActivity(
-  //     {required UserEntity userEntity, bool onlyOwn = false}) {
-  //   return StreamBuilder(
-  //     stream: FirebaseFirestore.instance.collection("activities").snapshots(),
-  //     builder: (context, snapshot) {
-  //       List<Widget> items = [];
-  //       if (snapshot.hasData) {
-  //         for (var element in snapshot.data!.docs) {
-  //           var ac = ActivityEntity.fromFirestore(element);
-  //           if (onlyOwn) {
-  //             if (ac.userId == userEntity.uid) {
-  //               items.add(
-  //                 ActivityCard(
-  //                   cubit: this,
-  //                   activityEntity: ac,
-  //                 ),
-  //               );
-  //             }
-  //           } else {
-  //             items.add(
-  //               ActivityCard(
-  //                 cubit: this,
-  //                 activityEntity: ac,
-  //               ),
-  //             );
-  //           }
-  //         }
-  //       }
-  //       return Column(
-  //         children: [
-  //           ...items,
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   void deleteActivity({required ActivityEntity activityEntity}) async {
     await FirebaseFirestore.instance
         .collection("activities")

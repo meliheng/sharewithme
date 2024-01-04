@@ -20,8 +20,6 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 10),
         CustomSearchBar(
@@ -35,7 +33,7 @@ class _UserListScreenState extends State<UserListScreen> {
           stream: cubit.state.userCollection.snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const LoadingDialog();
+              return const Center(child: LoadingDialog());
             }
             cubit.setDocuments(snapshot.data!.docs);
             cubit.filterDocuments();

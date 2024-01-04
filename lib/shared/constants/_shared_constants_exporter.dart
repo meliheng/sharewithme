@@ -1,3 +1,4 @@
-export 'color_constants.dart';
-export 'image_constants.dart';
-export 'string_constants.dart';
+export 'color_constant.dart';
+export 'image_constant.dart';
+export 'string_constant.dart';
+export 'icon_constant.dart';

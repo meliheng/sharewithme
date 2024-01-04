@@ -41,7 +41,7 @@ class _CircularAvatarWithEditIconState
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage(ImageC.userProfileIcon),
+                image: AssetImage(IconC.kUserProfileIcon),
                 fit: BoxFit.cover,
               ),
             ),

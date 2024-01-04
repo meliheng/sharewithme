@@ -52,20 +52,20 @@ class UserRepository extends IUserRepository {
   TaskEither<BaseFailure, Unit> follow({required UserEntity userEntity}) {
     return TaskEither.tryCatch(
       () async {
-        await db.collection("users").doc(userEntity.uid).update(
+        await db.collection("users").doc(userEntity.email).update(
           {
             "followers": FieldValue.arrayUnion(
-              [FirebaseAuth.instance.currentUser!.uid],
+              [FirebaseAuth.instance.currentUser!.email],
             ),
           },
         );
         await db
             .collection("users")
-            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .doc(FirebaseAuth.instance.currentUser!.email)
             .update(
           {
             "following": FieldValue.arrayUnion(
-              [userEntity.uid],
+              [userEntity.email],
             ),
           },
         );
@@ -82,20 +82,20 @@ class UserRepository extends IUserRepository {
   TaskEither<BaseFailure, Unit> unFollow({required UserEntity userEntity}) {
     return TaskEither.tryCatch(
       () async {
-        await db.collection("users").doc(userEntity.uid).update(
+        await db.collection("users").doc(userEntity.email).update(
           {
             "followers": FieldValue.arrayRemove(
-              [FirebaseAuth.instance.currentUser!.uid],
+              [FirebaseAuth.instance.currentUser!.email],
             ),
           },
         );
         await db
             .collection("users")
-            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .doc(FirebaseAuth.instance.currentUser!.email)
             .update(
           {
             "following": FieldValue.arrayRemove(
-              [userEntity.uid],
+              [userEntity.email],
             ),
           },
         );
