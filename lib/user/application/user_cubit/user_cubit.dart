@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sharewithme/auth/auth_export.dart';
+import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/application/user_cubit/user_state.dart';
 import 'package:sharewithme/user/domain/repository/i_user_repository.dart';
 
@@ -17,8 +17,25 @@ class UserCubit extends Cubit<UserState> {
     await userRepository.follow(userEntity: userEntity).run();
   }
 
-  Future<void> unFollow() async {
-    await userRepository.unFollow(userEntity: userEntity).run();
+  Future<void> unFollow(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      builder: (context) {
+        return ConfirmationBottomSheet(
+          onCancel: () => Navigator.pop(context),
+          onOk: () async {
+            Navigator.pop(context);
+            await userRepository.unFollow(userEntity: userEntity).run();
+          },
+        );
+      },
+    );
   }
 
   void addAbout(BuildContext context) async {

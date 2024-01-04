@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sharewithme/export.dart';
 
-class StyleContant {
+class StyleConstant {
   static final TextStyle kBlueMediumBold = TextStyle(
     color: ColorConstant.kPrimaryBlue,
     fontWeight: FontWeight.bold,

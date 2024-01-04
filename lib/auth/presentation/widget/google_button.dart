@@ -31,7 +31,7 @@ class GoogleButton extends StatelessWidget {
             Text(
               AuthStringConstants.loginWithGoogle,
               textAlign: TextAlign.center,
-              style: StyleContant.kBlack14W5,
+              style: StyleConstant.kBlack14W5,
             ),
           ],
         ),

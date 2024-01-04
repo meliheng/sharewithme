@@ -42,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         children: [
                           Text(
                             AuthC.signUp,
-                            style: StyleContant.kBlackBold20,
+                            style: StyleConstant.kBlackBold20,
                           ),
                         ],
                       ),
@@ -90,14 +90,14 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             TextSpan(
                               text: AuthC.termAndCondition,
-                              style: StyleContant.kBlueMediumBold,
+                              style: StyleConstant.kBlueMediumBold,
                             ),
                             TextSpan(
                               text: AuthC.and,
                             ),
                             TextSpan(
                               text: AuthC.privacyPolicy,
-                              style: StyleContant.kBlueMediumBold,
+                              style: StyleConstant.kBlueMediumBold,
                             ),
                           ],
                         ),
@@ -137,7 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   );
                                 },
                               text: AuthC.login,
-                              style: StyleContant.kBlueMedium,
+                              style: StyleConstant.kBlueMedium,
                             ),
                           ],
                         ),

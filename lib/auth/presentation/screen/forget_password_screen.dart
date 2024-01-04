@@ -24,7 +24,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           Image.asset(ImageConstant.kLoginImage),
           Text(
             AuthC.signIn,
-            style: StyleContant.kBlackBold20,
+            style: StyleConstant.kBlackBold20,
           ),
           const SizedBox(height: 10),
           BlocConsumer<AuthCubit, AuthState>(
@@ -64,7 +64,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           Text(
                             AuthC.forgetPassword,
                             textAlign: TextAlign.end,
-                            style: StyleContant.kBlueMediumBold,
+                            style: StyleConstant.kBlueMediumBold,
                           ),
                         ],
                       ),
@@ -92,7 +92,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             const TextSpan(text: " "),
                             TextSpan(
                               text: AuthStringConstants.register,
-                              style: StyleContant.kBlueMedium,
+                              style: StyleConstant.kBlueMedium,
                             ),
                           ],
                         ),

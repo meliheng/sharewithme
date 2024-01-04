@@ -63,13 +63,13 @@ class _UserCardState extends State<UserCard> {
                   children: [
                     Text(
                       widget.userEntity.username,
-                      style: StyleContant.kBlackBold18,
+                      style: StyleConstant.kBlackBold18,
                     ),
                     if (!widget.userEntity.isFollower &&
                         widget.userEntity.isFollowing)
                       Text(
                         StringC.kNotFollowYou,
-                        style: StyleContant.kBlack12,
+                        style: StyleConstant.kBlack12,
                       )
                   ],
                 ),
@@ -91,7 +91,7 @@ class _UserCardState extends State<UserCard> {
                   ),
                   child: const Text(
                     '370',
-                    style: StyleContant.kWhite12,
+                    style: StyleConstant.kWhite12,
                   ),
                 ),
                 const Spacer(),
@@ -100,7 +100,7 @@ class _UserCardState extends State<UserCard> {
                     icon: Icons.delete,
                     color: Colors.red,
                     onPressed: () {
-                      userCubit.unFollow();
+                      userCubit.unFollow(context);
                     },
                   )
                 else

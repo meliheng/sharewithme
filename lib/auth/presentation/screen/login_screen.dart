@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Text(
             AuthC.signIn,
-            style: StyleContant.kBlackBold20,
+            style: StyleConstant.kBlackBold20,
           ),
           const SizedBox(height: 10),
           BlocConsumer<AuthCubit, AuthState>(
@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           AuthC.forgetPassword,
                           textAlign: TextAlign.end,
-                          style: StyleContant.kBlueMediumBold,
+                          style: StyleConstant.kBlueMediumBold,
                         ),
                       ],
                     ),

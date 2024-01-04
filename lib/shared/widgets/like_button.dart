@@ -41,7 +41,7 @@ class _LikeButtonState extends State<LikeButton> {
         const SizedBox(width: 10),
         Text(
           likeCount,
-          style: StyleContant.kBlackBold16,
+          style: StyleConstant.kBlackBold16,
         ),
       ],
     );
