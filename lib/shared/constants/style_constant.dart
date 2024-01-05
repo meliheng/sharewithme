@@ -42,4 +42,9 @@ class StyleConstant {
     fontSize: 16,
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle kBlack16 = TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.w200,
+  );
 }
