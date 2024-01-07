@@ -32,7 +32,17 @@ class _CircularAvatarWithEditIconState
         else
           CircleAvatar(
             radius: widget.radius,
-            backgroundImage: AssetImage(IconC.kProfileIcon),
+            backgroundColor: Colors.white,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(widget.radius),
+              ),
+              child: Image.asset(
+                IconC.kUserIcon,
+              ),
+            ),
           ),
         if (widget.onFileSelected != null)
           Positioned(
@@ -50,8 +60,8 @@ class _CircularAvatarWithEditIconState
               },
               child: Container(
                 padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
+                decoration: BoxDecoration(
+                  color: ColorConstant.kPrimaryBlue,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(

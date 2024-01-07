@@ -7,6 +7,7 @@ class IconConstant {
   static String get kSearchIcon => 'searchicon.svg'.toIcon;
   static String get kHomeIcon => "homeicon.svg".toIcon;
   static String get kProfileIcon => "profileicon.svg".toIcon;
+  static String get kUserIcon => "user.png".toIcon;
   static String get kFavoriteIcon => "favoriteicon.svg".toIcon;
   static String get kOptionsIcon => "optionsicon.svg".toIcon;
   static String get kUserProfileIcon => "user.png".toIcon;

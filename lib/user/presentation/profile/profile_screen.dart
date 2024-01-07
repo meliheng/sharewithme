@@ -13,7 +13,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -77,54 +78,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomButton.withRadius(
-                    title: StringC.kSettings,
-                    color: ColorConstant.kGrayV1,
-                    onPressed: () {},
-                  ),
-                ),
-                Expanded(
-                  child: CustomButton.withRadius(
-                    title: StringC.kActivities,
-                    color: ColorConstant.kPrimaryBlue,
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-            ),
-            CustomContainer(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Column(
-                  children: [
-                    SettingsListTile(
-                      iconPath: IconC.kChangePasswordIcon,
-                      title: StringC.kChangePassword,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: CustomDivider(),
-                    ),
-                    SettingsListTile(
-                      iconPath: IconC.kNotificationIcon,
-                      title: StringC.kNotification,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: CustomDivider(),
-                    ),
-                    SettingsListTile(
-                      iconPath: IconC.kChangePasswordIcon,
-                      title: StringC.kChangePassword,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            _activitiesTab(),
           ],
+        );
+      },
+    );
+  }
+
+  Widget _activitiesTab() {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection(CollectionConstant.kActivities)
+          .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState.isLoading) {
+          return const Center(
+            child: LoadingDialog(),
+          );
+        }
+        final List<ActivityEntity> list = snapshot.data!.docs
+            .map((e) => ActivityEntity.fromFirestore(e))
+            .toList();
+        return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, // 3 images per row
+            crossAxisSpacing: 8.0, // spacing between columns
+            mainAxisSpacing: 8.0, // spacing between rows
+          ),
+          itemCount: list.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Image(
+              image: NetworkImage(list[index].imagePath),
+              fit: BoxFit.cover,
+            );
+          },
         );
       },
     );
