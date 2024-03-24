@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sharewithme/export.dart';
 
 class ScreenTemplate extends StatefulWidget {
   final VoidCallback? onFloatActionButtonPressed;
+  final StatefulNavigationShell navigationShell;
+
   const ScreenTemplate({
     super.key,
     this.onFloatActionButtonPressed,
+    required this.navigationShell,
   });
 
   @override
@@ -24,25 +28,18 @@ class _ScreenTemplateState extends State<ScreenTemplate> {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorConstant.kGrayV2,
-          appBar: CustomAppBar(
-            appBar: AppBar(),
-          ),
-          body: SafeArea(
-            child: Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width - 30,
-                child: PageView(
-                  controller: cubit.pageController,
-                  children: cubit.screens,
-                ),
-              ),
-            ),
+          // appBar: CustomAppBar(
+          //   appBar: AppBar(),
+          // ),
+          body: Center(
+            child: widget.navigationShell,
           ),
           floatingActionButton: cubit.showFloatActionButton(context),
           extendBody: true,
           extendBodyBehindAppBar: true,
           bottomNavigationBar: CustomNavigationBar(
             cubit: cubit,
+            navigationShell: widget.navigationShell,
           ),
         );
       },

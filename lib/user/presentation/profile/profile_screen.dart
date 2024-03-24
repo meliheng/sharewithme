@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sharewithme/auth/presentation/avatar_widget.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/constants/style_constant.dart';
@@ -17,71 +19,74 @@ class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection(CollectionConstant.kUsers)
-          .doc(FirebaseAuth.instance.currentUser!.email)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState.isLoading) {
-          return const Center(
-            child: LoadingDialog(),
+    return Scaffold(
+      appBar: CustomAppBar(appBar: AppBar()),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection(CollectionConstant.kUsers)
+            .doc(FirebaseAuth.instance.currentUser!.email)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState.isLoading) {
+            return const Center(
+              child: LoadingDialog(),
+            );
+          }
+          final UserEntity user = UserEntity.fromFirestore(snapshot.data!);
+          return Column(
+            children: [
+              const SizedBox(height: 20),
+              CircularAvatarWithEditIcon(
+                radius: 50,
+                imagePath: user.avatar,
+                onFileSelected: (file) {
+                  ProfileCubit cubit = ProfileCubit(userEntity: user);
+                  cubit.updateAvatar(file);
+                },
+              ),
+              Text(
+                user.username,
+                style: StyleConstant.kBlackBold18,
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.1,
+                      blurRadius: 1,
+                      offset: const Offset(1, 2),
+                    ),
+                  ],
+                ),
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _infoBox(
+                      count: '20',
+                      title: StringC.kActivities,
+                    ),
+                    _infoBox(
+                      count: user.followers.length.toString(),
+                      title: StringC.kFollowers,
+                    ),
+                    _infoBox(
+                      count: user.following.length.toString(),
+                      title: StringC.kFollowing,
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(child: _activitiesTab()),
+            ],
           );
-        }
-        final UserEntity user = UserEntity.fromFirestore(snapshot.data!);
-        return Column(
-          children: [
-            const SizedBox(height: 20),
-            CircularAvatarWithEditIcon(
-              radius: 50,
-              imagePath: user.avatar,
-              onFileSelected: (file) {
-                ProfileCubit cubit = ProfileCubit(userEntity: user);
-                cubit.updateAvatar(file);
-              },
-            ),
-            Text(
-              user.username,
-              style: StyleConstant.kBlackBold18,
-            ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 0.1,
-                    blurRadius: 1,
-                    offset: const Offset(1, 2),
-                  ),
-                ],
-              ),
-              height: 80,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _infoBox(
-                    count: '20',
-                    title: StringC.kActivities,
-                  ),
-                  _infoBox(
-                    count: user.followers.length.toString(),
-                    title: StringC.kFollowers,
-                  ),
-                  _infoBox(
-                    count: user.following.length.toString(),
-                    title: StringC.kFollowing,
-                  ),
-                ],
-              ),
-            ),
-            _activitiesTab(),
-          ],
-        );
-      },
+        },
+      ),
     );
   }
 
@@ -108,9 +113,13 @@ class _ProfileScreenState extends State<ProfileScreen>
           ),
           itemCount: list.length,
           itemBuilder: (BuildContext context, int index) {
-            return Image(
-              image: NetworkImage(list[index].imagePath),
-              fit: BoxFit.cover,
+            return GestureDetector(
+              onTap: () =>
+                  context.goNamed("Activity Detail", extra: list[index]),
+              child: Image(
+                image: NetworkImage(list[index].imagePath),
+                fit: BoxFit.cover,
+              ),
             );
           },
         );

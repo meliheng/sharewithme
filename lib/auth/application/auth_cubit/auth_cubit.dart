@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/user/domain/repository/i_user_repository.dart';
 part 'auth_state.dart';
@@ -72,13 +73,14 @@ class AuthCubit extends Cubit<AuthState> {
         emit(
           state.copyWith(status: AuthStatus.success),
         );
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ScreenTemplate(),
-          ),
-          (route) => false,
-        );
+        context.goNamed("Activity");
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const ScreenTemplate(),
+        //   ),
+        //   (route) => false,
+        // );
       },
     );
   }

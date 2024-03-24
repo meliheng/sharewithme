@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sharewithme/export.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   final NavigationBarCubit cubit;
+  final StatefulNavigationShell navigationShell;
+
   const CustomNavigationBar({
     super.key,
     required this.cubit,
+    required this.navigationShell,
   });
 
   @override
@@ -41,6 +45,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
               child: InkWell(
                 onTap: () {
                   widget.cubit.onPageChanged(0);
+                  widget.navigationShell.goBranch(0);
                 },
                 child: SvgPicture.asset(
                   IconC.kHomeIcon,
@@ -52,6 +57,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
             AnimatedNavigationButton(
               onTap: () {
                 widget.cubit.onPageChanged(1);
+                widget.navigationShell.goBranch(1);
               },
               icon: SvgPicture.asset(
                 IconC.kSearchIcon,
@@ -76,6 +82,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                 onTap: () {
                   // FirebaseAuth.instance.signOut();
                   widget.cubit.onPageChanged(2);
+                  widget.navigationShell.goBranch(2);
                 },
                 child: SvgPicture.asset(
                   IconC.kProfileIcon,

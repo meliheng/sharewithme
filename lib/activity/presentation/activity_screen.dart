@@ -14,24 +14,30 @@ class ActivityScreen extends StatefulWidget {
 class _ActivityScreenState extends State<ActivityScreen> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection("activities").snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              return ActivityCard(
-                activityEntity: ActivityEntity.fromFirestore(
-                  snapshot.data!.docs[index],
-                ),
+    return Builder(builder: (context) {
+      return Scaffold(
+        appBar: CustomAppBar(appBar: AppBar()),
+        body: StreamBuilder(
+          stream:
+              FirebaseFirestore.instance.collection("activities").snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return ActivityCard(
+                    activityEntity: ActivityEntity.fromFirestore(
+                      snapshot.data!.docs[index],
+                    ),
+                  );
+                },
               );
-            },
-          );
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
-    );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+      );
+    });
   }
 }

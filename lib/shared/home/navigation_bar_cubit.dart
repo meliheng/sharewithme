@@ -17,9 +17,9 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
 
   void onPageChanged(int index) {
     emit(state.copyWith(currentIndex: index));
-    pageController.jumpToPage(
-      index,
-    );
+    // pageController.jumpToPage(
+    //   index,
+    // );
   }
 
   Widget get getCurrentScreen => screens[state.currentIndex];

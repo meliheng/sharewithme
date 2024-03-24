@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sharewithme/export.dart';
 import 'package:sharewithme/shared/constants/style_constant.dart';
 import 'package:sharewithme/shared/widgets/password_text_field.dart';
@@ -131,10 +132,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    LoginScreen.route,
-                                  );
+                                  // Navigator.pushNamed(
+                                  //   context,
+                                  //   LoginScreen.route,
+                                  // );
+                                  context.pushNamed('Login');
                                 },
                               text: AuthC.login,
                               style: StyleConstant.kBlueMedium,
